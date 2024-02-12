@@ -20,6 +20,8 @@ createInertiaApp({
         app.use(pinia);
         app.use(ZiggyVue);
         app.mount(el);
+
+        console.log(window.document.getElementsByTagName('title')[0]?.innerText)
     },
   progress: {
     color: '#4B5563',

@@ -7,7 +7,7 @@ import CardBox from '@/Components/CardBox.vue'
 import FormControl from '@/Components/FormControl.vue'
 import FormField from '@/Components/FormField.vue'
 import BaseDivider from '@/Components/BaseDivider.vue'
-import BaseButton from '@/Components/BaseButton.vue'
+import BaseButtonLink from '@/Components/BaseButtonLink.vue'
 import FormValidationErrors from '@/Components/FormValidationErrors.vue'
 
 const form = useForm({
@@ -65,7 +65,7 @@ const submit = () => {
 
         <BaseDivider />
 
-        <BaseButton
+        <BaseButtonLink
           type="submit"
           color="info"
           label="Confirm"

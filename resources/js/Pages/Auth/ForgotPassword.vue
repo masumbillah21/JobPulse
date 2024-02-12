@@ -7,7 +7,7 @@ import CardBox from '@/Components/CardBox.vue'
 import FormField from '@/Components/FormField.vue'
 import FormControl from '@/Components/FormControl.vue'
 import BaseDivider from '@/Components/BaseDivider.vue'
-import BaseButton from '@/Components/BaseButton.vue'
+import BaseButtonLink from '@/Components/BaseButtonLink.vue'
 import FormValidationErrors from '@/Components/FormValidationErrors.vue'
 import NotificationBarInCard from '@/Components/NotificationBarInCard.vue'
 import BaseLevel from '@/Components/BaseLevel.vue'
@@ -72,7 +72,7 @@ const submit = () => {
         <BaseDivider />
 
         <BaseLevel>
-          <BaseButton
+          <BaseButtonLink
             type="submit"
             color="info"
             label="Send Password Reset Link"

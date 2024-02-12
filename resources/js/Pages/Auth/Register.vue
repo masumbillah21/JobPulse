@@ -9,7 +9,7 @@ import FormCheckRadioGroup from "@/Components/FormCheckRadioGroup.vue";
 import FormField from "@/Components/FormField.vue";
 import FormControl from "@/Components/FormControl.vue";
 import BaseDivider from "@/Components/BaseDivider.vue";
-import BaseButton from "@/Components/BaseButton.vue";
+import BaseButtonLink from "@/Components/BaseButtonLink.vue";
 import BaseButtons from "@/Components/BaseButtons.vue";
 import FormValidationErrors from "@/Components/FormValidationErrors.vue";
 
@@ -116,14 +116,14 @@ const submit = () => {
         <BaseDivider />
 
         <BaseButtons>
-          <BaseButton
+          <BaseButtonLink
             type="submit"
             color="info"
             label="Register"
             :class="{ 'opacity-25': form.processing }"
             :disabled="form.processing"
           />
-          <BaseButton route-name="login" color="info" outline label="Login" />
+          <BaseButtonLink route-name="login" color="info" outline label="Login" />
         </BaseButtons>
       </CardBox>
     </SectionFullScreen>

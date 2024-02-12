@@ -7,7 +7,7 @@ import CardBox from '@/Components/CardBox.vue'
 import FormField from '@/Components/FormField.vue'
 import FormControl from '@/Components/FormControl.vue'
 import BaseDivider from '@/Components/BaseDivider.vue'
-import BaseButton from '@/Components/BaseButton.vue'
+import BaseButtonLink from '@/Components/BaseButtonLink.vue'
 import FormValidationErrors from '@/Components/FormValidationErrors.vue'
 
 const props = defineProps({
@@ -98,7 +98,7 @@ const submit = () => {
 
         <BaseDivider />
 
-        <BaseButton
+        <BaseButtonLink
           type="submit"
           color="info"
           label="Reset password"

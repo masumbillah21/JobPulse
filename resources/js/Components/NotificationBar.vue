@@ -4,7 +4,7 @@ import { mdiClose } from '@mdi/js'
 import { colorsBgLight, colorsOutline } from '@/colors.js'
 import BaseLevel from '@/Components/BaseLevel.vue'
 import BaseIcon from '@/Components/BaseIcon.vue'
-import BaseButton from '@/Components/BaseButton.vue'
+import BaseButtonLink from '@/Components/BaseButtonLink.vue'
 
 const props = defineProps({
   icon: {
@@ -52,7 +52,7 @@ const hasRightSlot = computed(() => slots.right)
         <span class="text-center md:text-left md:py-2"><slot /></span>
       </div>
       <slot v-if="hasRightSlot" name="right" />
-      <BaseButton v-else :icon="mdiClose" small rounded-full color="white" @click="dismiss" />
+      <BaseButtonLink v-else :icon="mdiClose" small rounded-full color="white" @click="dismiss" />
     </BaseLevel>
   </div>
 </template>

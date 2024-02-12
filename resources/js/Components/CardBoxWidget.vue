@@ -5,7 +5,7 @@ import NumberDynamic from '@/Components/NumberDynamic.vue'
 import BaseIcon from '@/Components/BaseIcon.vue'
 import BaseLevel from '@/Components/BaseLevel.vue'
 import PillTagTrend from '@/Components/PillTagTrend.vue'
-import BaseButton from '@/Components/BaseButton.vue'
+import BaseButtonLink from '@/Components/BaseButtonLink.vue'
 
 defineProps({
   number: {
@@ -47,7 +47,7 @@ defineProps({
   <CardBox>
     <BaseLevel v-if="trend" class="mb-3" mobile>
       <PillTagTrend :trend="trend" :trend-type="trendType" small />
-      <BaseButton :icon="mdiCog" icon-w="w-4" icon-h="h-4" color="lightDark" small />
+      <BaseButtonLink :icon="mdiCog" icon-w="w-4" icon-h="h-4" color="lightDark" small />
     </BaseLevel>
     <BaseLevel mobile>
       <div>

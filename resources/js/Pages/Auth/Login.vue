@@ -8,7 +8,7 @@ import FormCheckRadioGroup from '@/Components/FormCheckRadioGroup.vue'
 import FormField from '@/Components/FormField.vue'
 import FormControl from '@/Components/FormControl.vue'
 import BaseDivider from '@/Components/BaseDivider.vue'
-import BaseButton from '@/Components/BaseButton.vue'
+import BaseButtonLink from '@/Components/BaseButtonLink.vue'
 import BaseButtons from '@/Components/BaseButtons.vue'
 import FormValidationErrors from '@/Components/FormValidationErrors.vue'
 import NotificationBarInCard from '@/Components/NotificationBarInCard.vue'
@@ -102,14 +102,14 @@ const submit = () => {
 
         <BaseLevel>
           <BaseButtons>
-            <BaseButton
+            <BaseButtonLink
               type="submit"
               color="info"
               label="Login"
               :class="{ 'opacity-25': form.processing }"
               :disabled="form.processing"
             />
-            <BaseButton
+            <BaseButtonLink
               v-if="canResetPassword"
               route-name="password.request"
               color="info"
