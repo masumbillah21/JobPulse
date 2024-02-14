@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('resume_references', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('resume_id')->constrained();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->enum('user_type', ['owner', 'company', 'employee' ,'candidate'])->default('candidate');
-            $table->timestamp('email_verified_at')->nullable();
-            $table->rememberToken();
+            $table->string('organization');
+            $table->string('phone');
+            $table->string('email')->nullable();
+            $table->string('relationship');
+            $table->unique(['resume_id', 'phone']);
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('resume_references');
     }
 };
