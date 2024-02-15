@@ -5,10 +5,14 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
 
-defineProps<{
-    mustVerifyEmail?: Boolean;
-    status?: String;
-}>();
+// defineProps<{
+//     mustVerifyEmail?: Boolean;
+//     status?: String;
+// }>();
+defineProps({
+    mustVerifyEmail: Boolean,
+    status: String
+})
 
 const user = usePage().props.auth.user;
 
@@ -16,6 +20,7 @@ const form = useForm({
     name: user.name,
     email: user.email,
 });
+
 </script>
 
 <template>

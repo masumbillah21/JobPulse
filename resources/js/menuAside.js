@@ -10,29 +10,33 @@ import {
   mdiTelevisionGuide,
   mdiResponsive,
   mdiPalette,
-  mdiReact
+  mdiReact,
+  mdiPlus
 } from '@mdi/js'
 
 export default [
   {
     route: 'dashboard',
     icon: mdiMonitor,
-    label: 'Dashboard'
+    label: 'Dashboard',
+    permission: 'viewDashboard',
   },
   {
-    route: 'profile.edit',
-    label: 'Profile',
-    icon: mdiAccountCircle
-  },
-  {
-    label: 'Dropdown',
-    icon: mdiViewList,
+    label: 'Employees',
+    icon: mdiAccountCircle,
+    permission: 'viewUser',
     menu: [
       {
-        label: 'Item One'
+        route: 'employee.index',
+        icon: mdiAccountCircle,
+        label: 'All',
+        permission: 'viewUser',
       },
       {
-        label: 'Item Two'
+        route: 'employee.create',
+        icon: mdiPlus,
+        label: 'Add New',
+        permission: 'addEmployee',
       }
     ]
   },

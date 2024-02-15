@@ -19,8 +19,6 @@ export const useMainStore = defineStore('main', () => {
     }
   }
 
-
-
   return {
     isFieldFocusRegistered,
     clients,

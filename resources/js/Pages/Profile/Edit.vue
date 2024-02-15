@@ -7,10 +7,11 @@ import UpdatePasswordForm from './Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm.vue';
 import { Head } from '@inertiajs/vue3';
 
-defineProps<{
-    mustVerifyEmail?: boolean;
-    status?: string;
-}>();
+defineProps({
+    mustVerifyEmail: Boolean,
+    status: String,
+});
+
 </script>
 
 <template>

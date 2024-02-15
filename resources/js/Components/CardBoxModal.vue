@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { mdiClose } from '@mdi/js'
-import BaseButton from '@/Components/BaseButton.vue'
+import BaseButtonLink from '@/Components/BaseButtonLink.vue'
 import BaseButtons from '@/Components/BaseButtons.vue'
 import CardBox from '@/Components/CardBox.vue'
 import OverlayLayer from '@/Components/OverlayLayer.vue'
@@ -24,7 +24,7 @@ const props = defineProps({
   modelValue: {
     type: [String, Number, Boolean],
     default: null
-  }
+  },
 })
 
 const emit = defineEmits(['update:modelValue', 'cancel', 'confirm'])
@@ -58,7 +58,7 @@ window.addEventListener('keydown', (e) => {
       is-modal
     >
       <CardBoxComponentTitle :title="title">
-        <BaseButton
+        <BaseButtonLink
           v-if="hasCancel"
           :icon="mdiClose"
           color="whiteDark"
@@ -74,8 +74,8 @@ window.addEventListener('keydown', (e) => {
 
       <template #footer>
         <BaseButtons>
-          <BaseButton :label="buttonLabel" :color="button" @click="confirm" />
-          <BaseButton v-if="hasCancel" label="Cancel" :color="button" outline @click="cancel" />
+          <BaseButtonLink :label="buttonLabel" :color="button" @click="confirm" />
+          <BaseButtonLink v-if="hasCancel" label="Cancel" :color="button" outline @click="cancel" />
         </BaseButtons>
       </template>
     </CardBox>
