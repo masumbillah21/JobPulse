@@ -64,7 +64,7 @@
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ employee.email }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ employee.created_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              <BaseButtonLink :href="route('employee.edit', employee.id)" :icon="mdiNoteEditOutline" label="Edit" color="info" small />
+                              <BaseButtonLink routeName="employee.edit" :routeParams="employee.id" :icon="mdiNoteEditOutline" label="Edit" color="info" small />
                               <BaseButtonLink class="ml-2" :icon="mdiTrashCan" label="Delete" color="danger" small @click="showModle(employee.id)"/>
 
                           </td>

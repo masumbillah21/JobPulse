@@ -29,6 +29,10 @@ const props = defineProps({
     type: String,
     default: null
   },
+  routeParams: {
+    type: Number,
+    default: null
+  },
   type: {
     type: String,
     default: null
@@ -110,7 +114,7 @@ const componentClass = computed(() => {
   <component
   :is="is"
     :class="componentClass"
-    :href="routeName ? route(routeName) : href"
+    :href="routeName ? route(routeName, routeParams) : href"
     :type="computedType"
     :target="target"
     :disabled="disabled"
