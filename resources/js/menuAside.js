@@ -1,7 +1,8 @@
 import {
   mdiAccountCircle,
   mdiMonitor,
-  mdiGithub,
+  mdiOfficeBuilding,
+  mdiCog,
   mdiLock,
   mdiAlertCircle,
   mdiSquareEditOutline,
@@ -10,7 +11,6 @@ import {
   mdiTelevisionGuide,
   mdiResponsive,
   mdiPalette,
-  mdiReact,
   mdiPlus
 } from '@mdi/js'
 
@@ -37,6 +37,31 @@ export default [
         icon: mdiPlus,
         label: 'Add New',
         permission: 'addEmployee',
+      }
+    ]
+  },
+  {
+    route: 'company.index',
+    icon: mdiOfficeBuilding,
+    label: 'Company',
+    permission: 'viewCompany',
+  },
+  {
+    label: 'Roles',
+    icon: mdiAccountCircle,
+    permission: 'viewRole',
+    menu: [
+      {
+        route: 'roles.index',
+        icon: mdiAccountCircle,
+        label: 'All',
+        permission: 'viewRole',
+      },
+      {
+        route: 'roles.create',
+        icon: mdiPlus,
+        label: 'Add New',
+        permission: 'addRole',
       }
     ]
   },

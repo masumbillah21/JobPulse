@@ -1,7 +1,7 @@
 <script setup>
 import { mdiUpload } from '@mdi/js'
 import { computed, ref, watch } from 'vue'
-import BaseButton from '@/Components/BaseButton.vue'
+import BaseButtonLink from '@/Components/BaseButtonLink.vue'
 
 const props = defineProps({
   modelValue: {
@@ -33,6 +33,8 @@ const root = ref(null)
 
 const file = ref(props.modelValue)
 
+const url = ref(null)
+
 const showFilename = computed(() => !props.isRoundIcon && file.value)
 
 const modelValueProp = computed(() => props.modelValue)
@@ -50,42 +52,26 @@ const upload = (event) => {
 
   file.value = value[0]
 
+  const image = event.target.files[0]
+  
+  url.value = URL.createObjectURL(image)
+
+  console.log(url.value)
+
   emit('update:modelValue', file.value)
-
-  // Use this as an example for handling file uploads
-  // let formData = new FormData()
-  // formData.append('file', file.value)
-
-  // const mediaStoreRoute = `/your-route/`
-
-  // axios
-  //   .post(mediaStoreRoute, formData, {
-  //     headers: {
-  //       'Content-Type': 'multipart/form-data'
-  //     },
-  //     onUploadProgress: progressEvent
-  //   })
-  //   .then(r => {
-  //
-  //   })
-  //   .catch(err => {
-  //
-  //   })
 }
 
-// const uploadPercent = ref(0)
-//
-// const progressEvent = progressEvent => {
-//   uploadPercent.value = Math.round(
-//     (progressEvent.loaded * 100) / progressEvent.total
-//   )
-// }
+console.log(url)
+
 </script>
 
 <template>
+  <div>
+    <img v-if="url" :src="url" width="200" class="mb-5"/>
+  </div>
   <div class="flex items-stretch justify-start relative">
     <label class="inline-flex">
-      <BaseButton
+      <BaseButtonLink
         as="a"
         :class="{ 'w-12 h-12': isRoundIcon, 'rounded-r-none': showFilename }"
         :icon-size="isRoundIcon ? 24 : undefined"

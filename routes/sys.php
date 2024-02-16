@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\RoleController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -70,5 +72,6 @@ Route::prefix('admin')->group(function () {
                 Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
                 require __DIR__.'/employee.php';
+                require __DIR__.'/company.php';
         });
 });

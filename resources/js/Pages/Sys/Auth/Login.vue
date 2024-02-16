@@ -53,7 +53,7 @@ const submit = () => {
         is-form
         @submit.prevent="submit"
       >
-        <h3 class="text-center text-4xl font-bold">System User Login</h3>
+        
         <FormValidationErrors />
 
         <NotificationBarInCard 
@@ -62,7 +62,7 @@ const submit = () => {
         >
           {{ status }}
         </NotificationBarInCard>
-
+        <h3 class="text-center text-4xl font-bold">System User Login</h3>
         <FormField
           label="Email"
           label-for="email"
