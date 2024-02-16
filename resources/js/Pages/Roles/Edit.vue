@@ -12,20 +12,41 @@
     import BaseDivider from "@/Components/BaseDivider.vue";
     import FormValidationErrors from "@/Components/FormValidationErrors.vue";
     import FormSuccess from "@/Components/FormSuccess.vue";
-    import { Head, useForm } from '@inertiajs/vue3'
+    import { Head, useForm, usePage } from '@inertiajs/vue3'
 
-    const props = defineProps(
-        {
-            employee: Object,
-        }
-    )
+    const roleData = usePage().props.role ?? null
+
     
     const form = useForm({
-        id: props.employee !== null ? props.employee.id : null,
-        name: props.employee !== null ? props.employee.name : "",
-        email: props.employee !== null ? props.employee.email : "",
-        password: "",
+        id: 0,
+        name: "",
+        _method: "post",
     });
+
+    if(roleData !== null) {
+        form.id = roleData.id
+        form.name = roleData.name
+        form._method = 'put'
+    }
+
+    const submit = () => {
+        if (roleData !== null) {
+            update();
+        } else {
+            create();
+        }
+    };
+
+    const create = () => {
+        form
+            .transform((data) => ({
+            ...data,
+            terms: form.terms && form.terms.length,
+            }))
+            .post(route("roles.store"), {
+                onSuccess: () => form.reset(),
+            });
+    };
 
     const update = () => {
         form
@@ -33,21 +54,19 @@
             ...data,
             terms: form.terms && form.terms.length,
             }))
-            .put(route("employee.update", form.id), {
-                onFinish: () => form.reset("password"),
-            });
+            .post(route("roles.update", form.id));
     };
 </script>
     
     <template>
       <LayoutAuthenticated>
-        <Head title="Edit Employee" />
+        <Head :title="(roleData !== null) ? 'Edit Role' : 'Create Role'" />
         <SectionMain>
-            <SectionTitleLineWithButton :icon="mdiArrowRightCircle" :title="employee !== null ? 'Edit Employee' : 'Create Employee'" main>
+            <SectionTitleLineWithButton :icon="mdiArrowRightCircle" :title="roleData !== null ? 'Edit Role' : 'Create Role'" main>
                 <BaseButtonLink
                     :icon="mdiArrowLeftCircle"
                     label="Back"
-                    routeName="employee.index"
+                    routeName="roles.index"
                     color="contrast"
                     rounded-full
                     small
@@ -57,11 +76,11 @@
                 <CardBox
                     class="my-24 w-1/2"
                     is-form
-                    @submit.prevent="update"
+                    @submit.prevent="submit"
                 >
                 <FormValidationErrors />
                 <FormSuccess />
-                <FormField label="Name" label-for="name" help="Please enter your name">
+                <FormField label="Name" label-for="name" help="Please enter role name">
                 <FormControl
                     v-model="form.name"
                     id="name"
@@ -72,42 +91,13 @@
                 />
                 </FormField>
 
-                <FormField
-                label="Email"
-                label-for="email"
-                help="Please enter your email"
-                >
-                <FormControl
-                    v-model="form.email"
-                    id="email"
-                    :icon="mdiEmail"
-                    autocomplete="email"
-                    type="email"
-                    required
-                />
-                </FormField>
-
-                <FormField
-                label="Password"
-                label-for="password"
-                help="Please enter new password"
-                >
-                <FormControl
-                    v-model="form.password"
-                    id="password"
-                    :icon="mdiFormTextboxPassword"
-                    type="password"
-                    autocomplete="new-password"
-                />
-                </FormField>
-
                 <BaseDivider />
 
                 <BaseButtons>
                 <BaseButtonLink
                     type="submit"
                     color="info"
-                    label="Update"
+                    :label="roleData !== null ? 'Update' : 'Create'"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 />

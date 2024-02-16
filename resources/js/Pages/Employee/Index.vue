@@ -17,8 +17,12 @@
     const deleteId = ref(null)
     const deleteEmployee = () => {
         isModalDangerActive.value = false
-        console.log('delete' + deleteId.value)
         router.delete(route('employee.destroy', deleteId.value))
+
+        const index = employees.data.findIndex((emp) => emp.id === deleteId.value)
+        if (index !== -1) {
+            rolesemployeesData.data.splice(index, 1)
+        }
 
     }
     const showModle = (id) => {
