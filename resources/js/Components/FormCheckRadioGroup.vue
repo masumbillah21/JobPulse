@@ -7,6 +7,10 @@ const props = defineProps({
     type: Object,
     default: () => {}
   },
+  oldValue: {
+    type: Object,
+    default: () => {}
+  },
   name: {
     type: String,
     required: true

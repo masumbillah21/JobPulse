@@ -65,4 +65,23 @@ export default [
       }
     ]
   },
+  {
+    label: 'Permissions',
+    icon: mdiAccountCircle,
+    permission: 'viewPermission',
+    menu: [
+      {
+        route: 'permissions.index',
+        icon: mdiAccountCircle,
+        label: 'All',
+        permission: 'viewPermission',
+      },
+      {
+        route: 'permissions.create',
+        icon: mdiPlus,
+        label: 'Add New',
+        permission: 'addPermission',
+      }
+    ]
+  },
 ]

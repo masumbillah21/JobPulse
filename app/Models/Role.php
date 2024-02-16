@@ -16,8 +16,15 @@ class Role extends Model
         'name',
     ];
 
+    protected $hidden = ['pivot'];
+
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class, 'role_permissons');
     }
 }

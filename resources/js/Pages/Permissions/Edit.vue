@@ -5,7 +5,6 @@
     import CardBox from '@/Components/CardBox.vue'
     import FormField from "@/Components/FormField.vue";
     import FormControl from "@/Components/FormControl.vue";
-    import FormCheckRadioGroup from "@/Components/FormCheckRadioGroup.vue";
     import LayoutAuthenticated from '@/Layouts/LayoutAuthenticated.vue'
     import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue'
     import BaseButtonLink from '@/Components/BaseButtonLink.vue'
@@ -15,26 +14,23 @@
     import FormSuccess from "@/Components/FormSuccess.vue";
     import { Head, useForm, usePage } from '@inertiajs/vue3'
 
-    const roleData = usePage().props.role ?? null
-    const permissionList = usePage().props.permissionList ?? null
+    const permissionData = usePage().props.permission ?? null
 
     
     const form = useForm({
         id: 0,
         name: "",
-        permissions: [],
         _method: "post",
     });
 
-    if(roleData !== null) {
-        form.id = roleData.id
-        form.name = roleData.name
-        form.permissions = roleData.permissions.map((item) => item.id)
+    if(permissionData !== null) {
+        form.id = permissionData.id
+        form.name = permissionData.name
         form._method = 'put'
     }
 
     const submit = () => {
-        if (roleData !== null) {
+        if (permissionData !== null) {
             update();
         } else {
             create();
@@ -47,7 +43,7 @@
             ...data,
             terms: form.terms && form.terms.length,
             }))
-            .post(route("roles.store"), {
+            .post(route("permissions.store"), {
                 onSuccess: () => form.reset(),
             });
     };
@@ -58,19 +54,19 @@
             ...data,
             terms: form.terms && form.terms.length,
             }))
-            .post(route("roles.update", form.id));
+            .post(route("permissions.update", form.id));
     };
 </script>
     
     <template>
       <LayoutAuthenticated>
-        <Head :title="(roleData !== null) ? 'Edit Role' : 'Create Role'" />
+        <Head :title="(permissionData !== null) ? 'Edit permission' : 'Create permission'" />
         <SectionMain>
-            <SectionTitleLineWithButton :icon="mdiArrowRightCircle" :title="roleData !== null ? 'Edit Role' : 'Create Role'" main>
+            <SectionTitleLineWithButton :icon="mdiArrowRightCircle" :title="permissionData !== null ? 'Edit permission' : 'Create permission'" main>
                 <BaseButtonLink
                     :icon="mdiArrowLeftCircle"
                     label="Back"
-                    routeName="roles.index"
+                    routeName="permissions.index"
                     color="contrast"
                     rounded-full
                     small
@@ -84,7 +80,7 @@
                 >
                 <FormValidationErrors />
                 <FormSuccess />
-                <FormField label="Name" label-for="name" help="Please enter role name">
+                <FormField label="Name" label-for="name" help="Please enter permission name">
                 <FormControl
                     v-model="form.name"
                     id="name"
@@ -95,19 +91,13 @@
                 />
                 </FormField>
 
-                <FormCheckRadioGroup
-                    v-model="form.permissions"
-                    name="permissions[]"
-                    :options="permissionList"
-                />
-
                 <BaseDivider />
 
                 <BaseButtons>
                 <BaseButtonLink
                     type="submit"
                     color="info"
-                    :label="roleData !== null ? 'Update' : 'Create'"
+                    :label="permissionData !== null ? 'Update' : 'Create'"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 />

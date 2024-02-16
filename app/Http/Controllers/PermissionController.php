@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class PermissionController extends Controller
 {
@@ -12,7 +13,8 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        //
+        $permissions = Permission::paginate(10);
+        return Inertia::render('Permissions/Index', ['permissionsData' => $permissions]);
     }
 
     /**
@@ -20,7 +22,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Permissions/Edit');
     }
 
     /**
@@ -28,7 +30,11 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|unique:permissions'
+        ]);
+        Permission::create($validated);
+        return redirect()->back()->with('success', 'Permission created successfully!');
     }
 
     /**
@@ -44,7 +50,7 @@ class PermissionController extends Controller
      */
     public function edit(Permission $permission)
     {
-        //
+        return Inertia::render('Permissions/Edit', ['permission' => $permission]);
     }
 
     /**
@@ -52,7 +58,11 @@ class PermissionController extends Controller
      */
     public function update(Request $request, Permission $permission)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|Rule::unique(Permission::class)->ignore($permission->id)'
+        ]);
+        $permission->update($validated);
+        return redirect()->back()->with('success', 'Permission updated successfully!');
     }
 
     /**
@@ -60,6 +70,7 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        //
+        $permission->delete();
+        return redirect()->back()->with('success', 'Permission deleted successfully!');
     }
 }

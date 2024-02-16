@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use Inertia\Inertia;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +16,7 @@ class RoleController extends Controller
     public function index()
     {
         $companyId = Auth::user()->company_id;
-        $roles = Role::where('company_id', $companyId)->paginate(10);
+        $roles = Role::where('company_id', $companyId)->with('permissions')->paginate(10);
         return Inertia::render('Roles/Index', [
             'rolesData' => $roles
         ]);
@@ -26,7 +27,10 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Roles/Edit');
+        $permissionList = Permission::pluck('name', 'id');
+        return Inertia::render('Roles/Edit', [
+            'permissionList' => $permissionList
+        ]);
     }
 
     /**
@@ -36,14 +40,18 @@ class RoleController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'permissions' => 'required|array'
         ]);
 
         $companyId = Auth::user()->company_id;
 
-        Role::create([
+        $role = Role::create([
             'name' => $request->name,
             'company_id' => $companyId
         ]);
+
+        $role->permissions()->attach($request->permissions);
+
         return redirect()->back()->with('success', 'Role created successfully');
     }
 
@@ -60,8 +68,11 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
+        $permissionList = Permission::pluck('name', 'id');
+
         return Inertia::render('Roles/Edit', [
-            'role' => $role
+            'role' => $role->load('permissions'),
+            'permissionList' => $permissionList
         ]);
     }
 
@@ -72,6 +83,7 @@ class RoleController extends Controller
     {
         $validate = $request->validate([
             'name' => 'required',
+            'permissions' => 'required|array'
         ]);
 
         $companyId = Auth::user()->company_id;
@@ -81,6 +93,8 @@ class RoleController extends Controller
         }
 
         $role->update($validate);
+
+        $role->permissions()->sync($request->permissions);
 
         return redirect()->back()->with('success', 'Role updated successfully');
     }
@@ -96,6 +110,7 @@ class RoleController extends Controller
             return redirect()->back()->with('error', 'Role not found');
         }
 
+        $role->permissions()->detach();
         $role->delete();
         return redirect()->back()->with('success', 'Role deleted successfully');
     }
