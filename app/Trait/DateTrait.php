@@ -17,4 +17,9 @@ trait DateTrait
     {
         return Carbon::parse($value)->diffForHumans();
     }
+
+    public function getClosingDateAttribute($value)
+    {
+        return Carbon::parse($value)->diffForHumans();
+    }
 }

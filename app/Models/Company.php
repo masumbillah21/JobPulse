@@ -10,7 +10,6 @@ use Storage;
 class Company extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'user_id',
         'name',
@@ -24,6 +23,11 @@ class Company extends Model
         'company_size',
     ];
 
+    public function getLogoAttribute($value): string
+    {
+        return config('app.url') . Storage::url($value);
+    }
+
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
@@ -34,9 +38,11 @@ class Company extends Model
         return $this->hasMany(Role::class);
     }
 
-    public function getLogoAttribute($value): string
+    public function jobs(): HasMany
     {
-        return config('app.url') . Storage::url($value);
+        return $this->hasMany(Job::class);
     }
+
+    
 
 }

@@ -2,15 +2,6 @@ import {
   mdiAccountCircle,
   mdiMonitor,
   mdiOfficeBuilding,
-  mdiCog,
-  mdiLock,
-  mdiAlertCircle,
-  mdiSquareEditOutline,
-  mdiTable,
-  mdiViewList,
-  mdiTelevisionGuide,
-  mdiResponsive,
-  mdiPalette,
   mdiPlus
 } from '@mdi/js'
 
@@ -89,5 +80,24 @@ export default [
     icon: mdiMonitor,
     label: 'Resume',
     permission: 'viewResume',
+  },
+  {
+    label: 'Jobs',
+    icon: mdiAccountCircle,
+    permission: 'viewJobs',
+    menu: [
+      {
+        route: 'jobs.index',
+        icon: mdiAccountCircle,
+        label: 'All',
+        permission: 'viewJobs',
+      },
+      {
+        route: 'jobs.create',
+        icon: mdiPlus,
+        label: 'Add New',
+        permission: 'addPermission',
+      }
+    ]
   },
 ]

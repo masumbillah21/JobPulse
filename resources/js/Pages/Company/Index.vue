@@ -27,6 +27,7 @@
     const companyData = usePage().props.company;
     
     const companyTypes = [
+      { id: '', label: 'Select Company Type' },
       { id: 'Business development', label: 'Business development' },
       { id: 'Marketing', label: 'Marketing' },
       { id: 'Sales', label: 'Sales' },
@@ -34,6 +35,7 @@
     ]
 
     const companySize = [
+      { id: '', label: 'Select Company Size' },
       { id: '0-10 Employees', label: '0-10 Employees' },
       { id: '11-20 Employees', label: '11-20 Employees' },
       { id: '21-30 Employees', label: '21-30 Employees' },
