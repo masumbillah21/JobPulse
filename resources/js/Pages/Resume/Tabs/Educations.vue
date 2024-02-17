@@ -142,6 +142,5 @@
                 </tr>
             </tbody>
         </table>
-        <BaseDivider />
     </CardBox>
 </template>
