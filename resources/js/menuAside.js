@@ -84,4 +84,10 @@ export default [
       }
     ]
   },
+  {
+    route: 'resume.create',
+    icon: mdiMonitor,
+    label: 'Resume',
+    permission: 'viewResume',
+  },
 ]

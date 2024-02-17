@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('resume_references', function (Blueprint $table) {
+        Schema::create('references', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('resume_id')->constrained();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('organization');
             $table->string('phone');
             $table->string('email')->nullable();
             $table->string('relationship');
-            $table->unique(['resume_id', 'phone']);
+            $table->unique(['user_id', 'phone']);
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('resume_references');
+        Schema::dropIfExists('references');
     }
 };

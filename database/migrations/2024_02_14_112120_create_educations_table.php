@@ -11,17 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('resume_education', function (Blueprint $table) {
+        Schema::create('educations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('resume_id')->constrained();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('degree');
             $table->string('institute');
             $table->string('board_university');
             $table->date('passing_year')->nullable();
             $table->boolean('in_progress')->default(0);
             $table->enum('result_type', ['grade', 'division'])->nullable();
-            $table->string('division')->nullable();
-            $table->string('grade')->nullable();
+            $table->string('result')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('resume_education');
+        Schema::dropIfExists('educations');
     }
 };
