@@ -41,18 +41,7 @@
     });
 
     if(educationInfo){
-        form.educations = [];
-        educationInfo.forEach(
-            (item, index) => form.educations.push({
-                id: item.id,
-                degree: item.degree,
-                institute: item.institute,
-                board_university: item.board_university,
-                passing_year: item.passing_year,
-                result_type: item.result_type,
-                result: item.result,
-            })
-        );
+        form.educations = educationInfo;
     }
     const addRow = () => {
         form.educations.push({

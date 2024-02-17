@@ -27,7 +27,7 @@ class ResumeController extends Controller
         $educationInfo = Education::where('user_id', Auth::id())->get();
         $trainingInfo = Training::where('user_id', Auth::id())->get();
         $experienceInfo = Experience::where('user_id', Auth::id())->get();
-        $referenceInfo = Education::where('user_id', Auth::id())->get();
+        $referenceInfo = Reference::where('user_id', Auth::id())->get();
         
         return Inertia::render('Resume/Index',[
             'personalInfo' => $personalInfo,
@@ -249,7 +249,7 @@ class ResumeController extends Controller
             $current = 1;
         }
 
-        Experience::updateOrCreate([
+        Reference::updateOrCreate([
             'user_id' => Auth::user()->id, 'id' => $request->id
         ],[
             'user_id' => Auth::user()->id,

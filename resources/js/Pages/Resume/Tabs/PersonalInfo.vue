@@ -108,7 +108,6 @@ const submit = () => {
 </script>
 
 <template>
-  {{ form.id }}
     <CardBox class="w-1/2" is-form @submit.prevent="submit">
         <FormValidationErrors />
         <FormSuccess />

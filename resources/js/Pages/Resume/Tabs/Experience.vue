@@ -3,6 +3,7 @@
         mdiPlus,
         mdiMinus,
         mdiArrowRightCircle,
+        mdiContentSave,
     } from '@mdi/js'
     import { computed, ref, reactive } from 'vue'
     import BaseButtonLink from '@/Components/BaseButtonLink.vue'
@@ -14,34 +15,34 @@
     import CardBox from '@/Components/CardBox.vue'
     import FormField from "@/Components/FormField.vue";
     import FormControl from "@/Components/FormControl.vue";
-    import { useForm, usePage } from '@inertiajs/vue3'
+    import { useForm, usePage, router } from '@inertiajs/vue3'
 
 
-    const educations = usePage().props.educations
-
-    const gradeType = [
-        { id: 'division', value: 'Division' },
-        { id: 'grade', value: 'Grade' },
-    ]
+    const experienceInfo = usePage().props.experienceInfo
 
     const form = useForm({
         'tableRow': [
             {
+                id: 0,
                 title: '',
-                organization: '',
+                company: '',
                 location: '',
                 start_date: '',
                 end_date: '',
                 description: '',
             },
         ],
-        _method: 'post'
     });
+
+    if(experienceInfo) {
+        form.tableRow = experienceInfo
+    }
 
     const addRow = () => {
         form.tableRow.push({
+            id: 0,
             title: '',
-            organization: '',
+            company: '',
             location: '',
             start_date: '',
             end_date: '',
@@ -49,34 +50,16 @@
         });
     }
 
-    const removeRow = (index) => {
+    const remove = (index, id) => {
         form.tableRow.splice(index, 1);
+        if(id != 0){
+            router.delete(route("resume.deleteExperience", id));
+        }
     }
 
-    const submit = () => {
-    if (form.id == 0) {
-      create();
-    } else {
-      update();
+    const submit = (data) => {
+        router.post(route("resume.saveExperience"), data);
     }
-  }
-  const create = () => {
-
-    form
-      .transform((data) => ({
-        ...data,
-        terms: form.terms && form.terms.length,
-      }))
-      .post(route("resume.store"));
-  }
-  const update = () => {
-    form
-      .transform((data) => ({
-        ...data,
-        terms: form.terms && form.terms.length,
-      }))
-      .post(route("resume.update", form.id));
-  }
 
 </script>
 
@@ -127,37 +110,27 @@
                         <FormControl v-model="row.title" type="text" required />
                     </td>
                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <FormControl v-model="row.organization" type="text" required />
+                        <FormControl v-model="row.company" type="text" required />
                     </td>
                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <FormControl v-model="row.location" type="text" required />
                     </td>
                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <FormControl v-model="row.start_date" type="text" required />
+                        <FormControl v-model="row.start_date" type="date" required />
                     </td>
                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <FormControl v-model="row.end_date" type="text" required />
+                        <FormControl v-model="row.end_date" type="date" required />
                     </td>
                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <FormControl v-model="row.description" type="text" required />
                     </td>
-                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" v-if="index >= 1">
-                        <BaseButtonLink
-                            :icon="mdiMinus"
-                            @click="removeRow(index)"
-                            label="Remove"
-                            color="contrast"
-                            rounded-full
-                            small
-                        />
+                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <BaseButtonLink :icon="mdiContentSave" color="info" :class="{ 'opacity-25': form.processing }" @click="submit(row)" />
+                        <BaseButtonLink :icon="mdiMinus" @click="remove(index, row.id)" class="ml-2" color="danger"
+                            rounded-full small />
                     </td>
                 </tr>
             </tbody>
         </table>
-        <BaseDivider />
-        <BaseButtons>
-            <BaseButtonLink type="submit" color="info" label="Update" :class="{ 'opacity-25': form.processing }"
-            :disabled="form.processing" />
-        </BaseButtons>
     </CardBox>
 </template>

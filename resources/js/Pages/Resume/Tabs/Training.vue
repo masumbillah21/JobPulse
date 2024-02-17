@@ -75,7 +75,7 @@
             small
         />
     </SectionTitleLineWithButton>
-    
+
     <CardBox is-form @submit.prevent="submit">
         <FormValidationErrors />
         <FormSuccess />
