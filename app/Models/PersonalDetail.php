@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Resume extends Model
+class PersonalDetail extends Model
 {
     use HasFactory;
 
@@ -24,4 +25,14 @@ class Resume extends Model
         'permanent_address',
         'image'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function getImageAttribute($value): string
+    {
+        return config('app.url') . Storage::url($value);
+    }
 }

@@ -1,9 +1,10 @@
 <script setup>
-import { computed } from "vue";
-import { usePage } from "@inertiajs/vue3";
-import NotificationBarInCard from "@/Components/NotificationBarInCard.vue";
+  import { computed, onMounted, ref } from "vue";
+  import { usePage } from "@inertiajs/vue3";
+  import NotificationBarInCard from "@/Components/NotificationBarInCard.vue";
 
-const success = computed(() => usePage().props.session.success ?? '');
+  const success = computed(() => usePage().props.session.success ?? '');
+
 </script>
 
 <template>

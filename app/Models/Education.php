@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Education extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'user_id',
         'degree',
@@ -19,4 +18,9 @@ class Education extends Model
         'result_type',
         'result',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

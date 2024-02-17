@@ -25,7 +25,7 @@ import { computed, ref } from 'vue'
   import { Head, router, useForm, usePage } from '@inertiajs/vue3'
 
 
-const resumeData = usePage().props.resumeData ?? null;
+const personalInfo = usePage().props.personalInfo ?? null;
 
 const genderType = [
   { id: 'Male', label: 'Male' },
@@ -48,6 +48,7 @@ const religionStatus = [
 
 const form = useForm({
   'id': 0,
+  'user_id': usePage().props.auth.user.id,
   'father_name': '',
   'mother_name': '',
   'dob': '',
@@ -63,6 +64,21 @@ const form = useForm({
   _method: 'post'
 });
 
+if(personalInfo) {
+  form.id = personalInfo.id;
+  form.father_name = personalInfo.father_name;
+  form.mother_name = personalInfo.mother_name;
+  form.dob = personalInfo.dob;
+  form.gender = personalInfo.gender;
+  form.marital_status = personalInfo.marital_status;
+  form.nationality = personalInfo.nationality;
+  form.religion = personalInfo.religion;
+  form.present_address = personalInfo.present_address;
+  form.permanent_address = personalInfo.permanent_address;
+  form.alt_email = personalInfo.alt_email;
+  form.phone = personalInfo.phone;
+  form._method = 'put';
+}
 
 const submit = () => {
     if (form.id == 0) {
@@ -78,7 +94,7 @@ const submit = () => {
         ...data,
         terms: form.terms && form.terms.length,
       }))
-      .post(route("resume.store"));
+      .post(route("resume.storePersonalInfo"));
   }
   const update = () => {
     form
@@ -86,18 +102,19 @@ const submit = () => {
         ...data,
         terms: form.terms && form.terms.length,
       }))
-      .post(route("resume.update", form.id));
+      .post(route("resume.updatePersonalInfo", form.id));
   }
 
 </script>
 
 <template>
+  {{ form.id }}
     <CardBox class="w-1/2" is-form @submit.prevent="submit">
         <FormValidationErrors />
         <FormSuccess />
         <SectionTitle title="Personal Information" />
-        <div v-if="resumeData && resumeData.image" class="mb-10">
-          <img :src="resumeData.image" width="300" />
+        <div v-if="personalInfo && personalInfo.image" class="mb-10">
+          <img :src="personalInfo.image" width="300" />
         </div>
         <div class="flex">
           <div class="w-1/2 p-1">
@@ -115,7 +132,7 @@ const submit = () => {
         <div class="flex">
           <div class="w-1/2 p-1">
             <FormField label="Date of Birth" label-for="dob" help="Please write your date of birth">
-              <FormControl v-model="form.mother_name" id="dob" :icon="mdiAccount" type="date" required />
+              <FormControl v-model="form.dob" id="dob" :icon="mdiAccount" type="date" required />
             </FormField>
           </div>
           <div class="w-1/2 p-1">
@@ -134,7 +151,7 @@ const submit = () => {
           </div>
           <div class="w-1/2 p-1">
             <FormField label="Nationality" label-for="nationality" help="Please write your nationality">
-              <FormControl v-model="form.mother_name" id="nationality" :icon="mdiAccount" type="text" required />
+              <FormControl v-model="form.nationality" id="nationality" :icon="mdiAccount" type="text" required />
             </FormField>
           </div>
         </div>

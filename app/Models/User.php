@@ -56,4 +56,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Company::class);
     }
+
+    public function personalDetails()
+    {
+        return $this->hasMany(PersonalDetail::class);
+    }
 }

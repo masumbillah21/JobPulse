@@ -85,7 +85,7 @@ export default [
     ]
   },
   {
-    route: 'resume.create',
+    route: 'resume.index',
     icon: mdiMonitor,
     label: 'Resume',
     permission: 'viewResume',
