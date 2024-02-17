@@ -1,15 +1,10 @@
 import {
-  mdiMenu,
-  mdiClockOutline,
-  mdiCloud,
-  mdiCrop,
   mdiAccount,
   mdiCogOutline,
   mdiEmail,
   mdiLogout,
   mdiThemeLightDark,
-  mdiGithub,
-  mdiReact
+  mdiCached,
 } from '@mdi/js'
 
 export default [
@@ -38,6 +33,12 @@ export default [
         isLogout: true
       }
     ]
+  },
+  {
+    icon: mdiCached,
+    label: 'Cache',
+    isDesktopNoLabel: true,
+    isCache: true
   },
   {
     icon: mdiThemeLightDark,

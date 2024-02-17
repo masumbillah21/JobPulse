@@ -6,13 +6,13 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 //create a route to clear all cache
-Route::get('/clear-cache', function () {
+Route::get('/cache', function () {
     Artisan::call('cache:clear');
     Artisan::call('route:clear');
     Artisan::call('view:clear');
     Artisan::call('config:clear');
-    return 'Cache cleared successfully';
-});
+    return redirect()->back()->with('message', 'Cache cleared successfully');
+})->name('cache.clear');
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

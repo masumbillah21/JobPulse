@@ -1,7 +1,7 @@
 <script setup>
-import { mdiForwardburger, mdiBackburger, mdiMenu } from '@mdi/js'
+import { mdiForwardburger, mdiBackburger, mdiMenu, mdiCached } from '@mdi/js'
 import { ref } from 'vue'
-import { router } from '@inertiajs/vue3'
+import { router, usePage } from '@inertiajs/vue3'
 import menuAside from '@/menuAside.js'
 import menuNavBar from '@/menuNavBar.js'
 import { useDarkModeStore } from '@/Stores/darkMode.js'
@@ -11,11 +11,15 @@ import NavBar from '@/Components/NavBar.vue'
 import NavBarItemPlain from '@/Components/NavBarItemPlain.vue'
 import AsideMenu from '@/Components/AsideMenu.vue'
 import FooterBar from '@/Components/FooterBar.vue'
+import CacheCleanMessage from '@/Components/CacheCleanMessage.vue'
+
 
 const layoutAsidePadding = 'xl:pl-72'
 
 const darkModeStore = useDarkModeStore()
 
+const form = usePage();
+const message = ref('');
 
 router.on('navigate', () => {
   isAsideMobileExpanded.value = false
@@ -31,10 +35,29 @@ const menuClick = (event, item) => {
   }
 
   if (item.isLogout) {
-    // Add:
     router.post(route('logout'))
   }
+  if (item.isCache) {
+    clearCache()
+  }
 }
+
+
+const showMessage = (msg) => {
+        message.value = msg;
+        setTimeout(() => {
+            message.value = '';
+        }, 5000);
+    };
+
+    const clearCache = async () => {
+        try {
+            await router.get(route('cache.clear'));
+            showMessage('Cache cleared successfully');
+        } catch (error) {
+            showMessage('Failed to clear cache ' + error);
+        }
+    };
 </script>
 
 <template>
@@ -69,6 +92,7 @@ const menuClick = (event, item) => {
         @menu-click="menuClick"
         @aside-lg-close-click="isAsideLgActive = false"
       />
+      <CacheCleanMessage :message="message" :icon="mdiCached" />
       <slot />
       <FooterBar />
     </div>

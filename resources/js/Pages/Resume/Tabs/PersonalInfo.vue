@@ -99,35 +99,53 @@ const submit = () => {
         <div v-if="resumeData && resumeData.image" class="mb-10">
           <img :src="resumeData.image" width="300" />
         </div>
-        <FormField label="Father Name" label-for="father-name" help="Please write your father name">
-          <FormControl v-model="form.father_name" id="father-name" :icon="mdiAccount" type="text" required />
-        </FormField>
+        <div class="flex">
+          <div class="w-1/2 p-1">
+            <FormField label="Father Name" label-for="father-name" help="Please write your father name">
+              <FormControl v-model="form.father_name" id="father-name" :icon="mdiAccount" type="text" required />
+            </FormField>
+          </div>
+          <div class="w-1/2 p-1">
+            <FormField label="Mother Name" label-for="mother-name" help="Please write your mother name">
+              <FormControl v-model="form.mother_name" id="mother-name" :icon="mdiAccount" type="text" required />
+            </FormField>
+          </div>
+        </div>
+        
+        <div class="flex">
+          <div class="w-1/2 p-1">
+            <FormField label="Date of Birth" label-for="dob" help="Please write your date of birth">
+              <FormControl v-model="form.mother_name" id="dob" :icon="mdiAccount" type="date" required />
+            </FormField>
+          </div>
+          <div class="w-1/2 p-1">
+            <FormField label="Gender">
+              <FormControl v-model="form.gender" :icon="mdiFormatListBulletedType" :options="genderType" />
+            </FormField>
+          </div>
+        </div>
+        
+        <div class="flex">
+          <div class="w-1/2 p-1">
+            <FormField label="Marital Status" help="Select your marital status.">
+              <FormControl v-model="form.marital_status" :icon="mdiFormatListBulletedType"
+                :options="maritalStatus" />
+            </FormField>
+          </div>
+          <div class="w-1/2 p-1">
+            <FormField label="Nationality" label-for="nationality" help="Please write your nationality">
+              <FormControl v-model="form.mother_name" id="nationality" :icon="mdiAccount" type="text" required />
+            </FormField>
+          </div>
+        </div>
 
-        <FormField label="Mother Name" label-for="mother-name" help="Please write your mother name">
-          <FormControl v-model="form.mother_name" id="mother-name" :icon="mdiAccount" type="text" required />
-        </FormField>
-
-        <FormField label="Date of Birth" label-for="dob" help="Please write your date of birth">
-          <FormControl v-model="form.mother_name" id="dob" :icon="mdiAccount" type="date" required />
-        </FormField>
-
-        <FormField label="Gender">
-          <FormControl v-model="form.gender" :icon="mdiFormatListBulletedType" :options="genderType" />
-        </FormField>
-
-        <FormField label="Marital Status">
-          <FormControl v-model="form.marital_status" :icon="mdiFormatListBulletedType"
-            :options="maritalStatus" />
-        </FormField>
-
-        <FormField label="Nationality" label-for="nationality" help="Please write your nationality">
-          <FormControl v-model="form.mother_name" id="nationality" :icon="mdiAccount" type="text" required />
-        </FormField>
-
-        <FormField label="Religion">
-          <FormControl v-model="form.religion" :icon="mdiFormatListBulletedType" :options="religionStatus" />
-        </FormField>
-
+        <div class="flex">
+          <div class="w-1/2 p-1">
+            <FormField label="Religion" help="Select your religion.">
+              <FormControl v-model="form.religion" :icon="mdiFormatListBulletedType" :options="religionStatus" />
+            </FormField>
+          </div>
+        </div>
         <FormField label="Present Address" label-for="present-address" help="Please enter your present address">
           <FormControl v-model="form.present_address" id="present-address" :icon="mdiMapMarkerOutline"
             autocomplete="address" type="address" required />
@@ -139,15 +157,20 @@ const submit = () => {
             autocomplete="address" type="address" required />
         </FormField>
 
-        <FormField label="Phone Number" label-for="phone" help="Please enter your company phone">
-          <FormControl v-model="form.phone" id="phone" :icon="mdiPhone" autocomplete="phone" type="tel"
-            required />
-        </FormField>
-
-        <FormField label="Email" label-for="email" help="Please enter your email">
-          <FormControl v-model="form.alt_email" id="email" :icon="mdiEmail" autocomplete="email" type="email"
-            required />
-        </FormField>
+        <div class="flex">
+          <div class="w-1/2 p-1">
+            <FormField label="Phone Number" label-for="phone" help="Please enter your company phone">
+              <FormControl v-model="form.phone" id="phone" :icon="mdiPhone" autocomplete="phone" type="tel"
+                required />
+            </FormField>
+          </div>
+          <div class="w-1/2 p-1">
+            <FormField label="Email" label-for="email" help="Please enter your email">
+              <FormControl v-model="form.alt_email" id="email" :icon="mdiEmail" autocomplete="email" type="email"
+                required />
+            </FormField>
+          </div>
+        </div>
 
         <FormField label="Photo" help="Max 500kb">
           <FormFilePicker label="Upload Photo" color="success" @update:modelValue="form.image = $event" />
@@ -155,7 +178,7 @@ const submit = () => {
         <BaseDivider />
 
         <BaseButtons>
-          <BaseButtonLink type="submit" color="info" label="Update" :class="{ 'opacity-25': form.processing }"
+          <BaseButtonLink type="submit" color="info" label="Save" :class="{ 'opacity-25': form.processing }"
             :disabled="form.processing" />
         </BaseButtons>
       </CardBox>
