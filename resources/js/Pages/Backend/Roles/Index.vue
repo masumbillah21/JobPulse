@@ -11,21 +11,21 @@
     import FormSuccess from "@/Components/FormSuccess.vue";
     import { Head, router, usePage } from '@inertiajs/vue3'
 
-    const rolesData = usePage().props.rolesData
+    const rolesData: any = usePage().props.rolesData
 
     const isModalDangerActive = ref(false)
-    const deleteId = ref(null)
+    const deleteId = ref<string | number>('')
     const deleteRole = () => {
         isModalDangerActive.value = false
         router.delete(route('roles.destroy', deleteId.value))
 
-        const index = rolesData.data.findIndex((role) => role.id === deleteId.value)
+        const index = rolesData.data.findIndex((role: any) => role.id === deleteId.value)
         if (index !== -1) {
             rolesData.data.splice(index, 1)
         }
 
     }
-    const showModle = (id) => {
+    const showModle = (id : string | number) => {
         isModalDangerActive.value = true
         deleteId.value = id
     }

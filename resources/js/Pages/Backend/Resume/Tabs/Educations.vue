@@ -50,8 +50,8 @@
             institute: '',
             board_university: '',
             passing_year: '',
-            result_type: 'grade',
-            result: '5'
+            result_type: '',
+            result: ''
         });
     }
 

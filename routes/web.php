@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -15,18 +16,49 @@ Route::get('/cache', function () {
 })->name('cache.clear');
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return Inertia::render('Frontend/Home', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+        'assetsUrl' => asset('assets'),
     ]);
-});
+})->name('home');
+
+
+Route::get('/about', function () {
+    return Inertia::render('Frontend/About', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'assetsUrl' => asset('assets'),
+    ]);
+})->name('about');
+
+Route::get('/job', function () {
+    return Inertia::render('Frontend/Job', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'assetsUrl' => asset('assets'),
+    ]);
+})->name('job');
+
+
+Route::get('/blog', function () {
+    return Inertia::render('Frontend/Blog', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'assetsUrl' => asset('assets'),
+    ]);
+})->name('blog');
+
+Route::get('/contact', function () {
+    return Inertia::render('Frontend/Contact', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'assetsUrl' => asset('assets'),
+    ]);
+})->name('contact');
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
 Route::middleware('auth')->group(function () {

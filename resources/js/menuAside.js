@@ -100,4 +100,29 @@ export default [
       }
     ]
   },
+  {
+    label: 'Pages',
+    icon: mdiAccountCircle,
+    permission: 'viewPages',
+    menu: [
+      {
+        route: 'pages.home',
+        icon: mdiAccountCircle,
+        label: 'Home',
+        permission: 'viewHome',
+      },
+      {
+        route: 'pages.about',
+        icon: mdiPlus,
+        label: 'About',
+        permission: 'viewAbout',
+      },
+      {
+        route: 'pages.contact',
+        icon: mdiPlus,
+        label: 'Contact',
+        permission: 'viewContact',
+      },
+    ]
+  },
 ]

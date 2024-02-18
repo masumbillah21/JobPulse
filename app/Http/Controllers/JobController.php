@@ -16,7 +16,7 @@ class JobController extends Controller
     {
         $companyId = Auth::user()->company_id;
         $jobsData = Job::where('company_id', $companyId)->paginate(10);
-        return Inertia::render('Jobs/Index', [
+        return Inertia::render('Backend/Jobs/Index', [
             'jobsData' => $jobsData
         ]);
 
@@ -27,7 +27,7 @@ class JobController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Jobs/Edit');
+        return Inertia::render('Backend/Jobs/Edit');
     }
 
     /**
@@ -73,7 +73,10 @@ class JobController extends Controller
      */
     public function show(Job $job)
     {
-        //
+        $jobData = Auth::user()->company->jobs()->with('user')->find($job->id);
+        return Inertia::render('Backend/Jobs/Show', [
+            'jobData' => $jobData
+        ]);
     }
 
     /**
@@ -82,7 +85,7 @@ class JobController extends Controller
     public function edit(Job $job)
     {
         $jobData = Auth::user()->company->jobs()->find($job->id);
-        return Inertia::render('Jobs/Edit', [
+        return Inertia::render('Backend/Jobs/Edit', [
             'jobData' => $jobData
         ]);
     }
@@ -101,9 +104,13 @@ class JobController extends Controller
             'responsibilities' => 'required|string',
             'salary' => 'required|string',
             'facilities' => 'required|string',
-            'closing_date' => 'required|date',
+            'closing_date' => 'nullable|date',
             'status' => 'nullable|boolean',
         ]);
+
+        if(empty($request->closing_date)) {
+            unset($validated['closing_date']);
+        }
 
         $job->update($validated);
         

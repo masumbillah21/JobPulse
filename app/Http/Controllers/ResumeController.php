@@ -29,7 +29,7 @@ class ResumeController extends Controller
         $experienceInfo = Experience::where('user_id', Auth::id())->get();
         $referenceInfo = Reference::where('user_id', Auth::id())->get();
         
-        return Inertia::render('Resume/Index',[
+        return Inertia::render('Backend/Resume/Index',[
             'personalInfo' => $personalInfo,
             'educationInfo' => $educationInfo,
             'trainingInfo' => $trainingInfo,

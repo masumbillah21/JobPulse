@@ -24,7 +24,7 @@
     import FormFilePicker from '@/Components/FormFilePicker.vue'
     import { Head, router, useForm, usePage } from '@inertiajs/vue3'
 
-    const companyData = usePage().props.company;
+    const companyData: any = usePage().props.companyData;
     
     const companyTypes = [
       { id: '', label: 'Select Company Type' },
@@ -43,7 +43,7 @@
       { id: '41-50 Employees', label: '41-50 Employees' },
     ]
 
-    const form = useForm({
+    let form: any = useForm({
       'id': 0,
       'name': '',
       'description': '',
@@ -58,15 +58,7 @@
     });
 
     if(companyData != null) {
-      form.id = companyData.id;
-      form.name = companyData.name;
-      form.description = companyData.description;
-      form.company_type = companyData.company_type;
-      form.address = companyData.address;
-      form.phone = companyData.phone;
-      form.email = companyData.email;
-      form.company_size = companyData.company_size;
-      form.website = companyData.website;
+      form = companyData
       form._method = 'put';
     }
 
@@ -80,7 +72,7 @@
     const create = () => {
       
       form
-          .transform((data) => ({
+          .transform((data: any) => ({
           ...data,
           terms: form.terms && form.terms.length,
           }))
@@ -88,7 +80,7 @@
   }
     const update = () => {
         form
-            .transform((data) => ({
+            .transform((data: any) => ({
             ...data,
             terms: form.terms && form.terms.length,
             }))

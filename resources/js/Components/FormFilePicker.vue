@@ -56,12 +56,8 @@ const upload = (event) => {
   
   url.value = URL.createObjectURL(image)
 
-  console.log(url.value)
-
   emit('update:modelValue', file.value)
 }
-
-console.log(url)
 
 </script>
 

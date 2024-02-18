@@ -17,7 +17,7 @@ class RoleController extends Controller
     {
         $companyId = Auth::user()->company_id;
         $roles = Role::where('company_id', $companyId)->with('permissions')->paginate(10);
-        return Inertia::render('Roles/Index', [
+        return Inertia::render('Backend/Roles/Index', [
             'rolesData' => $roles
         ]);
     }
@@ -28,7 +28,7 @@ class RoleController extends Controller
     public function create()
     {
         $permissionList = Permission::pluck('name', 'id');
-        return Inertia::render('Roles/Edit', [
+        return Inertia::render('Backend/Roles/Edit', [
             'permissionList' => $permissionList
         ]);
     }
@@ -70,7 +70,7 @@ class RoleController extends Controller
     {
         $permissionList = Permission::pluck('name', 'id');
 
-        return Inertia::render('Roles/Edit', [
+        return Inertia::render('Backend/Roles/Edit', [
             'role' => $role->load('permissions'),
             'permissionList' => $permissionList
         ]);

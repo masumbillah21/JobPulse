@@ -54,19 +54,28 @@
               <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                   <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                       <tr>
-                          <th scope="col" class="px-6 py-3">Name</th>
+                          <th scope="col" class="px-6 py-3">SL</th>
+                          <th scope="col" class="px-6 py-3">Title</th>
+                          <th scope="col" class="px-6 py-3">Closing Date</th>
+                          <th scope="col" class="px-6 py-3">Status</th>
                           <th scope="col" class="px-6 py-3">Created</th>
+                          <th scope="col" class="px-6 py-3">Updated</th>
                           <th scope="col" class="px-6 py-3">
                               Action
                           </th>
                       </tr>
                   </thead>
                   <tbody>
-                      <tr v-for="job in jobsData.data" :key="job.id" class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ job.name }}</td>
+                      <tr v-for="(job, index) in jobsData.data" :key="job.id" class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                          <td width="50" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ index + 1 }}</td>
+                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ job.title }}</td>
+                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ job.closing_date }}</td>
+                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ job.status == 1 ? 'Active' : 'Inactive' }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ job.created_at }}</td>
+                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ job.updated_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              <BaseButtonLink routeName="jobs.edit" :routeParams="job.id" :icon="mdiNoteEditOutline" label="Edit" color="info" small />
+                              <BaseButtonLink routeName="jobs.show" :routeParams="job.id" :icon="mdiEye" label="View" color="success" small />
+                              <BaseButtonLink class="ml-2" routeName="jobs.edit" :routeParams="job.id" :icon="mdiNoteEditOutline" label="Edit" color="info" small />
                               <BaseButtonLink class="ml-2" :icon="mdiTrashCan" label="Delete" color="danger" small @click="showModle(job.id)"/>
                           </td>
                       </tr>

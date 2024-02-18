@@ -18,8 +18,8 @@ class CompanyController extends Controller
         $user = Auth::user();
         $companyData = $user->company()->first();
 
-        return Inertia::render('Company/Index', [
-            'company' => $companyData
+        return Inertia::render('Backend/Company/Index', [
+            'companyData' => $companyData
         ]);
     }
 

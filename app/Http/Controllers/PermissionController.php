@@ -14,7 +14,7 @@ class PermissionController extends Controller
     public function index()
     {
         $permissions = Permission::paginate(10);
-        return Inertia::render('Permissions/Index', ['permissionsData' => $permissions]);
+        return Inertia::render('Backend/Permissions/Index', ['permissionsData' => $permissions]);
     }
 
     /**
@@ -22,7 +22,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Permissions/Edit');
+        return Inertia::render('Backend/Permissions/Edit');
     }
 
     /**
@@ -50,7 +50,7 @@ class PermissionController extends Controller
      */
     public function edit(Permission $permission)
     {
-        return Inertia::render('Permissions/Edit', ['permission' => $permission]);
+        return Inertia::render('Backend/Permissions/Edit', ['permission' => $permission]);
     }
 
     /**

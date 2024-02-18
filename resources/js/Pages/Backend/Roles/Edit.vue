@@ -94,12 +94,13 @@
                     required
                 />
                 </FormField>
-
-                <FormCheckRadioGroup
-                    v-model="form.permissions"
-                    name="permissions[]"
-                    :options="permissionList"
-                />
+                <FormField label="Permission(s)" help="Select Permission(s)">
+                    <FormCheckRadioGroup
+                        v-model="form.permissions"
+                        name="permissions[]"
+                        :options="permissionList"
+                    />
+                </FormField>
 
                 <BaseDivider />
 

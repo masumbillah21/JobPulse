@@ -24,11 +24,11 @@
   import FormSuccess from "@/Components/FormSuccess.vue";
   import CardBoxModal from '@/Components/CardBoxModal.vue'
   import FormFilePicker from '@/Components/FormFilePicker.vue'
-  import Educations from '@/Pages/Resume/Tabs/Educations.vue'
-  import PersonalInfo from '@/Pages/Resume/Tabs/PersonalInfo.vue'
-  import Experience from '@/Pages/Resume/Tabs/Experience.vue'
-  import Training from '@/Pages/Resume/Tabs/Training.vue'
-  import Reference from '@/Pages/Resume/Tabs/Reference.vue'
+  import Educations from '@/Pages/Backend/Resume/Tabs/Educations.vue'
+  import PersonalInfo from '@/Pages/Backend/Resume/Tabs/PersonalInfo.vue'
+  import Experience from '@/Pages/Backend/Resume/Tabs/Experience.vue'
+  import Training from '@/Pages/Backend/Resume/Tabs/Training.vue'
+  import Reference from '@/Pages/Backend/Resume/Tabs/Reference.vue'
   import { Head } from '@inertiajs/vue3'
 
 

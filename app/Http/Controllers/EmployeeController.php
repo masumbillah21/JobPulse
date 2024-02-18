@@ -18,7 +18,7 @@ class EmployeeController extends Controller
 
         $employees = User::paginate(10);
 
-        return Inertia::render('Employee/Index',[
+        return Inertia::render('Backend/Employee/Index',[
             'employees' => $employees
         ] );
     }
@@ -28,7 +28,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Employee/Create');
+        return Inertia::render('Backend/Employee/Create');
     }
 
     /**
@@ -67,7 +67,7 @@ class EmployeeController extends Controller
     {
         $employee = User::find($id);
 
-        return Inertia::render('Employee/Edit', ['employee' => $employee]);
+        return Inertia::render('Backend/Employee/Edit', ['employee' => $employee]);
     }
 
     /**
