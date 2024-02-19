@@ -1,5 +1,7 @@
 <?php
-use App\Http\Controllers\ResumeController;
+
+use App\Http\Controllers\Backend\ResumeController;
+
 
 
 Route::get('resume/index', [ResumeController::class, 'index'])->name('resume.index');

@@ -1,4 +1,6 @@
 <?php 
-use App\Http\Controllers\JobController;
+
+use App\Http\Controllers\Backend\JobController;
+
 
 Route::resource('jobs', JobController::class);

@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
+
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\Backend\ProfileController;
+use App\Http\Controllers\Backend\DashboardController;
 
 //create a route to clear all cache
 Route::get('/cache', function () {
