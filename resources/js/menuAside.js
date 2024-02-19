@@ -125,4 +125,23 @@ export default [
       },
     ]
   },
+  {
+    label: 'Blogs',
+    icon: mdiAccountCircle,
+    permission: 'viewBlogs',
+    menu: [
+      {
+        route: 'blogs.index',
+        icon: mdiAccountCircle,
+        label: 'All',
+        permission: 'viewBlogs',
+      },
+      {
+        route: 'blogs.create',
+        icon: mdiPlus,
+        label: 'Add New',
+        permission: 'addBlog',
+      }
+    ]
+  },
 ]

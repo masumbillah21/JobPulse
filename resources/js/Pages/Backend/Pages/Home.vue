@@ -24,7 +24,6 @@ const form = useForm({
 });
 
 
-
 const addSection = () => {
   form.contents.push({
     name: `Section ${form.contents.length + 1}`,
@@ -41,7 +40,6 @@ const removeSection = (sectionIndex) => {
 }
 
 const removeRow = (sectionIndex, rowIndex) => {
-  
   form.contents[sectionIndex].data.splice(rowIndex, 1);
 }
 
@@ -104,9 +102,9 @@ const toggleSection = (sectionIndex) => {
           </CardBox>
           <CardBox class="w-1/5">
   
-            <img  v-if="data.image" :src="data.image" width="200" alt="">
+            <img  v-if="data.image" :src="data.image" width="200" alt="" :key="(rowIndex + sectionIndex)">
             <FormField label="Image" help="Max 500kb">
-              <FormFilePicker :label="'Upload Image' + rowIndex" color="success" @update:modelValue="data.image = $event" />
+              <FormFilePicker :key="(rowIndex + sectionIndex)" :label="'Upload Image' + rowIndex" color="success" @update:modelValue="data.image = $event" />
             </FormField>
 
             <BaseButtons>

@@ -125,7 +125,7 @@
                     <FormField label="Facilities" label-for="facilities" help="Please enter job facilities">
                         <FormControl v-model="form.facilities" id="facilities" type="textarea" required />
                     </FormField>
-
+                    <p v-if="jobData && jobData.closing_date" class="text-red-500">Closing Date: {{ jobData.closing_date }}</p>
                     <FormField label="Closing date" label-for="closing-date" help="Please enter job closing date">
                         <FormControl v-model="form.closing_date" id="closing-date" :icon="mdiAccount" type="date" />
                     </FormField>

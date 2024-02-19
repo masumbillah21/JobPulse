@@ -12,7 +12,7 @@
   <LayoutGuest :canLogin="canLogin" :canRegister="canRegister">
     <Head title="Contact" />
     <main>
-      <div class="relative pt-16 pb-32 flex content-center items-center justify-center" style="min-height: 75vh;">
+      <div class="relative pt-16 pb-32 flex content-center items-center justify-center" style="min-height: 45vh;">
         <div class="absolute top-0 w-full h-full bg-center bg-cover"
           style='background-image: url("https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1267&amp;q=80");'>
           <span id="blackOverlay" class="w-full h-full absolute opacity-75 bg-black"></span>

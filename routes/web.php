@@ -1,6 +1,8 @@
 <?php
 
 
+use App\Http\Controllers\Frontend\BlogPageController;
+use App\Http\Controllers\Frontend\JobPageController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
@@ -33,22 +35,12 @@ Route::get('/about', function () {
     ]);
 })->name('about');
 
-Route::get('/job', function () {
-    return Inertia::render('Frontend/Job', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'assetsUrl' => asset('assets'),
-    ]);
-})->name('job');
+Route::get('/jobs', [JobPageController::class, 'index'])->name('job');
+Route::get('/job/{id}', [JobPageController::class, 'jobDetails'])->name('job.show');
 
 
-Route::get('/blog', function () {
-    return Inertia::render('Frontend/Blog', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'assetsUrl' => asset('assets'),
-    ]);
-})->name('blog');
+Route::get('/blog', [BlogPageController::class, 'index'])->name('blog');
+Route::get('/blog/{slug}', [BlogPageController::class, 'postDetails'])->name('blog.show');
 
 Route::get('/contact', function () {
     return Inertia::render('Frontend/Contact', [

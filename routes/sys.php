@@ -76,5 +76,6 @@ Route::prefix('admin')->group(function () {
                 require __DIR__.'/resume.php';
                 require __DIR__.'/jobs.php';
                 require __DIR__.'/pages.php';
+                require __DIR__.'/blog.php';
         });
 });

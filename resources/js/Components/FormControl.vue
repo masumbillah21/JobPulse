@@ -44,6 +44,10 @@ const props = defineProps({
     type: [String, Number, Boolean, Array, Object],
     default: ''
   },
+  inputClass:{
+    type: String,
+    default: 'dark:bg-white dark:bg-slate-700'
+  },
   required: Boolean,
   borderless: Boolean,
   transparent: Boolean,
@@ -65,7 +69,8 @@ const inputElClass = computed(() => {
     'dark:placeholder-gray-400',
     computedType.value === 'textarea' ? 'h-24' : 'h-12',
     props.borderless ? 'border-0' : 'border',
-    props.transparent ? 'bg-transparent' : 'bg-white dark:bg-slate-800'
+    props.transparent ? 'bg-transparent' : 'bg-white dark:bg-slate-800',
+    props.inputClass
   ]
 
   if (props.icon) {

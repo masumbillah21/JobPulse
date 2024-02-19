@@ -93,7 +93,9 @@ const showMessage = (msg) => {
         @aside-lg-close-click="isAsideLgActive = false"
       />
       <CacheCleanMessage :message="message" :icon="mdiCached" />
-      <slot />
+      <div style="min-height: 90vh;">
+        <slot />
+      </div>
       <FooterBar />
     </div>
   </div>
