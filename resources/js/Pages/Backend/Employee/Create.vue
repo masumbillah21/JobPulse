@@ -14,14 +14,14 @@
     import FormSuccess from "@/Components/FormSuccess.vue";
     import { Head, useForm } from '@inertiajs/vue3'
     
-    const form = useForm({
+    const form: any = useForm({
         name: "",
         email: "",
         password: "",
     });
     const submit = () => {
         form
-            .transform((data) => ({
+            .transform((data: any) => ({
             ...data,
             terms: form.terms && form.terms.length,
             }))

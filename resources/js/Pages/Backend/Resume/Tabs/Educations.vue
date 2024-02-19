@@ -18,14 +18,14 @@
     import { useForm, usePage, router } from '@inertiajs/vue3'
 
 
-    const educationInfo = usePage().props.educationInfo ?? null;
+    const educationInfo: any = usePage().props.educationInfo ?? null;
 
     const gradeType = [
         { id: 'division', label: 'Division' },
         { id: 'grade', label: 'Grade' },
     ]
 
-    const form = useForm({
+    const form: any = useForm({
         'educations': [
             {
                 id: 0,
@@ -55,14 +55,14 @@
         });
     }
 
-    const remove = (index, id) => {
+    const remove = (index: number, id: number) => {
         form.educations.splice(index, 1);
         if(id != 0){
             router.delete(route("resume.deleteEducation", id));
         }
     }
 
-    const submit = (data) => {
+    const submit = (data: any) => {
         router.post(route("resume.saveEducation"), data);
     }
 

@@ -25,7 +25,7 @@
   import { Head, router, useForm, usePage } from '@inertiajs/vue3'
 
 
-  const personalInfo = usePage().props.personalInfo ?? null;
+  const personalInfo: any = usePage().props.personalInfo ?? null;
 
   const genderType = [
     { id: '', label: 'Select Gender' },
@@ -49,7 +49,7 @@
     { id: 'Christian', label: 'Christian' },
   ]
 
-  const form = useForm({
+  const form: any = useForm({
     'id': 0,
     'user_id': usePage().props.auth.user.id,
     'father_name': '',
@@ -93,7 +93,7 @@
   const create = () => {
 
     form
-      .transform((data) => ({
+      .transform((data: any) => ({
         ...data,
         terms: form.terms && form.terms.length,
       }))
@@ -101,7 +101,7 @@
   }
   const update = () => {
     form
-      .transform((data) => ({
+      .transform((data: any) => ({
         ...data,
         terms: form.terms && form.terms.length,
       }))

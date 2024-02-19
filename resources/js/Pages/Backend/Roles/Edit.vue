@@ -15,11 +15,11 @@
     import FormSuccess from "@/Components/FormSuccess.vue";
     import { Head, useForm, usePage } from '@inertiajs/vue3'
 
-    const roleData = usePage().props.role ?? null
-    const permissionList = usePage().props.permissionList ?? null
+    const roleData: any = usePage().props.role ?? null
+    const permissionList: any = usePage().props.permissionList ?? null
 
     
-    const form = useForm({
+    const form: any = useForm({
         id: 0,
         name: "",
         permissions: [],
@@ -29,7 +29,7 @@
     if(roleData !== null) {
         form.id = roleData.id
         form.name = roleData.name
-        form.permissions = roleData.permissions.map((item) => item.id)
+        form.permissions = roleData.permissions.map((item: any) => item.id)
         form._method = 'put'
     }
 
@@ -43,7 +43,7 @@
 
     const create = () => {
         form
-            .transform((data) => ({
+            .transform((data: any) => ({
             ...data,
             terms: form.terms && form.terms.length,
             }))
@@ -54,7 +54,7 @@
 
     const update = () => {
         form
-            .transform((data) => ({
+            .transform((data: any) => ({
             ...data,
             terms: form.terms && form.terms.length,
             }))

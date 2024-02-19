@@ -14,13 +14,13 @@
     import FormSuccess from "@/Components/FormSuccess.vue";
     import { Head, useForm } from '@inertiajs/vue3'
 
-    const props = defineProps(
+    const props: any = defineProps(
         {
             employee: Object,
         }
     )
     
-    const form = useForm({
+    const form: any = useForm({
         id: props.employee !== null ? props.employee.id : null,
         name: props.employee !== null ? props.employee.name : "",
         email: props.employee !== null ? props.employee.email : "",
@@ -29,7 +29,7 @@
 
     const update = () => {
         form
-            .transform((data) => ({
+            .transform((data: any) => ({
             ...data,
             terms: form.terms && form.terms.length,
             }))

@@ -15,7 +15,7 @@
     import FormCheckRadioGroup from "@/Components/FormCheckRadioGroup.vue";
     import { Head, useForm, usePage } from '@inertiajs/vue3'
 
-    const jobData = usePage().props.jobData ?? null
+    const jobData: any = usePage().props.jobData ?? null
 
     const jobTypes = [
         { id: '', label: 'Select Job Type' },
@@ -23,7 +23,7 @@
         { id: 'Part Time', label: 'Part Time' },
         { id: 'Contract', label: 'Contract' },
     ];
-    const form = useForm({
+    const form: any = useForm({
         id: 0,
         title: '',
         location: '',
@@ -62,7 +62,7 @@
 
     const create = () => {
         form
-            .transform((data) => ({
+            .transform((data: any) => ({
                 ...data,
                 terms: form.terms && form.terms.length,
             }))
@@ -73,7 +73,7 @@
 
     const update = () => {
         form
-            .transform((data) => ({
+            .transform((data: any) => ({
                 ...data,
                 terms: form.terms && form.terms.length,
             }))

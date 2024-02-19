@@ -18,9 +18,9 @@
     import { useForm, usePage, router } from '@inertiajs/vue3'
 
 
-    const trainingInfo = usePage().props.trainingInfo
+    const trainingInfo: any = usePage().props.trainingInfo
 
-    const form = useForm({
+    const form: any = useForm({
         'tableRow': [
             {
                 id: 0,
@@ -51,14 +51,14 @@
         });
     }
 
-    const remove = (index, id) => {
+    const remove = (index: number, id: number) => {
         form.tableRow.splice(index, 1);
         if(id != 0){
             router.delete(route("resume.deleteTraining", id));
         }
     }
 
-    const submit = (data) => {
+    const submit = (data: any) => {
         router.post(route("resume.saveTraining"), data);
     }
 

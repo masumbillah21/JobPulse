@@ -18,9 +18,9 @@
     import { useForm, usePage, router } from '@inertiajs/vue3'
 
 
-    const referenceInfo = usePage().props.referenceInfo
+    const referenceInfo: any = usePage().props.referenceInfo
 
-    const form = useForm({
+    const form: any = useForm({
         'tableRow': [
             {
                 id: 0,
@@ -48,14 +48,14 @@
         });
     }
 
-    const remove = (index, id) => {
+    const remove = (index: number, id: number) => {
         form.tableRow.splice(index, 1);
         if(id != 0){
             router.delete(route("resume.deleteReference", id));
         }
     }
 
-    const submit = (data) => {
+    const submit = (data: any) => {
         router.post(route("resume.saveReference"), data);
     }
 

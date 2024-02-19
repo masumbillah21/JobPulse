@@ -33,7 +33,7 @@
 
 
   const openTab = ref(1)
-  const toggleTabs = (tabNumber) => {
+  const toggleTabs = (tabNumber: number) => {
     openTab.value = tabNumber
   }
 

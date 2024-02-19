@@ -7,25 +7,25 @@
     import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue'
     import BaseButtonLink from '@/Components/BaseButtonLink.vue'
     import CardBoxModal from '@/Components/CardBoxModal.vue'
-    import { Head, router } from '@inertiajs/vue3'
+    import { Head, router, usePage } from '@inertiajs/vue3'
     import Pagination from '@/Components/Pagination.vue'
     import FormSuccess from "@/Components/FormSuccess.vue";
 
-    defineProps(['employees'])
+    const employees: any = usePage().props.employees
 
     const isModalDangerActive = ref(false)
-    const deleteId = ref(null)
+    const deleteId = ref<string | number>('');
     const deleteEmployee = () => {
         isModalDangerActive.value = false
         router.delete(route('employee.destroy', deleteId.value))
 
-        const index = employees.data.findIndex((emp) => emp.id === deleteId.value)
-        if (index !== -1) {
-            rolesemployeesData.data.splice(index, 1)
-        }
+        const index = employees.data.findIndex((emp: any) => emp.id === deleteId.value)
+        // if (index !== -1) {
+        //     rolesemployeesData.data.splice(index, 1)
+        // }
 
     }
-    const showModle = (id) => {
+    const showModle = (id: number) => {
         isModalDangerActive.value = true
         deleteId.value = id
     }

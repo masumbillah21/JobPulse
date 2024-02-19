@@ -14,10 +14,10 @@
     import FormSuccess from "@/Components/FormSuccess.vue";
     import { Head, useForm, usePage } from '@inertiajs/vue3'
 
-    const permissionData = usePage().props.permission ?? null
+    const permissionData: any = usePage().props.permission ?? null
 
     
-    const form = useForm({
+    const form: any = useForm({
         id: 0,
         name: "",
         _method: "post",
@@ -39,7 +39,7 @@
 
     const create = () => {
         form
-            .transform((data) => ({
+            .transform((data: any) => ({
             ...data,
             terms: form.terms && form.terms.length,
             }))
@@ -50,7 +50,7 @@
 
     const update = () => {
         form
-            .transform((data) => ({
+            .transform((data: any) => ({
             ...data,
             terms: form.terms && form.terms.length,
             }))
