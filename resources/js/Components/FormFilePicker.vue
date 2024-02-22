@@ -5,7 +5,7 @@ import BaseButtonLink from '@/Components/BaseButtonLink.vue'
 
 const props = defineProps({
   modelValue: {
-    type: [Object, File, Array],
+    type: [Object, File, Array, String],
     default: null
   },
   label: {
@@ -33,7 +33,11 @@ const root = ref(null)
 
 const file = ref(props.modelValue)
 
-const url = ref(null)
+const url = ref(props.modelValue)
+
+if (file.value) {
+  url.value = URL.createObjectURL(file.value)
+}
 
 const showFilename = computed(() => !props.isRoundIcon && file.value)
 
@@ -41,6 +45,12 @@ const modelValueProp = computed(() => props.modelValue)
 
 watch(modelValueProp, (value) => {
   file.value = value
+
+  if (file.value) {
+    url.value = URL.createObjectURL(file.value)
+  } else {
+    url.value = URL.createObjectURL(url.value)
+  }
 
   if (!value) {
     root.value.input.value = null
@@ -52,9 +62,11 @@ const upload = (event) => {
 
   file.value = value[0]
 
-  const image = event.target.files[0]
-  
-  url.value = URL.createObjectURL(image)
+  if (file.value) {
+    url.value = URL.createObjectURL(file.value)
+  } else {
+    url.value = URL.createObjectURL(url.value)
+  }
 
   emit('update:modelValue', file.value)
 }
@@ -62,9 +74,7 @@ const upload = (event) => {
 </script>
 
 <template>
-  <div>
-    <img v-if="url" :src="url" width="200" class="mb-5"/>
-  </div>
+  <img v-if="url" :src="url" alt="" class="mb-2 max-w-52">
   <div class="flex items-stretch justify-start relative">
     <label class="inline-flex">
       <BaseButtonLink
