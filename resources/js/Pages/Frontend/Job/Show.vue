@@ -49,7 +49,7 @@
         </div>
         <div class="container mx-auto px-4">
             <div class="flex justify-center">
-                <CardBox class="my-2 w-9/12 mr-3 text-black bg-white dark:bg-gray-50">
+                <div class="my-2 w-9/12 mr-3 text-black bg-white dark:bg-gray-100 rounded p-5">
                     <h2 class="text-3xl font-semibold">Title: {{ jobDetail?.title }}</h2>
                     <hr class="mb-2">
 
@@ -76,8 +76,8 @@
 
                     <h2 class="text-2xl font-semibold">Facilities</h2>
                     <p class="mb-2">{{ jobDetail?.facilities }}</p>
-                </CardBox>
-                <CardBox class="my-2 w-full md:w-3/12 text-black dark:bg-gray-50">
+                </div>
+                <div class="my-2 w-3/12 mr-3 text-black bg-white dark:bg-gray-100 rounded p-5">
                     <p class="text-xl mb-1">Job Post By: {{ jobDetail?.user.name }}</p>
 
                     <p class="text-xl mb-1">Posted on: {{ jobDetail?.created_at }}</p>
@@ -86,7 +86,7 @@
 
                     <p class="text-xl mb-1">Status: {{ jobDetail?.status == 1 ? 'Active' : 'Draft' }}</p>
 
-                </CardBox>
+                </div>
             </div>
         </div>
       </section>

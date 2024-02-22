@@ -22,7 +22,7 @@ class UserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Backend/Sys/Auth/Login', [
+        return Inertia::render('Frontend/System/Auth/Login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
         ]);

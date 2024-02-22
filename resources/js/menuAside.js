@@ -106,6 +106,12 @@ export default [
     permission: 'viewPages',
     menu: [
       {
+        route: 'pages.create',
+        icon: mdiAccountCircle,
+        label: 'Add New',
+        permission: 'viewHome',
+      },
+      {
         route: 'pages.home',
         icon: mdiAccountCircle,
         label: 'Home',

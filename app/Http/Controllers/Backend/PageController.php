@@ -38,4 +38,8 @@ class PageController extends Controller
         //
     }
 
+    public function create() {
+        return Inertia::render('Backend/Pages/Edit');
+    }
+
 }

@@ -24,11 +24,14 @@ const form = useForm({
 });
 
 
+const imageKey = ref([]);
+
 const addSection = () => {
   form.contents.push({
     name: `Section ${form.contents.length + 1}`,
     data: [{ title: '', description: '', image: '', hidden: false }],
   });
+  imageKey.value.push({index: form.contents.length - 1, key: Math.random()});
 }
 
 const removeSection = (sectionIndex) => {
@@ -37,10 +40,12 @@ const removeSection = (sectionIndex) => {
   });
 
   form.contents.splice(sectionIndex, 1);
+  imageKey.value.splice(sectionIndex, 1);
 }
 
 const removeRow = (sectionIndex, rowIndex) => {
   form.contents[sectionIndex].data.splice(rowIndex, 1);
+  imageKey.value[sectionIndex].key = Math.random();
 }
 
 const addRow = (sectionIndex) => {
@@ -49,6 +54,7 @@ const addRow = (sectionIndex) => {
     description: "",
     image: "",
   });
+  imageKey.value.push({index: sectionIndex, key: Math.random()});
 }
 
 const save = (data) => {
@@ -102,9 +108,9 @@ const toggleSection = (sectionIndex) => {
           </CardBox>
           <CardBox class="w-1/5">
   
-            <img  v-if="data.image" :src="data.image" width="200" alt="" :key="(rowIndex + sectionIndex)">
+            <img  v-if="data.image" :src="data.image" width="200" alt="" :key="imageKey.key">
             <FormField label="Image" help="Max 500kb">
-              <FormFilePicker :key="(rowIndex + sectionIndex)" :label="'Upload Image' + rowIndex" color="success" @update:modelValue="data.image = $event" />
+              <FormFilePicker :key="imageKey.key" :label="'Upload Image' + rowIndex" color="success" @update:modelValue="data.image = $event" />
             </FormField>
 
             <BaseButtons>
@@ -112,7 +118,6 @@ const toggleSection = (sectionIndex) => {
                 rounded-full small />
             </BaseButtons>
           </CardBox>
-
         </div>
 
       </CardBox>
