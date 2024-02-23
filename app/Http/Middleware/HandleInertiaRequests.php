@@ -39,6 +39,9 @@ class HandleInertiaRequests extends Middleware
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
+            'urls' => [
+                'storeUrl' => config('app.url') . '/storage',
+            ],
             'session' => [
                 'success' => session('success'),
             ],

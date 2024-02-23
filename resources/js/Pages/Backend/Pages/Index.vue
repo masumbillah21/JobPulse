@@ -12,14 +12,17 @@
     import { Head, router, usePage } from '@inertiajs/vue3'
 
     const pageList: any = usePage().props.pageList
+    const urls: any = usePage().props.urls
+
+    const storage = urls.storeUrl
 
     const isModalDangerActive = ref(false)
     const deleteId = ref<string | number>('')
     const deleteRole = () => {
         isModalDangerActive.value = false
-        router.delete(route('roles.destroy', deleteId.value))
+        router.delete(route('pages.destroy', deleteId.value))
 
-        const index = pageList.data.findIndex((role: any) => role.id === deleteId.value)
+        const index = pageList.data.findIndex((page: any) => page.id === deleteId.value)
         if (index !== -1) {
             pageList.data.splice(index, 1)
         }
@@ -35,10 +38,10 @@
       <LayoutAuthenticated>
         <Head title="Roles" />
         <SectionMain>
-          <SectionTitleLineWithButton :icon="mdiArrowRightCircle" title="Roles" main>
+          <SectionTitleLineWithButton :icon="mdiArrowRightCircle" title="Pages" main>
             <BaseButtonLink
               :icon="mdiPlus"
-              routeName="roles.create"
+              routeName="pages.create"
               label="Add New"
               color="contrast"
               rounded-full
@@ -71,10 +74,10 @@
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ index + 1 }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ page.title }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              <img :src="page.featured_image" alt="" class="w-10 h-10 rounded-full">
+                              <img :src="`${storage}/${page.featured_image}`" v-if="page.featured_image" alt="" class="w-10 h-10 rounded-full">
                           </td>
-                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ page.order }}</td>
-                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ page.status }}</td>
+                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ page.page_order }}</td>
+                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ page.status ? 'Active' : 'Inactive' }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ page.created_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ page.updated_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">

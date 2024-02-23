@@ -29,10 +29,11 @@ class Page extends Model
         'contents' => 'array',
     ];
 
-    public function getFeaturedImageAttribute($value): string
-    {
-        return config('app.url') . Storage::url($value);
-    }
+    // public function getFeaturedImageAttribute($value): string
+    // {
+    //     return config('app.url') . Storage::url($value);
+    // }
+
 
     public function setSlugAttribute($value)
     {
