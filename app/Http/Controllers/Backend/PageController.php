@@ -71,7 +71,7 @@ class PageController extends Controller
             $image_path = $request->file('featured_image')->store('images', 'public');
        }
 
-        Page::create([
+        $page =  Page::create([
             'title' => $request->title,
             'user_id' => auth()->user()->id,
             'featured_image' => $image_path,
@@ -84,7 +84,7 @@ class PageController extends Controller
             'slug' => $request->title,
         ]);
 
-        return redirect()->back()->with('success', 'Page created successfully');
+        return redirect()->route('pages.edit', $page->id)->with('success', 'Page created successfully');
     }
 
     /**

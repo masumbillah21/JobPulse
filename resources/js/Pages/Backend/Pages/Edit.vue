@@ -4,7 +4,6 @@ import { Head, router, usePage, useForm } from '@inertiajs/vue3'
 import LayoutAuthenticated from '@/Layouts/LayoutAuthenticated.vue'
 import SectionMain from '@/Components/SectionMain.vue'
 import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue'
-import SectionTitle from '@/Components/SectionTitle.vue'
 import BaseButtons from '@/Components/BaseButtons.vue'
 import BaseButtonLink from '@/Components/BaseButtonLink.vue'
 import CardBox from '@/Components/CardBox.vue'
@@ -16,6 +15,10 @@ import FormFilePicker from '@/Components/FormFilePicker.vue'
 import FormCheckRadioGroup from '@/Components/FormCheckRadioGroup.vue'
 import { mdiArrowRightCircle, mdiPlus, mdiMinus, mdiContentSave, mdiChevronUp, mdiChevronDown } from '@mdi/js'
 import { base64ToFile } from '@/utils/base64ToFile.js'
+import Home from '@/Pages/Backend/Pages/Parts/Home.vue'
+import Blog from '@/Pages/Backend/Pages/Parts/Blog.vue'
+import Contact from '@/Pages/Backend/Pages/Parts/Contact.vue'
+import General from '@/Pages/Backend/Pages/Parts/General.vue'
 
 const pageData: any = usePage().props.pageData ?? null
 const urls: any = usePage().props.urls
@@ -31,12 +34,14 @@ const imagePosition = [
   { id: 'left', label: 'Left' },
   { id: 'light', label: 'Right' },
 ]
+
 const iconList = [
   { id: 'fa fa-phone', label: 'Phone' },
   { id: 'fa fa-email', label: 'Email' },
   { id: 'fa fa-map', label: 'Map Marker' },
   { id: 'fa fa-fax', label: 'Fax' },
 ]
+
 const form: any = useForm({
   id: 0,
   title: "",
@@ -166,7 +171,27 @@ const chooseLayout = (layout: String) => {
     ]
   } else if (layout === 'blog') {
     form.contents = []
-  } else {
+  } else if(layout === 'home') {
+    form.contents = [
+      {
+        name: 'Compnay Logo Section',
+        slug: 'logo',
+        data: [{
+          title: "",
+          description: "",
+        }],
+      },
+      {
+        name: 'Available Jobs Section',
+        slug: 'jobs',
+        data: [{
+          title: "",
+          description: "",
+        }],
+      },
+    ]
+  }
+  else {
     form.contents = [
       {
         name: 'Section 1',
@@ -191,13 +216,14 @@ const chooseLayout = (layout: String) => {
 
     <Head title="Edit Page" />
     <SectionMain>
-      <SectionTitleLineWithButton title="Add New">
+      <SectionTitleLineWithButton title="Page">
         <BaseButtons>
-          <BaseButtonLink class="mr-1" :icon="mdiArrowRightCircle" @click="addSection" label="Back" color="contrast" rounded-full
-            small />
+          <BaseButtonLink class="mr-1" :icon="mdiArrowRightCircle" routeName="pages.index" label="Back" color="contrast"
+            rounded-full small />
+          <BaseButtonLink v-if="pageData" class="mr-1" :icon="mdiArrowRightCircle" routeName="pages.create" label="Add New" color="info"
+            rounded-full small />
         </BaseButtons>
       </SectionTitleLineWithButton>
-      {{ pageData }}
       <CardBox class="w-full" is-form @submit.prevent="save">
         <FormValidationErrors />
         <FormSuccess />
@@ -206,88 +232,26 @@ const chooseLayout = (layout: String) => {
             <FormField label="Title" help="Enter Page Title">
               <FormControl v-model="form.title" type="text" placeholder="Enter Page Title" required />
             </FormField>
-            <div v-if="form.pageType !== 'blog' && form.pageType !== 'contact'"
-              v-for="(row, sectionIndex) in form.contents" :key="sectionIndex">
-              <SectionTitleLineWithButton :title="row.name" main>
-                <BaseButtons>
-                  <BaseButtonLink class="mr-1" :icon="mdiPlus" @click="addSection" label="Add Section" color="contrast"
-                    rounded-full small />
-                  <BaseButtonLink v-if="sectionIndex > 0" :icon="mdiMinus" @click="removeSection(sectionIndex)"
-                    label="Remove Section" color="danger" rounded-full small />
-                  <BaseButtonLink class="mr-1" :icon="row.hidden ? mdiChevronDown : mdiChevronUp"
-                    @click="toggleSection(sectionIndex)" :label="row.hidden ? 'Show' : 'Hide'" color="contrast"
-                    rounded-full small />
-                </BaseButtons>
-              </SectionTitleLineWithButton>
-
-              <div v-show="!row.hidden" v-for="(data, rowIndex) in row.data" :key="rowIndex + sectionIndex"
-                class="mb-2 flex-col justify-end items-end h-full">
-                <div class="w-full mb-7 p-5 bg-slate-900 rounded">
-                  <BaseButtons class="mt-auto justify-end">
-                    <BaseButtonLink class="mr-1" :icon="mdiPlus" @click="addRow(sectionIndex)" label="Add Row"
-                      color="contrast" rounded-full small />
-                    <BaseButtonLink v-if="rowIndex > 0" :icon="mdiMinus" @click="removeRow(sectionIndex, rowIndex)"
-                      label="Remove Row" color="danger" rounded-full small />
-                  </BaseButtons>
-                  <FormField :label="'Title: ' + data.title" :label-for="'headline-' + rowIndex">
-                    <FormControl v-model="data.title" :id="'headline-' + rowIndex" placeholder="Title here" type="text"
-                      required />
-                  </FormField>
-                  <FormField label="Subtitle" :label-for="'subtitle-' + rowIndex">
-                    <FormControl v-model="data.subtitle" :id="'subtitle-' + rowIndex" placeholder="Subtitle here"
-                      type="text" />
-                  </FormField>
-                  <FormField label="Description" :label-for="'description-' + rowIndex">
-                    <FormControl v-model="data.description" :id="'description-' + rowIndex" placeholder="Description here"
-                      type="textarea" required />
-                  </FormField>
-                  <div class="flex flex-row justify-between items-center">
-                    <FormField label="Image" help="Max 500kb">
-                      <FormFilePicker :key="data.imageKey" label="Upload Image" :modelValue="data.image" color="success"
-                        @update:modelValue="data.image = $event" />
-                    </FormField>
-
-                    <FormField class="ml-auto w-auto" label="Image Position">
-                      <FormControl v-model="data.imagePosition" :options="imagePosition" />
-                    </FormField>
-                  </div>
-                </div>
-              </div>
+            
+            <div v-if="form.page_type === 'general'" v-for="(row, sectionIndex) in form.contents" :key="sectionIndex">
+              <General :sectionIndex="sectionIndex" :row="row" :imagePosition="imagePosition" @addRow="addRow" @removeRow="removeRow" @toggleSection="toggleSection" @addSection="addSection" @removeSection="removeSection" />
             </div>
-            <div v-if="form.pageType === 'blog'">
-              <h3 class="text-center">Blog Page: You Can't add Section Here</h3>
+            <div v-if="form.page_type === 'blog'">
+              <Blog />
             </div>
-            <div v-if="form.pageType === 'contact'" v-for="(row, sectionIndex) in form.contents" :key="sectionIndex">
-              <SectionTitle :title="row.name" main />
-
-              <div v-show="!row.hidden" v-for="(data, rowIndex) in row.data" :key="rowIndex + sectionIndex"
-                class="mb-2 flex-col justify-end items-end h-full">
-                <div class="w-full mb-7 p-5 bg-slate-900 rounded">
-                  <BaseButtons class="mt-auto justify-end">
-                    <BaseButtonLink class="mr-1" :icon="mdiPlus" @click="addRow(sectionIndex)" label="Add Row"
-                      color="contrast" rounded-full small />
-                    <BaseButtonLink v-if="rowIndex > 0" :icon="mdiMinus" @click="removeRow(sectionIndex, rowIndex)"
-                      label="Remove Row" color="danger" rounded-full small />
-                  </BaseButtons>
-                  <FormField :label="'Title: ' + data.title" :label-for="'headline-' + rowIndex">
-                    <FormControl v-model="data.title" :id="'headline-' + rowIndex" placeholder="Title here" type="text"
-                      required />
-                  </FormField>
-                  <FormField label="Info" :label-for="'info-' + rowIndex">
-                    <FormControl v-model="data.info" :id="'info-' + rowIndex" placeholder="Contact Info here" type="text"
-                      required />
-                  </FormField>
-                  <FormField label="Choose Icon">
-                    <FormControl v-model="data.icon" :options="iconList" />
-                  </FormField>
-                </div>
-              </div>
+            <div v-if="form.page_type === 'contact'" v-for="(row, sectionIndex) in form.contents" :key="sectionIndex">
+              <Contact :sectionIndex="sectionIndex" :row="row" :iconList="iconList" @addRow="addRow" @removeRow="removeRow" />
+            </div>
+            <div v-if="form.page_type === 'home'" v-for="(row, sectionIndex) in form.contents" :key="sectionIndex">
+              <Home :sectionIndex="sectionIndex" :row="row" />
             </div>
           </div>
-
+          
+          <!-- Right part -->
           <div class="w-3/12 ml-5 flex flex-col items-center justify-start mt-10 border border-gray-50 rounded p-5">
             <div v-show="!form.featured_image" class="w-full">
-              <img v-if="pageData != null && pageData.featured_image" :src="`${storage}/${pageData.featured_image}`" class="h-52 w-11/12 mb-4" :alt="pageData.featured_image" alt="">
+              <img v-if="pageData != null && pageData.featured_image" :src="`${storage}/${pageData.featured_image}`"
+                class="h-52 w-11/12 mb-4" alt="">
               <div v-else class="h-52 w-11/12 mb-4 border-dashed border border-gray-50 flex justify-center items-center">
                 Featured Image</div>
             </div>
@@ -297,7 +261,7 @@ const chooseLayout = (layout: String) => {
             </FormField>
 
             <FormField class="w-full" label="Page Type">
-              <FormControl @change="chooseLayout(form.pageType)" v-model="form.page_type" :options="pageType" />
+              <FormControl @change="chooseLayout(form.page_type)" v-model="form.page_type" :options="pageType" />
             </FormField>
 
             <FormField v-show="form.pageType === 'contact'" class="w-full" label="Email To" label-for="email-to">

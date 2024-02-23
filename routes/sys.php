@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\System\UserController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Backend\ProfileController;
-use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Backend\SettingController;
 
+use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
@@ -69,6 +70,8 @@ Route::prefix('admin')->group(function () {
                 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
                 Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
                 Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+                Route::resource('/settings', SettingController::class);
 
                 require __DIR__.'/employee.php';
                 require __DIR__.'/company.php';

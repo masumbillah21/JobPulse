@@ -18,7 +18,8 @@ export default [
       },
       {
         icon: mdiCogOutline,
-        label: 'Settings'
+        label: 'Settings',
+        route: 'settings.index'
       },
       {
         icon: mdiEmail,
