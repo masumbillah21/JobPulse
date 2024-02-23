@@ -35,8 +35,10 @@ const file = ref(props.modelValue)
 
 const url = ref(props.modelValue)
 
-if (file.value) {
+if (file.value && typeof file.value === 'object' && file.value instanceof File) {
   url.value = URL.createObjectURL(file.value)
+}else{
+  file.value = null
 }
 
 const showFilename = computed(() => !props.isRoundIcon && file.value)

@@ -13,17 +13,16 @@ return new class extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('content');
-            $table->string('image')->nullable();
-            $table->string('icon')->nullable();
-            $table->string('image_icon_position')->nullable();
-            $table->string('button_link')->nullable();
-            $table->string('button_text')->nullable();
-            $table->string('type')->nullable();
-            $table->string('item_for');
-            $table->integer('order')->default(0);
-            $table->boolean('is_visible')->default(1);
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('title')->unique();
+            $table->json('contents');
+            $table->string('featured_image')->nullable();
+            $table->string('page_type');
+            $table->boolean('for_nav')->default(0);
+            $table->string('email_to')->nullable();
+            $table->integer('page_order')->default(0);
+            $table->boolean('status')->default(1);
+            $table->string('slug')->unique();
             $table->timestamps();
         });
     }

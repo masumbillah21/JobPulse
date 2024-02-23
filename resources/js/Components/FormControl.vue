@@ -48,6 +48,14 @@ const props = defineProps({
     type: String,
     default: 'dark:bg-white dark:bg-slate-700'
   },
+  min:{
+    type: [String, Number],
+    default: 0
+  },
+  step:{
+    type: [String, Number],
+    default: 1
+  },
   required: Boolean,
   borderless: Boolean,
   transparent: Boolean,
@@ -163,6 +171,8 @@ if (props.ctrlKFocus) {
       :required="required"
       :placeholder="placeholder"
       :type="computedType"
+      :min="min"
+      :step="step"
       :class="inputElClass"
     />
     <FormControlIcon v-if="icon" :icon="icon" :h="controlIconH" />

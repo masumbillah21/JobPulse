@@ -106,28 +106,16 @@ export default [
     permission: 'viewPages',
     menu: [
       {
+        route: 'pages.index',
+        icon: mdiAccountCircle,
+        label: 'All',
+        permission: 'viewPages',
+      },
+      {
         route: 'pages.create',
         icon: mdiAccountCircle,
         label: 'Add New',
-        permission: 'viewHome',
-      },
-      {
-        route: 'pages.home',
-        icon: mdiAccountCircle,
-        label: 'Home',
-        permission: 'viewHome',
-      },
-      {
-        route: 'pages.about',
-        icon: mdiPlus,
-        label: 'About',
-        permission: 'viewAbout',
-      },
-      {
-        route: 'pages.contact',
-        icon: mdiPlus,
-        label: 'Contact',
-        permission: 'viewContact',
+        permission: 'addPage',
       },
     ]
   },
