@@ -113,7 +113,7 @@ onBeforeUnmount(() => {
       >
       <BaseIcon
         v-if="item.menu"
-        :path="isDropdownActive ? mdiChevronUp : mdiChevronDown"
+        :path="isDropdownActive ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"
         class="hidden lg:inline-flex transition-colors dark:text-white"
       />
     </div>

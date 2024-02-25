@@ -1,15 +1,7 @@
 <script setup>
 import { computed, ref, onMounted } from 'vue'
 import { useMainStore } from '@/Stores/main'
-import {
-  mdiAccountMultiple,
-  mdiCartOutline,
-  mdiChartTimelineVariant,
-  mdiMonitorCellphone,
-  mdiReload,
-  mdiGithub,
-  mdiChartPie
-} from '@mdi/js'
+import  '@mdi/js'
 import * as chartConfig from '@/Components/Charts/chart.config.js'
 import LineChart from '@/Components/Charts/LineChart.vue'
 import SectionMain from '@/Components/SectionMain.vue'

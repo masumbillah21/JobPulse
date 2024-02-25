@@ -1,48 +1,35 @@
-import {
-  mdiAccount,
-  mdiCogOutline,
-  mdiEmail,
-  mdiLogout,
-  mdiThemeLightDark,
-  mdiCached,
-} from '@mdi/js'
-
 export default [
   {
     isCurrentUser: true,
     menu: [
       {
-        icon: mdiAccount,
+        icon: 'fas fa-user',
         label: 'My Profile',
         route: 'profile.edit'
       },
       {
-        icon: mdiCogOutline,
+        icon: 'fas fa-cogs',
         label: 'Settings',
         route: 'settings.index'
-      },
-      {
-        icon: mdiEmail,
-        label: 'Messages'
       },
       {
         isDivider: true
       },
       {
-        icon: mdiLogout,
+        icon: 'fas fa-sign-out-alt',
         label: 'Log Out',
         isLogout: true
       }
     ]
   },
   {
-    icon: mdiCached,
+    icon: 'fas fa-sync-alt',
     label: 'Cache',
     isDesktopNoLabel: true,
     isCache: true
   },
   {
-    icon: mdiThemeLightDark,
+    icon: 'fas fa-sun',
     label: 'Light/Dark',
     isDesktopNoLabel: true,
     isToggleLightDark: true

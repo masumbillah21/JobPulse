@@ -30,12 +30,7 @@ class Blog extends Model
     {
         return config('app.url') . Storage::url($value);
     }
-    
-
-    // public function getRouteKeyName()
-    // {
-    //     return 'slug';
-    // }
+ 
 
     public function user()
     {

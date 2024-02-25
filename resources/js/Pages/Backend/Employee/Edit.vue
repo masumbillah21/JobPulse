@@ -43,7 +43,7 @@
       <LayoutAuthenticated>
         <Head title="Edit Employee" />
         <SectionMain>
-            <SectionTitleLineWithButton :icon="mdiArrowRightCircle" :title="employee !== null ? 'Edit Employee' : 'Create Employee'" main>
+            <SectionTitleLineWithButton icon="far fa-arrow-alt-circle-right" :title="employee !== null ? 'Edit Employee' : 'Create Employee'" main>
                 <BaseButtonLink
                     :icon="mdiArrowLeftCircle"
                     label="Back"

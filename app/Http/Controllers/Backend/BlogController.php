@@ -131,4 +131,9 @@ class BlogController extends Controller
 
         return redirect()->back()->with('success', 'Blog Deleted Successfully');
     }
+
+    public function categories(){
+
+        return Inertia::render('Backend/Pages/Blog/Categories');
+    }
 }

@@ -35,7 +35,7 @@
       <LayoutAuthenticated>
         <Head title="Employees" />
         <SectionMain>
-          <SectionTitleLineWithButton :icon="mdiArrowRightCircle" title="Employees" main>
+          <SectionTitleLineWithButton icon="far fa-arrow-alt-circle-right" title="Employees" main>
             <BaseButtonLink
               :icon="mdiPlus"
               routeName="employee.create"

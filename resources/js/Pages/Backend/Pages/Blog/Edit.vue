@@ -73,7 +73,7 @@
       <LayoutAuthenticated>
         <Head :title="(blogData !== null) ? 'Edit Post' : 'Create Post'" />
         <SectionMain>
-            <SectionTitleLineWithButton :icon="mdiArrowRightCircle" :title="blogData !== null ? 'Edit Post' : 'Create Post'" main>
+            <SectionTitleLineWithButton icon="far fa-arrow-alt-circle-right" :title="blogData !== null ? 'Edit Post' : 'Create Post'" main>
                 <BaseButtonLink
                     :icon="mdiArrowLeftCircle"
                     label="Back"

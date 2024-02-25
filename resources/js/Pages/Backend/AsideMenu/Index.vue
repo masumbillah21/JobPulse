@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import { computed, ref } from 'vue'
-    import { mdiArrowRightCircle, mdiPlus, mdiEye, mdiTrashCan, mdiNoteEditOutline } from '@mdi/js'
     import SectionMain from '@/Components/SectionMain.vue'
     import CardBox from '@/Components/CardBox.vue'
     import LayoutAuthenticated from '@/Layouts/LayoutAuthenticated.vue'
@@ -11,21 +10,21 @@
     import FormSuccess from "@/Components/FormSuccess.vue";
     import { Head, router, usePage } from '@inertiajs/vue3'
 
-    const jobsData:any = usePage().props.jobsData
+    const asideMenuList: any = usePage().props.asideMenuList
 
     const isModalDangerActive = ref(false)
-    const deleteId = ref<string | number>('');
+    const deleteId = ref<string | number>('')
     const deleteRole = () => {
         isModalDangerActive.value = false
-        router.delete(route('jobs.destroy', deleteId.value))
+        router.delete(route('asides.destroy', deleteId.value))
 
-        const index = jobsData.data.findIndex((role: any) => role.id === deleteId.value)
+        const index = asideMenuList.data.findIndex((menu: any) => menu.id === deleteId.value)
         if (index !== -1) {
-            jobsData.data.splice(index, 1)
+            asideMenuList.data.splice(index, 1)
         }
 
     }
-    const showModle = (id: number) => {
+    const showModle = (id : string | number) => {
         isModalDangerActive.value = true
         deleteId.value = id
     }
@@ -33,12 +32,12 @@
     
     <template>
       <LayoutAuthenticated>
-        <Head title="Jobs" />
+        <Head title="Aside Menus" />
         <SectionMain>
-          <SectionTitleLineWithButton icon="far fa-arrow-alt-circle-right" title="Jobs" main>
+          <SectionTitleLineWithButton icon="far fa-arrow-alt-circle-right" title="Aside Menus" main>
             <BaseButtonLink
               icon="fas fa-plus"
-              routeName="jobs.create"
+              routeName="asides.create"
               label="Add New"
               color="contrast"
               rounded-full
@@ -55,9 +54,10 @@
                   <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                       <tr>
                           <th scope="col" class="px-6 py-3">SL</th>
-                          <th scope="col" class="px-6 py-3">Title</th>
-                          <th scope="col" class="px-6 py-3">Closing Date</th>
-                          <th scope="col" class="px-6 py-3">Status</th>
+                          <th scope="col" class="px-6 py-3">Label</th>
+                          <th scope="col" class="px-6 py-3">Route</th>
+                          <th scope="col" class="px-6 py-3">Icon</th>
+                          <th scope="col" class="px-6 py-3">Parent</th>
                           <th scope="col" class="px-6 py-3">Created</th>
                           <th scope="col" class="px-6 py-3">Updated</th>
                           <th scope="col" class="px-6 py-3">
@@ -66,23 +66,23 @@
                       </tr>
                   </thead>
                   <tbody>
-                      <tr v-for="(job, index) in jobsData.data" :key="job.id" class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                          <td width="50" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ index + 1 }}</td>
-                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ job.title }}</td>
-                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ job.closing_date }}</td>
-                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ job.status == 1 ? 'Active' : 'Inactive' }}</td>
-                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ job.created_at }}</td>
-                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ job.updated_at }}</td>
+                      <tr v-for="(menu, index) in asideMenuList.data" :key="menu.id" class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ index + 1 }}</td>
+                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ menu.label }}</td>
+                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ menu.route }}</td>
+                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ menu.icon }}</td>
+                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ menu.parent_id != null ? menu.parent.label : 'No Parent' }}</td>
+                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ menu.created_at }}</td>
+                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ menu.updated_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              <BaseButtonLink routeName="jobs.show" :routeParams="job.id" :icon="mdiEye" label="View" color="success" small />
-                              <BaseButtonLink class="ml-2" routeName="jobs.edit" :routeParams="job.id" :icon="mdiNoteEditOutline" label="Edit" color="info" small />
-                              <BaseButtonLink class="ml-2" :icon="mdiTrashCan" label="Delete" color="danger" small @click="showModle(job.id)"/>
+                              <BaseButtonLink routeName="asides.edit" :routeParams="menu.id" icon="far fa-edit" label="Edit" color="info" small />
+                              <BaseButtonLink class="ml-2" icon="far fa-trash-alt" label="Delete" color="danger" small @click="showModle(menu.id)"/>
                           </td>
                       </tr>
                   </tbody>
               </table>
             </CardBox>
-            <Pagination class="mt-6" :links="jobsData.links"/>
+            <Pagination class="mt-6" :links="asideMenuList.links"/>
         </SectionMain>
       </LayoutAuthenticated>
     </template>

@@ -89,7 +89,7 @@ const menuClick = (event) => {
       >
       <BaseIcon
         v-if="hasDropdown"
-        :path="isDropdownActive ? mdiMinus : mdiPlus"
+        :path="isDropdownActive ? 'fas fa-minus' : 'fas fa-plus'"
         class="flex-none"
         :class="activeInactiveStyle"
         w="w-12"

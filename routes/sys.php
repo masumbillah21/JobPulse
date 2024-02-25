@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\AsideMenuController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 
@@ -80,5 +81,7 @@ Route::prefix('admin')->group(function () {
                 require __DIR__.'/jobs.php';
                 require __DIR__.'/pages.php';
                 require __DIR__.'/blog.php';
+
+                Route::resource('asides', AsideMenuController::class);
         });
 });

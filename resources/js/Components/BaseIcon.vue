@@ -27,9 +27,10 @@ const iconSize = computed(() => props.size ?? 16)
 
 <template>
   <span :class="spanClass">
-    <svg type="mdi" viewBox="0 0 24 24" :width="iconSize" :height="iconSize" class="inline-block">
+    <!-- <svg type="mdi" viewBox="0 0 24 24" :width="iconSize" :height="iconSize" class="inline-block">
       <path fill="currentColor" :d="path" />
-    </svg>
+    </svg> -->
+    <i :class="path"></i>
     <slot />
   </span>
 </template>

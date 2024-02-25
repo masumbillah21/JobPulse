@@ -18,11 +18,11 @@ const jobData = usePage().props.jobData;
     <LayoutAuthenticated>
         <Head :title="jobData.title" />
         <SectionMain>
-            <SectionTitleLineWithButton :icon="mdiArrowRightCircle"
+            <SectionTitleLineWithButton icon="far fa-arrow-alt-circle-right"
                 :title="jobData.title" main>
                 <div>
                     <BaseButtonLink class="mr-1" routeName="jobs.edit" :routeParams="jobData.id" :icon="mdiNoteEditOutline" label="Edit" color="info" rounded-full small />
-                    <BaseButtonLink :icon="mdiArrowLeftCircle" label="Back" routeName="jobs.index" color="contrast"
+                    <BaseButtonLink icon="far fa-arrow-alt-circle-left" label="Back" routeName="jobs.index" color="contrast"
                     rounded-full small />
                 </div>
             </SectionTitleLineWithButton>

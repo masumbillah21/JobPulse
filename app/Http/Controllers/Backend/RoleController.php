@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\AsideMenu;
 use App\Models\Role;
 use Inertia\Inertia;
 use App\Models\Permission;
@@ -18,6 +19,8 @@ class RoleController extends Controller
     {
         $companyId = Auth::user()->company_id;
         $roles = Role::where('company_id', $companyId)->with('permissions')->paginate(10);
+
+    
         return Inertia::render('Backend/Roles/Index', [
             'rolesData' => $roles
         ]);
@@ -28,7 +31,14 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permissionList = Permission::pluck('name', 'id');
+        $permissionList = AsideMenu::with(['children' => function ($query) {
+            $query->select('id', 'label', 'parent_id', 'route')->where('status', true);
+        }])
+        ->select('id', 'label', 'route')
+        ->whereNull('parent_id')
+        ->where('status', true)
+        ->get();
+
         return Inertia::render('Backend/Roles/Edit', [
             'permissionList' => $permissionList
         ]);
@@ -43,6 +53,9 @@ class RoleController extends Controller
             'name' => 'required',
             'permissions' => 'required|array'
         ]);
+
+
+        dd($request->all());
 
         $companyId = Auth::user()->company_id;
 

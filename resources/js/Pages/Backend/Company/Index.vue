@@ -92,7 +92,7 @@
       <LayoutAuthenticated>
         <Head title="Company" />
         <SectionMain>
-          <SectionTitle title="Company Profile" :icon="mdiArrowRightCircle"/>
+          <SectionTitle title="Company Profile" icon="far fa-arrow-alt-circle-right"/>
           <div class="flex justify-center items-center">
             <CardBox
                 class="my-24 w-1/2"

@@ -37,7 +37,7 @@
       <LayoutAuthenticated>
         <Head title="Create Employee" />
         <SectionMain>
-            <SectionTitleLineWithButton :icon="mdiArrowRightCircle" title="Create Employee" main>
+            <SectionTitleLineWithButton icon="far fa-arrow-alt-circle-right" title="Create Employee" main>
                 <BaseButtonLink
                     :icon="mdiArrowLeftCircle"
                     label="Back"

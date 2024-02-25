@@ -86,7 +86,7 @@
 
         <Head :title="(jobData !== null) ? 'Edit job' : 'Create job'" />
         <SectionMain>
-            <SectionTitleLineWithButton :icon="mdiArrowRightCircle"
+            <SectionTitleLineWithButton icon="far fa-arrow-alt-circle-right"
                 :title="jobData !== null ? 'Edit job' : 'Create job'" main>
                 <BaseButtonLink :icon="mdiArrowLeftCircle" label="Back" routeName="jobs.index" color="contrast"
                     rounded-full small />

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\AsideMenu;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -30,10 +31,44 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $asideMenus = AsideMenu::with(['children' => function ($query) {
+            $query->where('status', true);
+        }])
+        ->whereNull('parent_id')
+        ->where('status', true)
+        ->get();
+        
+        $data = $asideMenus->map(function ($menu) {
+
+            $menuItem = [
+                'label' => $menu->label,
+                'icon' => $menu->icon,
+            ];
+        
+            if ($menu->route) {
+                $menuItem['route'] = $menu->route;
+            }
+        
+            if ($menu->children->isNotEmpty()) {
+                $menuItem['menu'] = $menu->children->map(function ($child) {
+                    if($child->status == 1){
+                        return [
+                            'route' => $child->route,
+                            'icon' => $child->icon,
+                            'label' => $child->label,
+                        ];
+                    }
+                });
+            }
+        
+            return $menuItem;
+        });
+
         return [
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+                'asideMenu' => $request->user() ? $data->toArray() : null
             ],
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),
