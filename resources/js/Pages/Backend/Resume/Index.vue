@@ -1,29 +1,9 @@
 <script setup lang="ts">
   import { computed, ref } from 'vue'
-  import {
-    mdiArrowRightCircle,
-    mdiPlus,
-    mdiNoteEditOutline,
-    mdiAccount,
-    mdiFormatListBulletedType,
-    mdiMapMarkerOutline,
-    mdiPhone,
-    mdiWeb,
-    mdiEmail,
-  } from '@mdi/js'
+
   import SectionMain from '@/Components/SectionMain.vue'
-  import CardBox from '@/Components/CardBox.vue'
-  import FormField from "@/Components/FormField.vue";
-  import FormControl from "@/Components/FormControl.vue";
   import LayoutAuthenticated from '@/Layouts/LayoutAuthenticated.vue'
   import SectionTitle from '@/Components/SectionTitle.vue'
-  import BaseButtonLink from '@/Components/BaseButtonLink.vue'
-  import BaseButtons from "@/Components/BaseButtons.vue";
-  import BaseDivider from "@/Components/BaseDivider.vue";
-  import FormValidationErrors from "@/Components/FormValidationErrors.vue";
-  import FormSuccess from "@/Components/FormSuccess.vue";
-  import CardBoxModal from '@/Components/CardBoxModal.vue'
-  import FormFilePicker from '@/Components/FormFilePicker.vue'
   import Educations from '@/Pages/Backend/Resume/Tabs/Educations.vue'
   import PersonalInfo from '@/Pages/Backend/Resume/Tabs/PersonalInfo.vue'
   import Experience from '@/Pages/Backend/Resume/Tabs/Experience.vue'
@@ -48,7 +28,7 @@
 
     <Head title="Resume" />
     <SectionMain>
-      <SectionTitle title="Resume" :icon="mdiArrowRightCircle" />
+      <SectionTitle title="Resume" icon="fas fa-arrow-circle-right" />
       
         <div class="w-full">
           <ul class="flex w-full mb-0 list-none pt-3 pb-4 flex-row">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\User;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Training;
@@ -24,11 +25,9 @@ class ResumeController extends Controller
      */
     public function index(): Response
     {
-        $this->authorize('view', PersonalDetail::class);
-        $this->authorize('view', Education::class);
-        $this->authorize('view', Training::class);
-        $this->authorize('view', Experience::class);
-        $this->authorize('view', Reference::class);
+        if (!Auth::user()->hasPermission('resume.view')) {
+            abort(403);
+        }
 
         $personalInfo = PersonalDetail::where('user_id', Auth::id())->first();
         $educationInfo = Education::where('user_id', Auth::id())->get();
@@ -46,7 +45,9 @@ class ResumeController extends Controller
     }
     public function storePersonalInfo(Request $request): RedirectResponse
     {
-        $this->authorize('create', PersonalDetail::class);
+        if (!Auth::user()->hasPermission('resume.create')) {
+            abort(403);
+        }
 
         $request->validate([
             'alt_email' => 'required|email|unique:personal_details',
@@ -89,7 +90,9 @@ class ResumeController extends Controller
     }
     public function updatePersonalInfo(Request $request, string $id): RedirectResponse
     {
-        $this->authorize('update', PersonalDetail::class);
+        if (!Auth::user()->hasPermission('resume.update')) {
+            abort(403);
+        }
 
         $validated = $request->validate([
             'alt_email' => ['required', 'email', 'max:255', Rule::unique(PersonalDetail::class)->ignore($request->id)],
@@ -132,8 +135,9 @@ class ResumeController extends Controller
 
     public function saveEducation(Request $request): RedirectResponse
     {
-        $this->authorize('create', Education::class);
-        $this->authorize('update', Education::class);
+        if (!Auth::user()->hasPermission('resume.create')) {
+            abort(403);
+        }
 
         $request->validate([
             'degree' => 'required|max:50',
@@ -166,7 +170,9 @@ class ResumeController extends Controller
     }
     public function deleteEducation(string $id): RedirectResponse
     {
-        $this->authorize('delete', Education::class);
+        if (!Auth::user()->hasPermission('resume.delete')) {
+            abort(403);
+        }
 
         Education::where('user_id', Auth::id())->where('id', $id)->delete();
 
@@ -175,8 +181,9 @@ class ResumeController extends Controller
 
     public function saveTraining(Request $request): RedirectResponse
     {
-        $this->authorize('create', Training::class);
-        $this->authorize('update', Training::class);
+        if (!Auth::user()->hasPermission('resume.create')) {
+            abort(403);
+        }
 
         $request->validate([
             'title' => 'required|max:50',
@@ -209,7 +216,9 @@ class ResumeController extends Controller
     }
     public function deleteTraining(string $id): RedirectResponse
     {
-        $this->authorize('delete', Training::class);
+        if (!Auth::user()->hasPermission('resume.delete')) {
+            abort(403);
+        }
 
         Training::where('user_id', Auth::id())->where('id', $id)->delete();
 
@@ -218,8 +227,9 @@ class ResumeController extends Controller
 
     public function saveExperience(Request $request): RedirectResponse
     {
-        $this->authorize('create', Experience::class);
-        $this->authorize('update', Experience::class);
+        if (!Auth::user()->hasPermission('resume.create')) {
+            abort(403);
+        }
 
         $request->validate([
             'title' => 'required|max:50',
@@ -253,7 +263,9 @@ class ResumeController extends Controller
     }
     public function deleteExperience(string $id): RedirectResponse
     {
-        $this->authorize('delete', Experience::class);
+        if (!Auth::user()->hasPermission('resume.delete')) {
+            abort(403);
+        }
 
         Experience::where('user_id', Auth::id())->where('id', $id)->delete();
 
@@ -262,8 +274,9 @@ class ResumeController extends Controller
 
     public function saveReference(Request $request): RedirectResponse
     {
-        $this->authorize('create', Reference::class);
-        $this->authorize('update', Reference::class);
+        if (!Auth::user()->hasPermission('resume.create')) {
+            abort(403);
+        }
 
         $request->validate([
             'name' => 'required|max:50',
@@ -294,7 +307,9 @@ class ResumeController extends Controller
     }
     public function deleteReference(string $id): RedirectResponse
     {
-        $this->authorize('delete', Reference::class);
+        if (!Auth::user()->hasPermission('resume.delete')) {
+            abort(403);
+        }
 
         Reference::where('user_id', Auth::id())->where('id', $id)->delete();
 

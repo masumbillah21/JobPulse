@@ -1,17 +1,4 @@
 <script setup lang="ts">
-  import { computed, ref } from 'vue'
-  import {
-    mdiArrowRightCircle,
-    mdiPlus,
-    mdiNoteEditOutline,
-    mdiAccount,
-    mdiFormatListBulletedType,
-    mdiMapMarkerOutline,
-    mdiPhone,
-    mdiWeb,
-    mdiEmail,
-  } from '@mdi/js'
-
   import CardBox from '@/Components/CardBox.vue'
   import FormField from "@/Components/FormField.vue";
   import FormControl from "@/Components/FormControl.vue";
@@ -22,7 +9,7 @@
   import FormValidationErrors from "@/Components/FormValidationErrors.vue";
   import FormSuccess from "@/Components/FormSuccess.vue";
   import FormFilePicker from '@/Components/FormFilePicker.vue'
-  import { Head, router, useForm, usePage } from '@inertiajs/vue3'
+  import { useForm, usePage } from '@inertiajs/vue3'
 
 
   const personalInfo: any = usePage().props.personalInfo ?? null;
@@ -121,12 +108,12 @@
     <div class="flex">
       <div class="w-1/2 p-1">
         <FormField label="Father Name" label-for="father-name" help="Please write your father name">
-          <FormControl v-model="form.father_name" id="father-name" :icon="mdiAccount" type="text" required />
+          <FormControl v-model="form.father_name" id="father-name" icon="fas fa-user" type="text" required />
         </FormField>
       </div>
       <div class="w-1/2 p-1">
         <FormField label="Mother Name" label-for="mother-name" help="Please write your mother name">
-          <FormControl v-model="form.mother_name" id="mother-name" :icon="mdiAccount" type="text" required />
+          <FormControl v-model="form.mother_name" id="mother-name" icon="fas fa-user" type="text" required />
         </FormField>
       </div>
     </div>
@@ -134,12 +121,12 @@
     <div class="flex">
       <div class="w-1/2 p-1">
         <FormField label="Date of Birth" label-for="dob" help="Please write your date of birth">
-          <FormControl v-model="form.dob" id="dob" :icon="mdiAccount" type="date" required />
+          <FormControl v-model="form.dob" id="dob" icon="fas fa-user" type="date" required />
         </FormField>
       </div>
       <div class="w-1/2 p-1">
         <FormField label="Gender">
-          <FormControl v-model="form.gender" :icon="mdiFormatListBulletedType" :options="genderType" />
+          <FormControl v-model="form.gender" icon="fas fa-list" :options="genderType" />
         </FormField>
       </div>
     </div>
@@ -147,12 +134,12 @@
     <div class="flex">
       <div class="w-1/2 p-1">
         <FormField label="Marital Status" help="Select your marital status.">
-          <FormControl v-model="form.marital_status" :icon="mdiFormatListBulletedType" :options="maritalStatus" />
+          <FormControl v-model="form.marital_status" icon="fas fa-list" :options="maritalStatus" />
         </FormField>
       </div>
       <div class="w-1/2 p-1">
         <FormField label="Nationality" label-for="nationality" help="Please write your nationality">
-          <FormControl v-model="form.nationality" id="nationality" :icon="mdiAccount" type="text" required />
+          <FormControl v-model="form.nationality" id="nationality" icon="fas fa-globe-asia" type="text" required />
         </FormField>
       </div>
     </div>
@@ -160,29 +147,29 @@
     <div class="flex">
       <div class="w-1/2 p-1">
         <FormField label="Religion" help="Select your religion.">
-          <FormControl v-model="form.religion" :icon="mdiFormatListBulletedType" :options="religionStatus" />
+          <FormControl v-model="form.religion" icon="fas fa-list" :options="religionStatus" />
         </FormField>
       </div>
     </div>
     <FormField label="Present Address" label-for="present-address" help="Please enter your present address">
-      <FormControl v-model="form.present_address" id="present-address" :icon="mdiMapMarkerOutline"
+      <FormControl v-model="form.present_address" id="present-address" icon="fas fa-map-marker"
         autocomplete="address" type="address" required />
     </FormField>
 
     <FormField label="Permanent Address" label-for="permanent-address" help="Please enter your permanent address">
-      <FormControl v-model="form.permanent_address" id="permanent-address" :icon="mdiMapMarkerOutline"
+      <FormControl v-model="form.permanent_address" id="permanent-address" icon="fas fa-map-marker"
         autocomplete="address" type="address" required />
     </FormField>
 
     <div class="flex">
       <div class="w-1/2 p-1">
         <FormField label="Phone Number" label-for="phone" help="Please enter your company phone">
-          <FormControl v-model="form.phone" id="phone" :icon="mdiPhone" autocomplete="phone" type="tel" required />
+          <FormControl v-model="form.phone" id="phone" icon="fas fa-phone" autocomplete="phone" type="tel" required />
         </FormField>
       </div>
       <div class="w-1/2 p-1">
         <FormField label="Email" label-for="email" help="Please enter your email">
-          <FormControl v-model="form.alt_email" id="email" :icon="mdiEmail" autocomplete="email" type="email"
+          <FormControl v-model="form.alt_email" id="email" icon="fas fa-envelope" autocomplete="email" type="email"
             required />
         </FormField>
       </div>

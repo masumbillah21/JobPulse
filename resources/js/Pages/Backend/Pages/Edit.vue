@@ -215,9 +215,9 @@ const chooseLayout = (layout: String) => {
 
     <Head title="Edit Page" />
     <SectionMain>
-      <SectionTitleLineWithButton title="Page">
+      <SectionTitleLineWithButton title="Page" icon="fas fa-arrow-circle-right">
         <BaseButtons>
-          <BaseButtonLink class="mr-1" icon="far fa-arrow-alt-circle-left" routeName="pages.index" label="Back" color="contrast"
+          <BaseButtonLink class="mr-1" icon="fas fa-arrow-circle-left" routeName="pages.index" label="Back" color="contrast"
             rounded-full small />
           <BaseButtonLink v-if="pageData" class="mr-1" icon="fas fa-plus" routeName="pages.create" label="Add New" color="info"
             rounded-full small />

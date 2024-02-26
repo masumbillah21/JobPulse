@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\User;
+use Auth;
 use Inertia\Inertia;
 use App\Enum\UserTypeEnum;
 use Illuminate\Http\Request;
@@ -16,7 +17,9 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //$this->authorize('view', User::class);
+        if (!Auth::user()->hasPermission('employee.view')) {
+            abort(403);
+        }
 
         $employees = User::paginate(10);
 
@@ -30,7 +33,9 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        // $this->authorize('create', User::class);
+        if (!Auth::user()->hasPermission('employee.create')) {
+            abort(403);
+        }
 
         return Inertia::render('Backend/Employee/Edit');
     }
@@ -40,7 +45,9 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->authorize('create', User::class);
+        if (!Auth::user()->hasPermission('employee.create')) {
+            abort(403);
+        }
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -71,7 +78,9 @@ class EmployeeController extends Controller
      */
     public function edit(User $employee)
     {
-        // $this->authorize('update', User::class);
+        if (!Auth::user()->hasPermission('employee.update')) {
+            abort(403);
+        }
 
         return Inertia::render('Backend/Employee/Edit', ['employeeData' => $employee]);
     }
@@ -81,7 +90,9 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // $this->authorize('update', User::class);
+        if (!Auth::user()->hasPermission('employee.update')) {
+            abort(403);
+        }
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -108,7 +119,9 @@ class EmployeeController extends Controller
      */
     public function destroy(string $id)
     {
-        // $this->authorize('delete', User::class);
+        if (!Auth::user()->hasPermission('employee.delete')) {
+            abort(403);
+        }
 
         User::where('id', $id)->delete();
 

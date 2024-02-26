@@ -86,7 +86,7 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
-        $this->authorize('update', Blog::class); 
+        $this->authorize('update', $blog); 
 
         return Inertia::render('Backend/Pages/Blog/Edit', [
             'blogData' => $blog
@@ -98,7 +98,7 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
-        $this->authorize('update', Blog::class); 
+        $this->authorize('update', $blog); 
 
         // try{
             $validation = $request->validate([
@@ -135,7 +135,7 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog)
     {
-        $this->authorize('delete', Blog::class); 
+        $this->authorize('delete', $blog); 
 
         $blog->delete();
 

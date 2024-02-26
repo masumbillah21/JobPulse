@@ -12,9 +12,12 @@ use App\Models\Training;
 use App\Models\Education;
 use App\Models\Reference;
 use App\Policies\BlogPolicy;
+use App\Policies\EducationsPolicy;
 use App\Policies\JobsPolicy;
 use App\Policies\PagesPolicy;
+use App\Policies\PersonalDetailsPolicy;
 use App\Policies\RolesPolicy;
+use App\Policies\TrainingPolicy;
 use App\Policies\UsersPolicy;
 use App\Policies\ResumePolicy;
 use App\Policies\CompanyPolicy;
@@ -33,10 +36,10 @@ class AuthServiceProvider extends ServiceProvider
         Company::class => CompanyPolicy::class,
         Role::class => RolesPolicy::class,
         Permission::class => PermissionPolicy::class,
-        Education::class => ResumePolicy::class,
-        PersonalDetail::class => ResumePolicy::class,
-        Training::class => ResumePolicy::class,
-        Reference::class => ResumePolicy::class,
+        PersonalDetail::class => PersonalDetailsPolicy::class,
+        // Education::class => EducationsPolicy::class,
+        // Training::class => TrainingPolicy::class,
+        // Reference::class => ReferencePolicy::class,
         Job::class => JobsPolicy::class,
         Page::class => PagesPolicy::class,
     ];

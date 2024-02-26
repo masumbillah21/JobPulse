@@ -1,19 +1,9 @@
 <script setup lang="ts">
-    import {
-        mdiPlus,
-        mdiMinus,
-        mdiArrowRightCircle,
-        mdiContentSave,
-    } from '@mdi/js'
-    import { computed, ref, reactive } from 'vue'
     import BaseButtonLink from '@/Components/BaseButtonLink.vue'
-    import BaseButtons from "@/Components/BaseButtons.vue";
-    import BaseDivider from "@/Components/BaseDivider.vue";
     import FormValidationErrors from "@/Components/FormValidationErrors.vue";
     import FormSuccess from "@/Components/FormSuccess.vue";
     import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue'
     import CardBox from '@/Components/CardBox.vue'
-    import FormField from "@/Components/FormField.vue";
     import FormControl from "@/Components/FormControl.vue";
     import { useForm, usePage, router } from '@inertiajs/vue3'
 
@@ -62,9 +52,9 @@
 </script>
 
 <template>
-    <SectionTitleLineWithButton :icon="mdiArrowRightCircle" title="Reference" main>
+    <SectionTitleLineWithButton icon="fas fa-arrow-circle-right" title="Reference" main>
         <BaseButtonLink
-            :icon="mdiPlus"
+            icon="fas fa-plus"
             @click="addRow"
             label="Add New"
             color="contrast"
@@ -117,8 +107,8 @@
                         <FormControl v-model="row.relationship" type="text" required />
                     </td>
                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <BaseButtonLink :icon="mdiContentSave" color="info" :class="{ 'opacity-25': form.processing }" @click="submit(row)" />
-                        <BaseButtonLink :icon="mdiMinus" @click="remove(index, row.id)" class="ml-2" color="danger"
+                        <BaseButtonLink icon="far fa-save" color="info" :class="{ 'opacity-25': form.processing }" @click="submit(row)" />
+                        <BaseButtonLink icon="fas fa-minus" @click="remove(index, row.id)" class="ml-2" color="danger"
                             rounded-full small />
                     </td>
                 </tr>

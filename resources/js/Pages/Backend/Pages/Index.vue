@@ -1,6 +1,5 @@
 <script setup lang="ts">
-    import { computed, ref } from 'vue'
-    import { mdiArrowRightCircle, mdiPlus, mdiEye, mdiTrashCan, mdiNoteEditOutline } from '@mdi/js'
+    import { ref } from 'vue'
     import SectionMain from '@/Components/SectionMain.vue'
     import CardBox from '@/Components/CardBox.vue'
     import LayoutAuthenticated from '@/Layouts/LayoutAuthenticated.vue'
@@ -38,9 +37,9 @@
       <LayoutAuthenticated>
         <Head title="Roles" />
         <SectionMain>
-          <SectionTitleLineWithButton :icon="mdiArrowRightCircle" title="Pages" main>
+          <SectionTitleLineWithButton icon="fas fa-arrow-circle-right" title="Pages" main>
             <BaseButtonLink
-              :icon="mdiPlus"
+              icon="fas fa-plus"
               routeName="pages.create"
               label="Add New"
               color="contrast"
@@ -81,8 +80,8 @@
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ page.created_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ page.updated_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              <BaseButtonLink routeName="pages.edit" :routeParams="page.id" :icon="mdiNoteEditOutline" label="Edit" color="info" small />
-                              <BaseButtonLink class="ml-2" :icon="mdiTrashCan" label="Delete" color="danger" small @click="showModle(page.id)"/>
+                              <BaseButtonLink routeName="pages.edit" :routeParams="page.id" icon="fas fa-edit" label="Edit" color="info" small />
+                              <BaseButtonLink class="ml-2" icon="fas fa-trash-alt" label="Delete" color="danger" small @click="showModle(page.id)"/>
                           </td>
                       </tr>
                   </tbody>

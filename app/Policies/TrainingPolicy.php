@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 
-class ResumePolicy
+class TrainingPolicy
 {
     /**
      * Create a new policy instance.
@@ -13,7 +13,6 @@ class ResumePolicy
     {
         //
     }
-
     public function view(User $user)
     {
         return $user->hasPermission('resume.view');

@@ -18,6 +18,7 @@ class RoleController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', Role::class);
 
         $roles = Role::with('permissions')->paginate(10);
     
@@ -31,6 +32,8 @@ class RoleController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Role::class);
+
         $permissionList = Permission::pluck('name', 'id');
 
         return Inertia::render('Backend/Roles/Edit', [
@@ -43,6 +46,8 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Role::class);
+
         $request->validate([
             'name' => 'required',
             'permissions' => 'required|array'
@@ -70,6 +75,8 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
+        $this->authorize('update', $role);
+
         $permissionList = Permission::pluck('name', 'id');
 
         return Inertia::render('Backend/Roles/Edit', [
@@ -83,6 +90,8 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
+        $this->authorize('update', Role::class);
+
         $validate = $request->validate([
             'name' => 'required',
             'permissions' => 'required|array'
@@ -106,6 +115,8 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
+        $this->authorize('delete', Role::class);
+
         $companyId = Auth::user()->company_id;
 
         if($role->company_id != $companyId) {

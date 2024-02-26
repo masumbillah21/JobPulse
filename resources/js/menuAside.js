@@ -72,7 +72,7 @@ export default [
      label : "Resume",
      icon : "fas fa-file",
      route : "resume.index",
-     permission: "resume.create",
+     permission: "resume.view",
   },
   {
      label : "Jobs",

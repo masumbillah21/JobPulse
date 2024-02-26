@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import { mdiArrowRightCircle, mdiArrowLeftCircle, mdiAccount, mdiEmail, mdiFormTextboxPassword, mdiNoteEditOutline } from '@mdi/js'
+import { ref } from 'vue'
 import SectionMain from '@/Components/SectionMain.vue'
 import CardBox from '@/Components/CardBox.vue'
 import FormField from "@/Components/FormField.vue";
 import FormControl from "@/Components/FormControl.vue";
-import FormCheckRadioGroup from "@/Components/FormCheckRadioGroup.vue";
 import LayoutAuthenticated from '@/Layouts/LayoutAuthenticated.vue'
 import SectionTitle from '@/Components/SectionTitle.vue'
 import BaseButtonLink from '@/Components/BaseButtonLink.vue'
@@ -84,7 +82,7 @@ const submit = () => {
 
         <Head title="Settings" />
         <SectionMain>
-            <SectionTitle :icon="mdiArrowRightCircle" title="Settings" main />
+            <SectionTitle icon="fas fa-arrow-circle-right" title="Settings" main />
             <div class="flex justify-center items-center">
                 <CardBox class="my-24 w-9/12" is-form @submit.prevent="submit">
                     <FormValidationErrors />
@@ -117,7 +115,7 @@ const submit = () => {
                     <BaseDivider />
 
                     <BaseButtons>
-                        <BaseButtonLink type="submit" color="info" label="Save"
+                        <BaseButtonLink icon="far fa-save" type="submit" color="info" label="Save"
                             :class="{ 'opacity-25': form.processing }" :disabled="form.processing" />
                     </BaseButtons>
                 </CardBox>
