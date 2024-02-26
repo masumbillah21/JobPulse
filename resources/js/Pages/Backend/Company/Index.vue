@@ -1,14 +1,4 @@
 <script setup lang="ts">
-    import { computed, ref } from 'vue'
-    import { mdiArrowRightCircle, 
-      mdiPlus,  
-      mdiNoteEditOutline, 
-      mdiAccount, 
-      mdiFormatListBulletedType,
-      mdiMapMarkerOutline,
-      mdiPhone,
-      mdiWeb,
-      mdiEmail, } from '@mdi/js'
     import SectionMain from '@/Components/SectionMain.vue'
     import CardBox from '@/Components/CardBox.vue'
     import FormField from "@/Components/FormField.vue";
@@ -108,7 +98,7 @@
             <FormControl
                 v-model="form.name"
                 id="name"
-                :icon="mdiAccount"
+                icon="fas fa-user"
                 autocomplete="name"
                 type="text"
                 required
@@ -119,7 +109,7 @@
               <FormControl
                   v-model="form.description"
                   id="description"
-                  :icon="mdiNoteEditOutline"
+                  icon="fas fa-info"
                   autocomplete="description"
                   type="text"
                   required
@@ -129,7 +119,7 @@
             <FormField label="Company type">
               <FormControl 
               v-model="form.company_type" 
-              :icon="mdiFormatListBulletedType"
+              icon="fas fa-list"
               :options="companyTypes" />
             </FormField>
 
@@ -137,7 +127,7 @@
               <FormControl
                   v-model="form.address"
                   id="address"
-                  :icon="mdiMapMarkerOutline"
+                  icon="fas fa-map-marker"
                   autocomplete="address"
                   type="address"
                   required
@@ -148,7 +138,7 @@
               <FormControl
                   v-model="form.phone"
                   id="phone"
-                  :icon="mdiPhone"
+                  icon="fas fa-phone"
                   autocomplete="phone"
                   type="tel"
                   required
@@ -163,7 +153,7 @@
             <FormControl
                 v-model="form.email"
                 id="email"
-                :icon="mdiEmail"
+                icon="fas fa-envelope"
                 autocomplete="email"
                 type="email"
                 required
@@ -173,7 +163,7 @@
             <FormField label="Company Size">
               <FormControl 
               v-model="form.company_size" 
-              :icon="mdiFormatListBulletedType"
+              icon="fas fa-list"
               :options="companySize" />
             </FormField>
 
@@ -185,7 +175,7 @@
             <FormControl
                 v-model="form.website"
                 id="website"
-                :icon="mdiWeb"
+                icon="fas fa-globe"
                 type="url"
                 autocomplete="website"
             />

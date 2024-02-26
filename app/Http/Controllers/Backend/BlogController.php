@@ -17,6 +17,8 @@ class BlogController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', Blog::class);
+
         $blogs = Blog::where('user_id', Auth::user()->id)->with('user')->paginate(10);
         return Inertia::render('Backend/Pages/Blog/Index', [
             'blogsData' => $blogs
@@ -28,6 +30,7 @@ class BlogController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Blog::class); 
         return Inertia::render('Backend/Pages/Blog/Edit');
     }
 
@@ -37,6 +40,7 @@ class BlogController extends Controller
     public function store(Request $request)
     {
      
+        $this->authorize('create', Blog::class); 
            
         $request->validate([
             'title' => 'required|max:255',
@@ -82,6 +86,8 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
+        $this->authorize('update', Blog::class); 
+
         return Inertia::render('Backend/Pages/Blog/Edit', [
             'blogData' => $blog
         ]);
@@ -92,6 +98,8 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
+        $this->authorize('update', Blog::class); 
+
         // try{
             $validation = $request->validate([
                 'title' => 'required|max:255',
@@ -127,6 +135,8 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog)
     {
+        $this->authorize('delete', Blog::class); 
+
         $blog->delete();
 
         return redirect()->back()->with('success', 'Blog Deleted Successfully');

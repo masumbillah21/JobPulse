@@ -17,42 +17,22 @@ import { Head, useForm, usePage } from '@inertiajs/vue3'
 const roleData: any = usePage().props.role ?? null
 const permissionList: any = usePage().props.permissionList ?? null
 
+
 const form: any = useForm({
     id: 0,
     name: "",
-    permissions: permissionList.map((item: any) => {
-        if (item.route !== null) {
-            return { ...item, permissions: [] };
-        } else if (item.children.length > 0) {
-            return {
-                ...item,
-                children: item.children.map((child: any) => ({
-                    ...child,
-                    permissions: []
-                }))
-            };
-        }
-    }),
+    permissions: [],
     _method: "post",
 });
 
 
-// if (roleData !== null) {
-//     form.id = roleData.id
-//     form.name = roleData.name
-//     form.permissions = roleData.permissions.map((item: any) => ({
-//         ...item,
-//         permission: null // Initialize permission property
-//     }));
-//     form._method = 'put'
-// }
+if (roleData !== null) {
+    form.id = roleData.id
+    form.name = roleData.name
+    form.permissions = roleData.permissions.map((permission: any) => permission.id);
+    form._method = 'put'
+}
 
-const crudList = {
-    'create': 'Create',
-    'read': 'Read',
-    'update': 'Update',
-    'delete': 'Delete'
-};
 const submit = () => {
     if (roleData !== null) {
         update();
@@ -61,20 +41,8 @@ const submit = () => {
     }
 };
 
-const filteredPermissions = computed(() => {
-    return form.permissions.filter((item: any) => {
-        if (item.permissions && item.permissions.length > 0) {
-            return true;
-        }
-        if (item.children && Array.isArray(item.children) && item.children.some((child: any) => child.permissions && child.permissions.length > 0)) {
-            return true;
-        }
-        return false;
-    });
-});
 
 const create = () => {
-    form.permissions = filteredPermissions.value;
     form.post(route("roles.store"), {
         onSuccess: () => form.reset(),
     });
@@ -104,28 +72,9 @@ const update = () => {
                         <FormControl v-model="form.name" id="name" autocomplete="name" type="text" required />
                     </FormField>
 
-                    <ul v-for="(permission, index) in form.permissions" :key="index">
-                        <li class="mb-5 pb-2 border-b">
-                            <div class="flex justify-between">
-                                {{ permission.label }}
-                                <FormField v-if="permission.route" label="Permission(s)" help="Select Permission(s)">
-                                    <FormCheckRadioGroup v-model="permission.permissions" name="permissions[]"
-                                        :options="crudList" />
-                                </FormField>
-                            </div>
-                            <ul class="ml-3 mt-1" v-for="(subItem, subIndex) in permission.children" :key="subIndex">
-                                <li class="mb-5 mt-5">
-                                    <div class="flex justify-between">
-                                        {{ subItem.label }}
-                                        <FormField v-if="subItem.route" label="Permission(s)" help="Select Permission(s)">
-                                            <FormCheckRadioGroup v-model="subItem.permissions" name="permissions[]"
-                                                :options="crudList" />
-                                        </FormField>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                    <FormField label="Permissions" label-for="permissions" help="Please select permissions">
+                        <FormCheckRadioGroup v-model="form.permissions" name="permissions" :options="permissionList" />
+                    </FormField>
                     <BaseDivider />
 
                     <BaseButtons>

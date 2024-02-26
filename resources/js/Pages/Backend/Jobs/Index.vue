@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import { computed, ref } from 'vue'
-    import { mdiArrowRightCircle, mdiPlus, mdiEye, mdiTrashCan, mdiNoteEditOutline } from '@mdi/js'
     import SectionMain from '@/Components/SectionMain.vue'
     import CardBox from '@/Components/CardBox.vue'
     import LayoutAuthenticated from '@/Layouts/LayoutAuthenticated.vue'
@@ -74,9 +73,9 @@
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ job.created_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ job.updated_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              <BaseButtonLink routeName="jobs.show" :routeParams="job.id" :icon="mdiEye" label="View" color="success" small />
-                              <BaseButtonLink class="ml-2" routeName="jobs.edit" :routeParams="job.id" :icon="mdiNoteEditOutline" label="Edit" color="info" small />
-                              <BaseButtonLink class="ml-2" :icon="mdiTrashCan" label="Delete" color="danger" small @click="showModle(job.id)"/>
+                              <BaseButtonLink routeName="jobs.show" :routeParams="job.id" icon="far fa-eye" label="View" color="success" small />
+                              <BaseButtonLink class="ml-2" routeName="jobs.edit" :routeParams="job.id" icon="fas fa-edit" label="Edit" color="info" small />
+                              <BaseButtonLink class="ml-2" icon="fas fa-trash-alt" label="Delete" color="danger" small @click="showModle(job.id)"/>
                           </td>
                       </tr>
                   </tbody>

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-    import { computed, ref, watch } from 'vue'
-    import { mdiArrowRightCircle, mdiArrowLeftCircle, mdiAccount, mdiEmail, mdiFormTextboxPassword, mdiNoteEditOutline, mdiFormatListBulletedType } from '@mdi/js'
     import SectionMain from '@/Components/SectionMain.vue'
     import CardBox from '@/Components/CardBox.vue'
     import FormField from "@/Components/FormField.vue";
@@ -88,7 +86,7 @@
         <SectionMain>
             <SectionTitleLineWithButton icon="far fa-arrow-alt-circle-right"
                 :title="jobData !== null ? 'Edit job' : 'Create job'" main>
-                <BaseButtonLink :icon="mdiArrowLeftCircle" label="Back" routeName="jobs.index" color="contrast"
+                <BaseButtonLink icon="fas fa-arrow-alt-circle-left" label="Back" routeName="jobs.index" color="contrast"
                     rounded-full small />
             </SectionTitleLineWithButton>
             <div class="flex justify-center items-center">
@@ -96,13 +94,13 @@
                     <FormValidationErrors />
                     <FormSuccess />
                     <FormField label="Title" label-for="title" help="Please enter job title">
-                        <FormControl v-model="form.title" id="title" :icon="mdiAccount" type="text" required />
+                        <FormControl v-model="form.title" id="title" icon="fas fa-pencil-alt" type="text" required />
                     </FormField>
                     <FormField label="Location" label-for="location" help="Please enter job location">
-                        <FormControl v-model="form.location" id="location" :icon="mdiAccount" type="text" required />
+                        <FormControl v-model="form.location" id="location" icon="fas fa-map-marker" type="text" required />
                     </FormField>
                     <FormField label="Job type" help="Please select job type">
-                        <FormControl v-model="form.job_type" :icon="mdiFormatListBulletedType" :options="jobTypes" />
+                        <FormControl v-model="form.job_type" icon="fas fa-list-alt" :options="jobTypes" />
                     </FormField>
 
                     <FormField label="Description" label-for="description" help="Please enter job description">
@@ -119,7 +117,7 @@
                     </FormField>
 
                     <FormField label="Salary" label-for="salary" help="Please enter job salary">
-                        <FormControl v-model="form.salary" id="salary" :icon="mdiAccount" type="text" required />
+                        <FormControl v-model="form.salary" id="salary" icon="fas fa-dollar-sign" type="text" required />
                     </FormField>
 
                     <FormField label="Facilities" label-for="facilities" help="Please enter job facilities">
@@ -127,7 +125,7 @@
                     </FormField>
                     <p v-if="jobData && jobData.closing_date" class="text-red-500">Closing Date: {{ jobData.closing_date }}</p>
                     <FormField label="Closing date" label-for="closing-date" help="Please enter job closing date">
-                        <FormControl v-model="form.closing_date" id="closing-date" :icon="mdiAccount" type="date" />
+                        <FormControl v-model="form.closing_date" id="closing-date" type="date" />
                     </FormField>
                     <FormCheckRadioGroup v-model="form.status" name="status" type="radio"
                         :options="{ '1': 'Active', '0': 'Inactive' }" />

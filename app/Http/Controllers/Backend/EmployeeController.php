@@ -16,6 +16,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
+        //$this->authorize('view', User::class);
 
         $employees = User::paginate(10);
 
@@ -29,7 +30,9 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Backend/Employee/Create');
+        // $this->authorize('create', User::class);
+
+        return Inertia::render('Backend/Employee/Edit');
     }
 
     /**
@@ -37,6 +40,8 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        // $this->authorize('create', User::class);
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -64,11 +69,11 @@ class EmployeeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $employee)
     {
-        $employee = User::find($id);
+        // $this->authorize('update', User::class);
 
-        return Inertia::render('Backend/Employee/Edit', ['employee' => $employee]);
+        return Inertia::render('Backend/Employee/Edit', ['employeeData' => $employee]);
     }
 
     /**
@@ -76,6 +81,8 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // $this->authorize('update', User::class);
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)->ignore($id)],
@@ -101,6 +108,8 @@ class EmployeeController extends Controller
      */
     public function destroy(string $id)
     {
+        // $this->authorize('delete', User::class);
+
         User::where('id', $id)->delete();
 
         return redirect()->back()->with('success', 'Employee deleted successfully');

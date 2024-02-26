@@ -17,6 +17,7 @@ class PageController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', Page::class);
         
         $pages = Page::paginate(10);
         return Inertia::render('Backend/Pages/Index', [
@@ -29,6 +30,8 @@ class PageController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Page::class);
+
         return Inertia::render('Backend/Pages/Edit');
     }
 
@@ -37,6 +40,8 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Page::class);
+
         $request->validate([
             'title' => 'required|string|max:255|unique:pages',
             'contents' => 'nullable|array',
@@ -48,9 +53,6 @@ class PageController extends Controller
             'page_order' => 'required|integer',
             'status' => 'required|boolean',
         ]);
-
-
-        
 
         $contents = [];
         if ($request->has('contents')) {
@@ -100,6 +102,8 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
+        $this->authorize('update', Page::class);
+
         return Inertia::render('Backend/Pages/Edit', [
             'pageData' => $page
         ]);
@@ -110,6 +114,8 @@ class PageController extends Controller
      */
     public function update(Request $request, Page $page)
     {
+        $this->authorize('update', Page::class);
+
         $request->validate([
             'title' => 'required|string|max:255|' . Rule::unique(Page::class)->ignore($request->id),
             'contents' => 'nullable|array',
@@ -121,8 +127,6 @@ class PageController extends Controller
             'page_order' => 'required|integer',
             'status' => 'required|boolean',
         ]);
-
-        // dd($page->featured_image);
 
         $contents = [];
         if ($request->has('contents')) {
@@ -167,6 +171,8 @@ class PageController extends Controller
      */
     public function destroy(Page $page)
     {
+        $this->authorize('delete', Page::class);
+
         $page->delete();
         return redirect()->back()->with('success', 'Page deleted successfully');
     }

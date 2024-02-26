@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { router, usePage } from '@inertiajs/vue3'
 import menuNavBar from '@/menuNavBar.js'
+import menuAside from '@/menuAside.js'
 import { useDarkModeStore } from '@/Stores/darkMode.js'
 import BaseIcon from '@/Components/BaseIcon.vue'
 import NavBar from '@/Components/NavBar.vue'
@@ -10,15 +11,35 @@ import AsideMenu from '@/Components/AsideMenu.vue'
 import FooterBar from '@/Components/FooterBar.vue'
 import CacheCleanMessage from '@/Components/CacheCleanMessage.vue'
 
+const permissions = usePage().props.auth.permissions
+
 
 const layoutAsidePadding = 'xl:pl-72'
 
 const darkModeStore = useDarkModeStore()
 
-const asideMenuList = usePage().props.auth.asideMenu
-
-const form = usePage();
 const message = ref('');
+
+const filteredItems = filterItems(menuAside);
+
+function filterItems(items) {
+  return items.reduce((filtered, item) => {
+    // Check if the item's permission exists in the provided permissions array
+    if (permissions.some(permission => permission.permission === item.permission)) {
+      // If the item has a menu, filter its submenu items
+      if (item.menu) {
+        const filteredMenu = filterItems(item.menu);
+        if (filteredMenu.length > 0) {
+          // Add the item only if it or its sub-menu items have matching permissions
+          filtered.push({ ...item, menu: filteredMenu });
+        }
+      } else {
+        filtered.push(item);
+      }
+    }
+    return filtered;
+  }, []);
+}
 
 router.on('navigate', () => {
   isAsideMobileExpanded.value = false
@@ -75,7 +96,7 @@ const clearCache = async () => {
         </NavBarItemPlain>
       </NavBar>
       <AsideMenu :is-aside-mobile-expanded="isAsideMobileExpanded" :is-aside-lg-active="isAsideLgActive"
-        :menu="asideMenuList" @menu-click="menuClick" @aside-lg-close-click="isAsideLgActive = false" />
+        :menu="filteredItems" @menu-click="menuClick" @aside-lg-close-click="isAsideLgActive = false" />
       <CacheCleanMessage :message="message" icon="fas fa-sync-alt" />
       <div style="min-height: 90vh;">
         <slot />

@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import { computed, ref } from 'vue'
-    import { mdiArrowRightCircle, mdiPlus, mdiEye, mdiTrashCan, mdiNoteEditOutline } from '@mdi/js'
     import SectionMain from '@/Components/SectionMain.vue'
     import CardBox from '@/Components/CardBox.vue'
     import LayoutAuthenticated from '@/Layouts/LayoutAuthenticated.vue'
@@ -35,9 +34,9 @@
       <LayoutAuthenticated>
         <Head title="Roles" />
         <SectionMain>
-          <SectionTitleLineWithButton :icon="mdiArrowRightCircle" title="Roles" main>
+          <SectionTitleLineWithButton icon="fas fa-arrow-alt-circle-right" title="Roles" main>
             <BaseButtonLink
-              :icon="mdiPlus"
+              icon="fas fa-plus"
               routeName="roles.create"
               label="Add New"
               color="contrast"
@@ -54,6 +53,7 @@
               <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                   <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                       <tr>
+                          <th scope="col" class="px-6 py-3">SL</th>
                           <th scope="col" class="px-6 py-3">Name</th>
                           <th scope="col" class="px-6 py-3">Permissions</th>
                           <th scope="col" class="px-6 py-3">Created</th>
@@ -64,16 +64,17 @@
                       </tr>
                   </thead>
                   <tbody>
-                      <tr v-for="role in rolesData.data" :key="role.id" class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                      <tr v-for="(role, index) in rolesData.data" :key="role.id" class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ index + 1 }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ role.name }}</td>
-                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              <span v-for="permission in role.permissions" :key="permission.id" class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{{ permission.name }}</span>
+                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white flex-wrap w-20">
+                              <span v-for="(permission, pIndex) in role.permissions" :key="permission.id" class="bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{{ permission.name }} <br v-if="(pIndex + 1) % 5 == 0"></span>
                           </td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ role.created_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ role.updated_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              <BaseButtonLink routeName="roles.edit" :routeParams="role.id" :icon="mdiNoteEditOutline" label="Edit" color="info" small />
-                              <BaseButtonLink class="ml-2" :icon="mdiTrashCan" label="Delete" color="danger" small @click="showModle(role.id)"/>
+                              <BaseButtonLink routeName="roles.edit" :routeParams="role.id" icon="fas fa-edit" label="Edit" color="info" small />
+                              <BaseButtonLink class="ml-2" icon="fas fa-trash-alt" label="Delete" color="danger" small @click="showModle(role.id)"/>
                           </td>
                       </tr>
                   </tbody>

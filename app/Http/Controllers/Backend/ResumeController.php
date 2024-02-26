@@ -24,6 +24,12 @@ class ResumeController extends Controller
      */
     public function index(): Response
     {
+        $this->authorize('view', PersonalDetail::class);
+        $this->authorize('view', Education::class);
+        $this->authorize('view', Training::class);
+        $this->authorize('view', Experience::class);
+        $this->authorize('view', Reference::class);
+
         $personalInfo = PersonalDetail::where('user_id', Auth::id())->first();
         $educationInfo = Education::where('user_id', Auth::id())->get();
         $trainingInfo = Training::where('user_id', Auth::id())->get();
@@ -40,6 +46,8 @@ class ResumeController extends Controller
     }
     public function storePersonalInfo(Request $request): RedirectResponse
     {
+        $this->authorize('create', PersonalDetail::class);
+
         $request->validate([
             'alt_email' => 'required|email|unique:personal_details',
             'phone' => 'required|digits:11|unique:personal_details',
@@ -81,6 +89,8 @@ class ResumeController extends Controller
     }
     public function updatePersonalInfo(Request $request, string $id): RedirectResponse
     {
+        $this->authorize('update', PersonalDetail::class);
+
         $validated = $request->validate([
             'alt_email' => ['required', 'email', 'max:255', Rule::unique(PersonalDetail::class)->ignore($request->id)],
             'phone' => ['required', 'digits:11', Rule::unique(PersonalDetail::class)->ignore($request->id)],
@@ -122,6 +132,9 @@ class ResumeController extends Controller
 
     public function saveEducation(Request $request): RedirectResponse
     {
+        $this->authorize('create', Education::class);
+        $this->authorize('update', Education::class);
+
         $request->validate([
             'degree' => 'required|max:50',
             'institute' => 'required|max:50',
@@ -153,6 +166,8 @@ class ResumeController extends Controller
     }
     public function deleteEducation(string $id): RedirectResponse
     {
+        $this->authorize('delete', Education::class);
+
         Education::where('user_id', Auth::id())->where('id', $id)->delete();
 
         return redirect()->back()->with('success', 'Education info deleted successfully');
@@ -160,6 +175,9 @@ class ResumeController extends Controller
 
     public function saveTraining(Request $request): RedirectResponse
     {
+        $this->authorize('create', Training::class);
+        $this->authorize('update', Training::class);
+
         $request->validate([
             'title' => 'required|max:50',
             'organization' => 'required|max:50',
@@ -191,6 +209,8 @@ class ResumeController extends Controller
     }
     public function deleteTraining(string $id): RedirectResponse
     {
+        $this->authorize('delete', Training::class);
+
         Training::where('user_id', Auth::id())->where('id', $id)->delete();
 
         return redirect()->back()->with('success', 'Training info deleted successfully');
@@ -198,6 +218,9 @@ class ResumeController extends Controller
 
     public function saveExperience(Request $request): RedirectResponse
     {
+        $this->authorize('create', Experience::class);
+        $this->authorize('update', Experience::class);
+
         $request->validate([
             'title' => 'required|max:50',
             'company' => 'required|max:50',
@@ -230,6 +253,8 @@ class ResumeController extends Controller
     }
     public function deleteExperience(string $id): RedirectResponse
     {
+        $this->authorize('delete', Experience::class);
+
         Experience::where('user_id', Auth::id())->where('id', $id)->delete();
 
         return redirect()->back()->with('success', 'Experience deleted successfully');
@@ -237,6 +262,9 @@ class ResumeController extends Controller
 
     public function saveReference(Request $request): RedirectResponse
     {
+        $this->authorize('create', Reference::class);
+        $this->authorize('update', Reference::class);
+
         $request->validate([
             'name' => 'required|max:50',
             'organization' => 'required|max:50',
@@ -266,6 +294,8 @@ class ResumeController extends Controller
     }
     public function deleteReference(string $id): RedirectResponse
     {
+        $this->authorize('delete', Reference::class);
+
         Reference::where('user_id', Auth::id())->where('id', $id)->delete();
 
         return redirect()->back()->with('success', 'Reference deleted successfully');

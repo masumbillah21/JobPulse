@@ -10,7 +10,7 @@ class Permission extends Model
 {
     use HasFactory, DateTrait;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'permission'];
 
     protected $hidden = ['pivot'];
 

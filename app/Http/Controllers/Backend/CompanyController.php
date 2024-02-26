@@ -16,6 +16,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', Company::class);
+
         $user = Auth::user();
         $companyData = $user->company()->first();
 
@@ -37,6 +39,8 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Company::class);
+
         $request->validate([
             'name' => 'required',
             'description' => 'required',
@@ -92,6 +96,8 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company)
     {
+        $this->authorize('update', Company::class);
+
         $validation = $request->validate([
             'name' => 'required',
             'description' => 'required',

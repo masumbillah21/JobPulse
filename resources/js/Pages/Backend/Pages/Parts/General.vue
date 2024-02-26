@@ -6,8 +6,6 @@ import BaseButtons from '@/Components/BaseButtons.vue'
 import BaseButtonLink from '@/Components/BaseButtonLink.vue'
 import FormFilePicker from '@/Components/FormFilePicker.vue'
 import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue'
-import { mdiPlus, mdiMinus, mdiChevronUp, mdiChevronDown } from '@mdi/js'
-
 
 defineProps({
     row: {
@@ -52,11 +50,11 @@ const onToggleSection = (sectionIndex: number) => {
 <template>
     <SectionTitleLineWithButton :title="row.name" main>
         <BaseButtons>
-            <BaseButtonLink class="mr-1" :icon="mdiPlus" @click="onAddSection" label="Add Section" color="contrast"
+            <BaseButtonLink class="mr-1" icon="fas fa-plus" @click="onAddSection" label="Add Section" color="contrast"
                 rounded-full small />
-            <BaseButtonLink v-if="sectionIndex > 0" :icon="mdiMinus" @click="onRemoveSection(sectionIndex)"
+            <BaseButtonLink v-if="sectionIndex > 0" icon="fas fa-minus" @click="onRemoveSection(sectionIndex)"
                 label="Remove Section" color="danger" rounded-full small />
-            <BaseButtonLink class="mr-1" :icon="row.hidden ? mdiChevronDown : mdiChevronUp"
+            <BaseButtonLink class="mr-1" :icon="row.hidden ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"
                 @click="onToggleSection(sectionIndex)" :label="row.hidden ? 'Show' : 'Hide'" color="contrast" rounded-full
                 small />
         </BaseButtons>
@@ -66,9 +64,9 @@ const onToggleSection = (sectionIndex: number) => {
         class="mb-2 flex-col justify-end items-end h-full">
         <div class="w-full mb-7 p-5 bg-slate-900 rounded">
             <BaseButtons class="mt-auto justify-end">
-                <BaseButtonLink class="mr-1" :icon="mdiPlus" @click="onAddRow(sectionIndex)" label="Add Row"
+                <BaseButtonLink class="mr-1" icon="fas fa-plus" @click="onAddRow(sectionIndex)" label="Add Row"
                     color="contrast" rounded-full small />
-                <BaseButtonLink v-if="rowIndex > 0" :icon="mdiMinus" @click="onRemoveRow(sectionIndex, rowIndex)"
+                <BaseButtonLink v-if="rowIndex > 0" icon="fas fa-minus" @click="onRemoveRow(sectionIndex, rowIndex)"
                     label="Remove Row" color="danger" rounded-full small />
             </BaseButtons>
             <FormField :label="'Title: ' + data.title" :label-for="'headline-' + (rowIndex + sectionIndex)">

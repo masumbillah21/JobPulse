@@ -1,7 +1,6 @@
 <script setup lang="ts">
     import { computed, ref, watch } from 'vue'
-    import { mdiArrowRightCircle, mdiArrowLeftCircle, mdiAccount, mdiEmail, mdiFormTextboxPassword, mdiNoteEditOutline } from '@mdi/js'
-    import SectionMain from '@/Components/SectionMain.vue'
+     import SectionMain from '@/Components/SectionMain.vue'
     import CardBox from '@/Components/CardBox.vue'
     import FormField from "@/Components/FormField.vue";
     import FormControl from "@/Components/FormControl.vue";
@@ -75,7 +74,7 @@
         <SectionMain>
             <SectionTitleLineWithButton icon="far fa-arrow-alt-circle-right" :title="blogData !== null ? 'Edit Post' : 'Create Post'" main>
                 <BaseButtonLink
-                    :icon="mdiArrowLeftCircle"
+                    icon="far fa-arrow-alt-circle-left"
                     label="Back"
                     routeName="blogs.index"
                     color="contrast"

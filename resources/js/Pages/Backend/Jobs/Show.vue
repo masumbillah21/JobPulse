@@ -1,7 +1,5 @@
 <script setup lan='ts'>
-import { mdiArrowRightCircle, mdiArrowLeftCircle, mdiNoteEditOutline } from '@mdi/js'
-import { ref } from 'vue'
-import { Head, router, usePage } from '@inertiajs/vue3'
+import { Head, usePage } from '@inertiajs/vue3'
 import LayoutAuthenticated from '@/Layouts/LayoutAuthenticated.vue'
 import SectionMain from '@/Components/SectionMain.vue'
 import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue'
@@ -21,7 +19,7 @@ const jobData = usePage().props.jobData;
             <SectionTitleLineWithButton icon="far fa-arrow-alt-circle-right"
                 :title="jobData.title" main>
                 <div>
-                    <BaseButtonLink class="mr-1" routeName="jobs.edit" :routeParams="jobData.id" :icon="mdiNoteEditOutline" label="Edit" color="info" rounded-full small />
+                    <BaseButtonLink class="mr-1" routeName="jobs.edit" :routeParams="jobData.id" icon="fas fa-edit" label="Edit" color="info" rounded-full small />
                     <BaseButtonLink icon="far fa-arrow-alt-circle-left" label="Back" routeName="jobs.index" color="contrast"
                     rounded-full small />
                 </div>

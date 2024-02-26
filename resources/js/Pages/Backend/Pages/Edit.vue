@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import { ref } from 'vue'
-import { Head, router, usePage, useForm } from '@inertiajs/vue3'
+import { Head, usePage, useForm } from '@inertiajs/vue3'
 import LayoutAuthenticated from '@/Layouts/LayoutAuthenticated.vue'
 import SectionMain from '@/Components/SectionMain.vue'
 import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue'
@@ -13,7 +13,6 @@ import FormField from '@/Components/FormField.vue'
 import FormControl from '@/Components/FormControl.vue'
 import FormFilePicker from '@/Components/FormFilePicker.vue'
 import FormCheckRadioGroup from '@/Components/FormCheckRadioGroup.vue'
-import { mdiArrowRightCircle, mdiPlus, mdiMinus, mdiContentSave, mdiChevronUp, mdiChevronDown } from '@mdi/js'
 import { base64ToFile } from '@/utils/base64ToFile.js'
 import Home from '@/Pages/Backend/Pages/Parts/Home.vue'
 import Blog from '@/Pages/Backend/Pages/Parts/Blog.vue'
@@ -218,9 +217,9 @@ const chooseLayout = (layout: String) => {
     <SectionMain>
       <SectionTitleLineWithButton title="Page">
         <BaseButtons>
-          <BaseButtonLink class="mr-1" :icon="mdiArrowRightCircle" routeName="pages.index" label="Back" color="contrast"
+          <BaseButtonLink class="mr-1" icon="far fa-arrow-alt-circle-left" routeName="pages.index" label="Back" color="contrast"
             rounded-full small />
-          <BaseButtonLink v-if="pageData" class="mr-1" :icon="mdiArrowRightCircle" routeName="pages.create" label="Add New" color="info"
+          <BaseButtonLink v-if="pageData" class="mr-1" icon="fas fa-plus" routeName="pages.create" label="Add New" color="info"
             rounded-full small />
         </BaseButtons>
       </SectionTitleLineWithButton>
@@ -283,7 +282,7 @@ const chooseLayout = (layout: String) => {
                 :options="{ '1': 'Enable', '0': 'Disable' }" />
             </FormField>
 
-            <BaseButtonLink :icon="mdiContentSave" class="w-full mt-10" color="info" type="submit" label="Save"
+            <BaseButtonLink icon="far fa-save" class="w-full mt-10" color="info" type="submit" label="Save"
               :class="{ 'opacity-25': form.processing }" :disabled="form.processing" rounded-full />
           </div>
         </div>

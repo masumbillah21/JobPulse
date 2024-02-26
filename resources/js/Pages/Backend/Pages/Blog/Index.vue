@@ -1,6 +1,5 @@
 <script setup lang="ts">
-    import { computed, ref } from 'vue'
-    import { mdiArrowRightCircle, mdiPlus, mdiEye, mdiTrashCan, mdiNoteEditOutline } from '@mdi/js'
+    import { ref } from 'vue'
     import SectionMain from '@/Components/SectionMain.vue'
     import CardBox from '@/Components/CardBox.vue'
     import LayoutAuthenticated from '@/Layouts/LayoutAuthenticated.vue'
@@ -37,9 +36,9 @@
       <LayoutAuthenticated>
         <Head title="Blog Posts" />
         <SectionMain>
-          <SectionTitleLineWithButton :icon="mdiArrowRightCircle" title="Blog Posts" main>
+          <SectionTitleLineWithButton icon="far fa-arrow-alt-circle-right" title="Blog Posts" main>
             <BaseButtonLink
-              :icon="mdiPlus"
+              icon="fas fa-plus"
               routeName="blogs.create"
               label="Add New"
               color="contrast"
@@ -76,8 +75,8 @@
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ blog.created_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ blog.updated_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              <BaseButtonLink routeName="blogs.edit" :routeParams="blog.id" :icon="mdiNoteEditOutline" label="Edit" color="info" small />
-                              <BaseButtonLink class="ml-2" :icon="mdiTrashCan" label="Delete" color="danger" small @click="showModle(blog.id)"/>
+                              <BaseButtonLink routeName="blogs.edit" :routeParams="blog.id" icon="fas fa-edit" label="Edit" color="info" small />
+                              <BaseButtonLink class="ml-2" icon="fas fa-trash-alt" label="Delete" color="danger" small @click="showModle(blog.id)"/>
                           </td>
                       </tr>
                   </tbody>

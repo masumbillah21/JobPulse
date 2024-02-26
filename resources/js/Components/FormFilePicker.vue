@@ -14,7 +14,7 @@ const props = defineProps({
   },
   icon: {
     type: String,
-    default: mdiUpload
+    default: 'fas fa-cloud-upload-alt'
   },
   accept: {
     type: String,

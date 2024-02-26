@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\AsideMenu;
 use App\Models\Role;
+use App\Models\User;
 use Inertia\Inertia;
+use App\Models\AsideMenu;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -17,9 +18,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $companyId = Auth::user()->company_id;
-        $roles = Role::where('company_id', $companyId)->with('permissions')->paginate(10);
 
+        $roles = Role::with('permissions')->paginate(10);
     
         return Inertia::render('Backend/Roles/Index', [
             'rolesData' => $roles
@@ -31,13 +31,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permissionList = AsideMenu::with(['children' => function ($query) {
-            $query->select('id', 'label', 'parent_id', 'route')->where('status', true);
-        }])
-        ->select('id', 'label', 'route')
-        ->whereNull('parent_id')
-        ->where('status', true)
-        ->get();
+        $permissionList = Permission::pluck('name', 'id');
 
         return Inertia::render('Backend/Roles/Edit', [
             'permissionList' => $permissionList
@@ -54,14 +48,8 @@ class RoleController extends Controller
             'permissions' => 'required|array'
         ]);
 
-
-        dd($request->all());
-
-        $companyId = Auth::user()->company_id;
-
         $role = Role::create([
             'name' => $request->name,
-            'company_id' => $companyId
         ]);
 
         $role->permissions()->attach($request->permissions);
@@ -85,7 +73,7 @@ class RoleController extends Controller
         $permissionList = Permission::pluck('name', 'id');
 
         return Inertia::render('Backend/Roles/Edit', [
-            'role' => $role->load('permissions'),
+            'role' => $role->load('permissions:id'),
             'permissionList' => $permissionList
         ]);
     }

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-    import { computed, ref, watch } from 'vue'
-    import { mdiArrowRightCircle, mdiArrowLeftCircle, mdiAccount, mdiEmail, mdiFormTextboxPassword, mdiNoteEditOutline } from '@mdi/js'
     import SectionMain from '@/Components/SectionMain.vue'
     import CardBox from '@/Components/CardBox.vue'
     import FormField from "@/Components/FormField.vue";
@@ -12,20 +10,24 @@
     import BaseDivider from "@/Components/BaseDivider.vue";
     import FormValidationErrors from "@/Components/FormValidationErrors.vue";
     import FormSuccess from "@/Components/FormSuccess.vue";
-    import { Head, useForm } from '@inertiajs/vue3'
+    import { Head, useForm, usePage} from '@inertiajs/vue3'
 
-    const props: any = defineProps(
-        {
-            employee: Object,
-        }
-    )
-    
+    const employeeData: any = usePage().props.employeeData ?? null
+
     const form: any = useForm({
-        id: props.employee !== null ? props.employee.id : null,
-        name: props.employee !== null ? props.employee.name : "",
-        email: props.employee !== null ? props.employee.email : "",
+        id: 0,
+        name: "",
+        email: "",
         password: "",
     });
+
+    if(employeeData !== null) {
+        form.id = employeeData.id
+        form.name = employeeData.name
+        form.email = employeeData.email
+        form.password = ""
+    }
+    
 
     const update = () => {
         form
@@ -41,11 +43,11 @@
     
     <template>
       <LayoutAuthenticated>
-        <Head title="Edit Employee" />
+        <Head :title="employeeData !== null ? 'Edit Employee' : 'Create Employee'" />
         <SectionMain>
-            <SectionTitleLineWithButton icon="far fa-arrow-alt-circle-right" :title="employee !== null ? 'Edit Employee' : 'Create Employee'" main>
+            <SectionTitleLineWithButton icon="far fa-arrow-alt-circle-right" :title="employeeData !== null ? 'Edit Employee' : 'Create Employee'" main>
                 <BaseButtonLink
-                    :icon="mdiArrowLeftCircle"
+                    icon="far fa-arrow-alt-circle-left"
                     label="Back"
                     routeName="employee.index"
                     color="contrast"
@@ -65,7 +67,7 @@
                 <FormControl
                     v-model="form.name"
                     id="name"
-                    :icon="mdiAccount"
+                    icon="fas fa-user"
                     autocomplete="name"
                     type="text"
                     required
@@ -80,7 +82,7 @@
                 <FormControl
                     v-model="form.email"
                     id="email"
-                    :icon="mdiEmail"
+                    icon="fas fa-envelope"
                     autocomplete="email"
                     type="email"
                     required
@@ -95,7 +97,7 @@
                 <FormControl
                     v-model="form.password"
                     id="password"
-                    :icon="mdiFormTextboxPassword"
+                    icon="fas fa-mask"
                     type="password"
                     autocomplete="new-password"
                 />
@@ -107,7 +109,7 @@
                 <BaseButtonLink
                     type="submit"
                     color="info"
-                    label="Update"
+                    :label="employeeData !== null ? 'Update' : 'Create'"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 />

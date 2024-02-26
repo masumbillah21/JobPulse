@@ -1,12 +1,9 @@
 <script setup lang='ts'>
-import { ref } from 'vue'
+
 import FormField from '@/Components/FormField.vue'
 import FormControl from '@/Components/FormControl.vue'
-import BaseButtons from '@/Components/BaseButtons.vue'
-import BaseButtonLink from '@/Components/BaseButtonLink.vue'
-import FormFilePicker from '@/Components/FormFilePicker.vue'
 import SectionTitle from '@/Components/SectionTitle.vue'
-import { mdiPlus, mdiMinus, mdiChevronUp, mdiChevronDown } from '@mdi/js'
+
 
 
 defineProps({

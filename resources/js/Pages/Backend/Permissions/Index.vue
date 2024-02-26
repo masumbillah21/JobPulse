@@ -35,9 +35,9 @@
       <LayoutAuthenticated>
         <Head title="Permissions" />
         <SectionMain>
-          <SectionTitleLineWithButton :icon="mdiArrowRightCircle" title="Permissions" main>
+          <SectionTitleLineWithButton icon="fas fa-arrow-circle-right" title="Permissions" main>
             <BaseButtonLink
-              :icon="mdiPlus"
+              icon="fas fa-plus"
               routeName="permissions.create"
               label="Add New"
               color="contrast"
@@ -54,20 +54,26 @@
               <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                   <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                       <tr>
+                          <th scope="col" class="px-6 py-3">SL</th>
                           <th scope="col" class="px-6 py-3">Name</th>
+                          <th scope="col" class="px-6 py-3">Permission</th>
                           <th scope="col" class="px-6 py-3">Created</th>
+                          <th scope="col" class="px-6 py-3">Updated</th>
                           <th scope="col" class="px-6 py-3">
                               Action
                           </th>
                       </tr>
                   </thead>
                   <tbody>
-                      <tr v-for="permission in permissionsData.data" :key="permission.id" class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                      <tr v-for="(permission, index) in permissionsData.data" :key="permission.id" class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ index + 1 }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ permission.name }}</td>
+                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ permission.permission }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ permission.created_at }}</td>
+                          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ permission.updated_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              <BaseButtonLink routeName="permissions.edit" :routeParams="permission.id" :icon="mdiNoteEditOutline" label="Edit" color="info" small />
-                              <BaseButtonLink class="ml-2" :icon="mdiTrashCan" label="Delete" color="danger" small @click="showModle(permission.id)"/>
+                              <BaseButtonLink routeName="permissions.edit" :routeParams="permission.id" icon="fas fa-edit" label="Edit" color="info" small />
+                              <BaseButtonLink class="ml-2" icon="fas fa-trash-alt" label="Delete" color="danger" small @click="showModle(permission.id)"/>
                           </td>
                       </tr>
                   </tbody>

@@ -12,7 +12,6 @@ class Role extends Model
     use HasFactory, DateTrait;
 
     protected $fillable = [
-        'company_id',
         'name',
     ];
 

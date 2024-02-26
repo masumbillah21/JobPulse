@@ -91,4 +91,17 @@ class User extends Authenticatable
     {
         return $this->hasMany(Page::class);
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'user_role');
+    }
+
+    public function hasPermission($permission)
+    {
+
+        return $this->roles->flatMap(function ($role) use ($permission) {
+            return $role->permissions->pluck('permission');
+        })->contains($permission);
+    }
 }

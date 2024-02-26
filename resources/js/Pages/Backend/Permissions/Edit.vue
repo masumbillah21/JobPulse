@@ -20,12 +20,14 @@
     const form: any = useForm({
         id: 0,
         name: "",
+        permission: "",
         _method: "post",
     });
 
     if(permissionData !== null) {
         form.id = permissionData.id
         form.name = permissionData.name
+        form.permission = permissionData.permission
         form._method = 'put'
     }
 
@@ -62,9 +64,9 @@
       <LayoutAuthenticated>
         <Head :title="(permissionData !== null) ? 'Edit permission' : 'Create permission'" />
         <SectionMain>
-            <SectionTitleLineWithButton :icon="mdiArrowRightCircle" :title="permissionData !== null ? 'Edit permission' : 'Create permission'" main>
+            <SectionTitleLineWithButton icon="fas fa-arrow-circle-right" :title="permissionData !== null ? 'Edit permission' : 'Create permission'" main>
                 <BaseButtonLink
-                    :icon="mdiArrowLeftCircle"
+                    icon="fas fa-arrow-circle-left"
                     label="Back"
                     routeName="permissions.index"
                     color="contrast"
@@ -81,14 +83,24 @@
                 <FormValidationErrors />
                 <FormSuccess />
                 <FormField label="Name" label-for="name" help="Please enter permission name">
-                <FormControl
-                    v-model="form.name"
-                    id="name"
-                    :icon="mdiAccount"
-                    autocomplete="name"
-                    type="text"
-                    required
-                />
+                    <FormControl
+                        v-model="form.name"
+                        id="name"
+                        icon="fas fa-lock"
+                        autocomplete="name"
+                        type="text"
+                        required
+                    />
+                </FormField>
+                <FormField label="Permission" label-for="permission" help="Please enter permission">
+                    <FormControl
+                        v-model="form.permission"
+                        id="permission"
+                        icon="fas fa-key"
+                        autocomplete="permission"
+                        type="text"
+                        required
+                    />
                 </FormField>
 
                 <BaseDivider />

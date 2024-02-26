@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use Inertia\Inertia;
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 
 class PermissionController extends Controller
@@ -14,7 +15,9 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $permissions = Permission::paginate(10);
+        $this->authorize('view', Permission::class);
+
+        $permissions = Permission::orderBy('id', 'desc')->paginate(10);
         return Inertia::render('Backend/Permissions/Index', ['permissionsData' => $permissions]);
     }
 
@@ -23,6 +26,8 @@ class PermissionController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Permission::class);
+
         return Inertia::render('Backend/Permissions/Edit');
     }
 
@@ -31,8 +36,11 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Permission::class);
+
         $validated = $request->validate([
-            'name' => 'required|unique:permissions'
+            'name' => 'required|unique:permissions',
+            'permission' => 'required|unique:permissions',
         ]);
         Permission::create($validated);
         return redirect()->back()->with('success', 'Permission created successfully!');
@@ -51,6 +59,8 @@ class PermissionController extends Controller
      */
     public function edit(Permission $permission)
     {
+        $this->authorize('update', Permission::class);
+
         return Inertia::render('Backend/Permissions/Edit', ['permission' => $permission]);
     }
 
@@ -59,10 +69,15 @@ class PermissionController extends Controller
      */
     public function update(Request $request, Permission $permission)
     {
+        $this->authorize('update', Permission::class);
+
         $validated = $request->validate([
-            'name' => 'required|Rule::unique(Permission::class)->ignore($permission->id)'
+            'name' => 'required|'.Rule::unique(Permission::class)->ignore($permission->id),
+            'permission' => 'required|'.Rule::unique(Permission::class)->ignore($permission->id),
         ]);
+
         $permission->update($validated);
+
         return redirect()->back()->with('success', 'Permission updated successfully!');
     }
 
@@ -71,6 +86,8 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
+        $this->authorize('delete', Permission::class);
+
         $permission->delete();
         return redirect()->back()->with('success', 'Permission deleted successfully!');
     }
