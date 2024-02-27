@@ -8,6 +8,7 @@
     import CardBoxModal from '@/Components/CardBoxModal.vue'
     import Pagination from '@/Components/Pagination.vue'
     import FormSuccess from "@/Components/FormSuccess.vue";
+    import { hasPermission } from '@/utils/hasPermission.js'
     import { Head, router, usePage } from '@inertiajs/vue3'
 
     const jobsData:any = usePage().props.jobsData
@@ -35,7 +36,7 @@
         <Head title="Jobs" />
         <SectionMain>
           <SectionTitleLineWithButton icon="far fa-arrow-alt-circle-right" title="Jobs" main>
-            <BaseButtonLink
+            <BaseButtonLink v-if="hasPermission('jobs.create')"
               icon="fas fa-plus"
               routeName="jobs.create"
               label="Add New"
@@ -73,9 +74,9 @@
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ job.created_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ job.updated_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              <BaseButtonLink routeName="jobs.show" :routeParams="job.id" icon="far fa-eye" label="View" color="success" small />
-                              <BaseButtonLink class="ml-2" routeName="jobs.edit" :routeParams="job.id" icon="fas fa-edit" label="Edit" color="info" small />
-                              <BaseButtonLink class="ml-2" icon="fas fa-trash-alt" label="Delete" color="danger" small @click="showModle(job.id)"/>
+                              <BaseButtonLink v-if="hasPermission('jobs.view')" routeName="jobs.show" :routeParams="job.id" icon="far fa-eye" label="View" color="success" small />
+                              <BaseButtonLink v-if="hasPermission('jobs.update')" class="ml-2" routeName="jobs.edit" :routeParams="job.id" icon="fas fa-edit" label="Edit" color="info" small />
+                              <BaseButtonLink v-if="hasPermission('jobs.delete')" class="ml-2" icon="fas fa-trash-alt" label="Delete" color="danger" small @click="showModle(job.id)"/>
                           </td>
                       </tr>
                   </tbody>

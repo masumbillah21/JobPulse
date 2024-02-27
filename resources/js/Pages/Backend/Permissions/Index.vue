@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import { computed, ref } from 'vue'
-    import { mdiArrowRightCircle, mdiPlus, mdiEye, mdiTrashCan, mdiNoteEditOutline } from '@mdi/js'
     import SectionMain from '@/Components/SectionMain.vue'
     import CardBox from '@/Components/CardBox.vue'
     import LayoutAuthenticated from '@/Layouts/LayoutAuthenticated.vue'
@@ -9,6 +8,7 @@
     import CardBoxModal from '@/Components/CardBoxModal.vue'
     import Pagination from '@/Components/Pagination.vue'
     import FormSuccess from "@/Components/FormSuccess.vue";
+    import { hasPermission } from '@/utils/hasPermission.js'
     import { Head, router, usePage } from '@inertiajs/vue3'
 
     const permissionsData: any = usePage().props.permissionsData
@@ -36,7 +36,7 @@
         <Head title="Permissions" />
         <SectionMain>
           <SectionTitleLineWithButton icon="fas fa-arrow-circle-right" title="Permissions" main>
-            <BaseButtonLink
+            <BaseButtonLink v-if="hasPermission('permissions.create')"
               icon="fas fa-plus"
               routeName="permissions.create"
               label="Add New"
@@ -72,8 +72,8 @@
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ permission.created_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ permission.updated_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              <BaseButtonLink routeName="permissions.edit" :routeParams="permission.id" icon="fas fa-edit" label="Edit" color="info" small />
-                              <BaseButtonLink class="ml-2" icon="fas fa-trash-alt" label="Delete" color="danger" small @click="showModle(permission.id)"/>
+                              <BaseButtonLink v-if="hasPermission('permissions.update')" routeName="permissions.edit" :routeParams="permission.id" icon="fas fa-edit" label="Edit" color="info" small />
+                              <BaseButtonLink v-if="hasPermission('permissions.delete')" class="ml-2" icon="fas fa-trash-alt" label="Delete" color="danger" small @click="showModle(permission.id)"/>
                           </td>
                       </tr>
                   </tbody>

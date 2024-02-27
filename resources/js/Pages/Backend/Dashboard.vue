@@ -1,7 +1,6 @@
 <script setup>
 import { computed, ref, onMounted } from 'vue'
 import { useMainStore } from '@/Stores/main'
-import  '@mdi/js'
 import * as chartConfig from '@/Components/Charts/chart.config.js'
 import LineChart from '@/Components/Charts/LineChart.vue'
 import SectionMain from '@/Components/SectionMain.vue'
@@ -12,6 +11,7 @@ import CardBoxTransaction from '@/Components/CardBoxTransaction.vue'
 import CardBoxClient from '@/Components/CardBoxClient.vue'
 import LayoutAuthenticated from '@/Layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue'
+import SectionTitle from '@/Components/SectionTitle.vue'
 import { Head } from '@inertiajs/vue3'
 
 const chartData = ref(null)
@@ -35,41 +35,24 @@ const transactionBarItems = computed(() => mainStore.history)
   <LayoutAuthenticated>
     <Head title="Dashboard" />
     <SectionMain>
-      <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Overview" main>
-        <BaseButtonLink
-          href="https://github.com/justboil/admin-one-vue-tailwind"
-          target="_blank"
-          :icon="mdiGithub"
-          label="Star on GitHub"
-          color="contrast"
-          rounded-full
-          small
-        />
-      </SectionTitleLineWithButton>
+      <SectionTitle icon="fas fa-sliders-h" title="Overview" main/>
 
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
         <CardBoxWidget
-          trend="12%"
-          trend-type="up"
           color="text-emerald-500"
-          :icon="mdiAccountMultiple"
+          icon="fas fa-users"
           :number="512"
-          label="Clients"
+          label="Employees"
         />
         <CardBoxWidget
-          trend="12%"
-          trend-type="down"
           color="text-blue-500"
-          :icon="mdiCartOutline"
+          icon="fas fa-building"
           :number="7770"
-          prefix="$"
-          label="Sales"
+          label="Companies"
         />
         <CardBoxWidget
-          trend="Overflow"
-          trend-type="alert"
           color="text-red-500"
-          :icon="mdiChartTimelineVariant"
+          icon="fas fa-suitcase"
           :number="256"
           suffix="%"
           label="Performance"
@@ -101,8 +84,8 @@ const transactionBarItems = computed(() => mainStore.history)
         </div>
       </div>
 
-      <SectionTitleLineWithButton :icon="mdiChartPie" title="Trends overview">
-        <BaseButtonLink :icon="mdiReload" color="whiteDark" @click="fillChartData" />
+      <SectionTitleLineWithButton icon="fas fa-chart-pie" title="Trends overview">
+        <BaseButtonLink icon="fas fa-sync-alt" color="whiteDark" @click="fillChartData" />
       </SectionTitleLineWithButton>
 
       <CardBox class="mb-6">

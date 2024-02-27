@@ -1,6 +1,5 @@
 <script setup>
-import { useForm, Head, Link } from '@inertiajs/vue3'
-import { mdiAccount, mdiAsterisk } from '@mdi/js'
+import { useForm, Head } from '@inertiajs/vue3'
 import LayoutGuest from '@/Layouts/LayoutGuest.vue'
 import SectionFullScreen from '@/Components/SectionFullScreen.vue'
 import CardBox from '@/Components/CardBox.vue'
@@ -70,7 +69,7 @@ const submit = () => {
         >
           <FormControl
             v-model="form.email"
-            :icon="mdiAccount"
+            icon="fas fa-user"
             id="email"
             autocomplete="email"
             type="email"
@@ -85,7 +84,7 @@ const submit = () => {
         >
           <FormControl
             v-model="form.password"
-            :icon="mdiAsterisk"
+            icon="fas fa-key"
             type="password"
             id="password"
             autocomplete="current-password"
@@ -109,13 +108,6 @@ const submit = () => {
               label="Login"
               :class="{ 'opacity-25': form.processing }"
               :disabled="form.processing"
-            />
-            <BaseButtonLink
-              v-if="canResetPassword"
-              route-name="password.request"
-              color="info"
-              outline
-              label="Forgot Password?"
             />
           </BaseButtons>
         </BaseLevel>

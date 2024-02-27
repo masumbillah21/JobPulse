@@ -8,11 +8,6 @@ export default [
         route: 'profile.edit'
       },
       {
-        icon: 'fas fa-cogs',
-        label: 'Settings',
-        route: 'settings.index'
-      },
-      {
         isDivider: true
       },
       {

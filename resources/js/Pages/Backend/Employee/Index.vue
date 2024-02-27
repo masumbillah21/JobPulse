@@ -8,6 +8,7 @@
     import CardBoxModal from '@/Components/CardBoxModal.vue'
     import { Head, router, usePage } from '@inertiajs/vue3'
     import Pagination from '@/Components/Pagination.vue'
+    import { hasPermission } from '@/utils/hasPermission.js'
     import FormSuccess from "@/Components/FormSuccess.vue";
 
     const employees: any = usePage().props.employees
@@ -35,7 +36,7 @@
         <Head title="Employees" />
         <SectionMain>
           <SectionTitleLineWithButton icon="far fa-arrow-alt-circle-right" title="Employees" main>
-            <BaseButtonLink
+            <BaseButtonLink v-if="hasPermission('employee.create')"
               icon="fas fa-plus"
               routeName="employee.create"
               label="Add New"
@@ -69,9 +70,8 @@
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ employee.email }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ employee.created_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              <BaseButtonLink routeName="employee.edit" :routeParams="employee.id" icon="fas fa-edit" label="Edit" color="info" small />
-                              <BaseButtonLink class="ml-2" icon="fas fa-trash-alt" label="Delete" color="danger" small @click="showModle(employee.id)"/>
-
+                              <BaseButtonLink v-if="hasPermission('employee.update')" routeName="employee.edit" :routeParams="employee.id" icon="fas fa-edit" label="Edit" color="info" small />
+                              <BaseButtonLink class="ml-2" v-if="hasPermission('employee.delete')" icon="fas fa-trash-alt" label="Delete" color="danger" small @click="showModle(employee.id)"/>
                           </td>
                       </tr>
                   </tbody>

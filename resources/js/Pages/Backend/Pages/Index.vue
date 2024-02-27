@@ -8,6 +8,7 @@
     import CardBoxModal from '@/Components/CardBoxModal.vue'
     import Pagination from '@/Components/Pagination.vue'
     import FormSuccess from "@/Components/FormSuccess.vue";
+    import { hasPermission } from '@/utils/hasPermission.js'
     import { Head, router, usePage } from '@inertiajs/vue3'
 
     const pageList: any = usePage().props.pageList
@@ -38,7 +39,7 @@
         <Head title="Roles" />
         <SectionMain>
           <SectionTitleLineWithButton icon="fas fa-arrow-circle-right" title="Pages" main>
-            <BaseButtonLink
+            <BaseButtonLink v-if="hasPermission('pages.create')"
               icon="fas fa-plus"
               routeName="pages.create"
               label="Add New"
@@ -80,8 +81,8 @@
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ page.created_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ page.updated_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              <BaseButtonLink routeName="pages.edit" :routeParams="page.id" icon="fas fa-edit" label="Edit" color="info" small />
-                              <BaseButtonLink class="ml-2" icon="fas fa-trash-alt" label="Delete" color="danger" small @click="showModle(page.id)"/>
+                              <BaseButtonLink v-if="hasPermission('pages.update')" routeName="pages.edit" :routeParams="page.id" icon="fas fa-edit" label="Edit" color="info" small />
+                              <BaseButtonLink v-if="hasPermission('pages.delete')" class="ml-2" icon="fas fa-trash-alt" label="Delete" color="danger" small @click="showModle(page.id)"/>
                           </td>
                       </tr>
                   </tbody>

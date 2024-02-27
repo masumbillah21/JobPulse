@@ -17,7 +17,7 @@ const emit = defineEmits(['menu-click', 'aside-lg-close-click'])
 
 const logoutItem = computed(() => ({
   label: 'Logout',
-  icon: mdiLogout,
+  icon: 'fas fa-sign-out-alt',
   color: 'info',
   isLogout: true
 }))

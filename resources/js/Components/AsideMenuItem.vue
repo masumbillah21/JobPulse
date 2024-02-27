@@ -1,7 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { Link } from '@inertiajs/vue3'
-import { mdiMinus, mdiPlus } from '@mdi/js'
 import { getButtonColor } from '@/colors.js'
 import BaseIcon from '@/Components/BaseIcon.vue'
 import AsideMenuList from '@/Components/AsideMenuList.vue'

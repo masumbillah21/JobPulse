@@ -19,5 +19,11 @@ class OwerUserSeeder extends Seeder
             'password' => '12345678',
             'user_type' => 'owner',
         ]);
+
+        $user = User::find(1);
+
+        if ($user) {
+            $user->roles()->attach(1);
+        }
     }
 }

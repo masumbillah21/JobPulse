@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\Backend\CompanyController;
 
+Route::resource('company', CompanyController::class)->only([
+    'index', 'update', 'store', 'create', 'show'
+]);
 
-
-
-Route::resource('company', CompanyController::class);
+Route::get('company/{id}/{status}', [CompanyController::class, 'changeStatus'])->name('company.status');

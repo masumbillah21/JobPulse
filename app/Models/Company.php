@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Trait\DateTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -9,7 +10,7 @@ use Storage;
 
 class Company extends Model
 {
-    use HasFactory;
+    use HasFactory, DateTrait;
     protected $fillable = [
         'user_id',
         'name',
@@ -21,6 +22,7 @@ class Company extends Model
         'website',
         'logo',
         'company_size',
+        'status'
     ];
 
     public function getLogoAttribute($value): string

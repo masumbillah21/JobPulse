@@ -18,8 +18,7 @@ class CompanyController extends Controller
     {
         $this->authorize('view', Company::class);
 
-        $user = Auth::user();
-        $companyData = $user->company()->first();
+        $companyData = Company::paginate(10);
 
         return Inertia::render('Backend/Company/Index', [
             'companyData' => $companyData
@@ -31,7 +30,14 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        $this->authorize('create', Company::class);
+
+        $user = Auth::user();
+        $companyData = $user->company()->first();
+
+        return Inertia::render('Backend/Company/Edit', [
+            'companyData' => $companyData
+        ]);
     }
 
     /**
@@ -80,7 +86,11 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
-        //
+        $this->authorize('view', Company::class);
+
+        return Inertia::render('Backend/Company/Show', [
+            'companyDetails' => $company
+        ]);
     }
 
     /**
@@ -127,8 +137,14 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Company $company)
+    public function changeStatus(string $id, string $status)
     {
-        //
+        $this->authorize('delete', Company::class);
+
+        $company = Company::find($id);
+        $comStatus = $company->status == 1 ? 0 : 1;
+        $company->update(['status' => $comStatus]);
+
+        return redirect()->back()->with('success', 'Company status updated successfully');
     }
 }

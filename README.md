@@ -11,11 +11,11 @@
 - - The Login Route will be different for the Main Owner.
 - - Backend: Dashboard, Companies, Jobs, Employee(Optional), Blogs, Pages Plugins, Accounts Settings
 - - - Main System Owner Company can only login in the site.
-- - - Job providing companies can register and login in the site.
 
 - Candidates can apply to the posted jobs under any company. Before applying candidates must be logged in into the system.
 
 - - For The Candidates, you have to develop these Modules:
+- - Job providing companies can register and login in the site.
 - - Frontend Part: Login, Registration and Forget Password
 - - Backend: Dashboard, Jobs, Profiles, Accounts Settings
 

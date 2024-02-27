@@ -57,7 +57,16 @@ class HandleInertiaRequests extends Middleware
 
     private function getUserPermissions(Request $request)
     {
+        
+        if (!$request->user()) {
+            return [];
+        }
+        
         $user = $request->user();
+
+        if ($user->roles() == null) {
+            return [];
+        }
 
         $roles = $user->roles()->with('permissions')->get();
 

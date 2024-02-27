@@ -45,7 +45,7 @@
             ...data,
             terms: form.terms && form.terms.length,
             }))
-            .post(route("permissions.store"), {
+            .post(route("admin.permissions.store"), {
                 onSuccess: () => form.reset(),
             });
     };
@@ -56,7 +56,7 @@
             ...data,
             terms: form.terms && form.terms.length,
             }))
-            .post(route("permissions.update", form.id));
+            .post(route("admin.permissions.update", form.id));
     };
 </script>
     

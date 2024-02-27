@@ -8,6 +8,7 @@
     import CardBoxModal from '@/Components/CardBoxModal.vue'
     import Pagination from '@/Components/Pagination.vue'
     import FormSuccess from "@/Components/FormSuccess.vue";
+    import { hasPermission } from '@/utils/hasPermission.js'
 
     import { Head, router, usePage } from '@inertiajs/vue3'
 
@@ -37,7 +38,7 @@
         <Head title="Blog Posts" />
         <SectionMain>
           <SectionTitleLineWithButton icon="far fa-arrow-alt-circle-right" title="Blog Posts" main>
-            <BaseButtonLink
+            <BaseButtonLink v-if="hasPermission('blogs.create')"
               icon="fas fa-plus"
               routeName="blogs.create"
               label="Add New"
@@ -75,8 +76,8 @@
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ blog.created_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ blog.updated_at }}</td>
                           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              <BaseButtonLink routeName="blogs.edit" :routeParams="blog.id" icon="fas fa-edit" label="Edit" color="info" small />
-                              <BaseButtonLink class="ml-2" icon="fas fa-trash-alt" label="Delete" color="danger" small @click="showModle(blog.id)"/>
+                              <BaseButtonLink v-if="hasPermission('blogs.update')" routeName="blogs.edit" :routeParams="blog.id" icon="fas fa-edit" label="Edit" color="info" small />
+                              <BaseButtonLink v-if="hasPermission('blogs.delete')" class="ml-2" icon="fas fa-trash-alt" label="Delete" color="danger" small @click="showModle(blog.id)"/>
                           </td>
                       </tr>
                   </tbody>

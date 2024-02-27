@@ -18,13 +18,18 @@ return new class extends Migration
             $table->string('title');
             $table->string('location');
             $table->string('job_type');
+            $table->string('job_level');
+            $table->foreignId('job_category_id')->constrained()->restrictOnDelete();
+            $table->string('work_type');
             $table->text('description');
             $table->text('requirements');
             $table->text('responsibilities');
             $table->string('salary');
             $table->string('facilities');
+            $table->text('skills');
             $table->date('closing_date');
             $table->string('status');
+            $table->string('slug');
             $table->timestamps();
         });
     }

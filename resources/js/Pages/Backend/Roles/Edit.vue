@@ -43,14 +43,14 @@ const submit = () => {
 
 
 const create = () => {
-    form.post(route("roles.store"), {
+    form.post(route("admin.roles.store"), {
         onSuccess: () => form.reset(),
     });
 };
 
 
 const update = () => {
-    form.post(route("roles.update", form.id));
+    form.post(route("admin.roles.update", form.id));
 };
 </script>
     

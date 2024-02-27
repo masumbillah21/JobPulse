@@ -25,48 +25,10 @@ export default [
      ]
   },
   {
-     label : "Company",
+     label : "Company Profile",
      icon : "fas fa-building",
-     route : "company.index",
+     route : "company.create",
      permission: "company.create"
-  },
-  {
-     label : "Roles",
-     icon : "fas fa-users-cog",
-     permission: "role.view",
-     menu :[
-        {
-           route : "roles.index",
-           icon : "fas fa-users-cog",
-           label : "All Roles",
-           permission: "role.view",
-        },
-        {
-           route : "roles.create",
-           icon : "fas fa-plus",
-           label : "Add Role",
-           permission: "role.create",
-        }
-     ]
-  },
-  {
-     label : "Permissions",
-     icon : "fas fa-key",
-     permission: "permissions.view",
-     menu :[
-        {
-           route : "permissions.index",
-           icon : "fas fa-key",
-           label : "All Permissions",
-           permission: "permissions.view",
-        },
-        {
-           route : "permissions.create",
-           icon : "fas fa-plus",
-           label : "Add Permission",
-           permission: "permissions.view",
-        }
-     ]
   },
   {
      label : "Resume",
@@ -94,25 +56,6 @@ export default [
      ]
   },
   {
-     label : "Pages",
-     icon : "fas fa-folder",
-     permission: "pages.view",
-     menu :[
-        {
-           route : "pages.index",
-           icon : "fas fa-folder",
-           label : "All Pages",
-           permission: "pages.view",
-        },
-        {
-           route : "pages.create",
-           icon : "fas fa-plus",
-           label : "Add Page",
-           permission: "pages.create",
-        }
-     ]
-  },
-  {
      label : "Blogs",
      icon : "fas fa-folder",
      permission: "blogs.view",
@@ -130,5 +73,11 @@ export default [
            permission: "blogs.create",
         }
      ]
-  }
+  },
+  {
+      label : "Plugins",
+      icon : "fas fa-building",
+      route : "company.index",
+      permission: "company.create"
+   },
 ]

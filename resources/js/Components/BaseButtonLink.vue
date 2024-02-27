@@ -3,6 +3,10 @@ import { computed } from 'vue'
 import { Link } from '@inertiajs/vue3'
 import { getButtonColor } from '@/colors.js'
 import BaseIcon from '@/Components/BaseIcon.vue'
+import { usePage } from '@inertiajs/vue3'
+import { UserTypeEnum } from '@/utils/userTypeEnum.js'
+
+const userType = usePage().props.auth.user.user_type
 
 const props = defineProps({
   label: {
@@ -114,7 +118,7 @@ const componentClass = computed(() => {
   <component
   :is="is"
     :class="componentClass"
-    :href="routeName ? route(routeName, routeParams) : href"
+    :href="routeName ? route(userType === UserTypeEnum.SYSTEM ? 'admin.'+routeName : routeName, routeParams) : href"
     :type="computedType"
     :target="target"
     :disabled="disabled"
