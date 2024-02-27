@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enum\UserTypeEnum;
 use App\Models\Role;
 use App\Models\Permission;
 use Illuminate\Database\Seeder;
@@ -28,6 +29,9 @@ class RoleSeeder extends Seeder
         ]);
         Role::create([
             'name' => 'Company Employee',
+        ]);
+        Role::create([
+            'name' => 'Candidate',
         ]);
 
         $role = Role::find(1);

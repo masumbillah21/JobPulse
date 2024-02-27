@@ -115,6 +115,30 @@ class PermissionSeeder extends Seeder
         "permission" => "jobs.delete"
       ],
       [
+        "name" => "Job List View",
+        "permission" => "jobs.view.list"
+      ],
+      [
+        "name" => "Job List Approved",
+        "permission" => "jobs.approved"
+      ],
+      [
+        "name" => "View Job Categories",
+        "permission" => "job.categories.view"
+      ],
+      [
+        "name" => "Create Job Category",
+        "permission" => "job.categories.create"
+      ],
+      [
+        "name" => "Update Job Category",
+        "permission" => "job.categories.update"
+      ],
+      [
+        "name" => "Delete Job Category",
+        "permission" => "job.categories.delete"
+      ],
+      [
         "name" => "Apply Job",
         "permission" => "jobs.apply"
       ],
@@ -149,7 +173,55 @@ class PermissionSeeder extends Seeder
       [
         "name" => "Delete Blog",
         "permission" => "blogs.delete"
-      ]
+      ],
+      [
+        "name" => "View Categories",
+        "permission" => "categories.view"
+      ],
+      [
+        "name" => "Create Category",
+        "permission" => "categories.create"
+      ],
+      [
+        "name" => "Update Category",
+        "permission" => "categories.update"
+      ],
+      [
+        "name" => "Delete Category",
+        "permission" => "categories.delete"
+      ],
+      [
+        "name" => "View Tags",
+        "permission" => "tags.view"
+      ],
+      [
+        "name" => "Create Tag",
+        "permission" => "tags.create"
+      ],
+      [
+        "name" => "Update Tag",
+        "permission" => "tags.update"
+      ],
+      [
+        "name" => "Delete Tag",
+        "permission" => "tags.delete"
+      ],
+      [
+        "name" => "View Settings",
+        "permission" => "settings.view"
+      ],
+      [
+        "name" => "Create Settings",
+        "permission" => "settings.create"
+      ],
+      [
+        "name" => "Update Settings",
+        "permission" => "settings.update"
+      ],
+      [
+        "name" => "Delete Settings",
+        "permission" => "settings.delete"
+      ],
     ];  
 
     $this->createMenu($menus);

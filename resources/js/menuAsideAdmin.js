@@ -96,7 +96,26 @@ export default [
            icon : "fas fa-plus",
            label : "Add Job",
            permission: "jobs.create",
-        }
+        },
+     ]
+  },
+  {
+     label : "Jobs List",
+     icon : "fas fa-sliders-h",
+     permission: "jobs.view.list",
+     menu :[
+        {
+            route : "admin.jobs.index",
+            icon : "fas fa-list",
+            label : "Job Lists",
+            permission: "jobs.view.list",
+         },
+         {
+            route : "admin.jobs.categories.index",
+            icon : "fas fa-list",
+            label : "Job Categories",
+            permission: "job.categories.view",
+         }
      ]
   },
   {
@@ -134,7 +153,19 @@ export default [
            icon : "fas fa-plus",
            label : "Add Blog",
            permission: "blogs.create",
-        }
+        },
+        {
+            route : "admin.categories.index",
+            icon : "fas fa-list",
+            label : "Categories",
+            permission: "categories.view",
+         },
+         {
+            route : "admin.tags.index",
+            icon : "fas fa-list",
+            label : "Tags",
+            permission: "tags.view",
+         }
      ]
   },
   {

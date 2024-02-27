@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Enum\UserTypeEnum;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -17,7 +18,7 @@ class OwerUserSeeder extends Seeder
             'name' => 'System Admin',
             'email' => 'mbillah21@yahoo.com',
             'password' => '12345678',
-            'user_type' => 'owner',
+            'user_type' => UserTypeEnum::SYSTEM,
         ]);
 
         $user = User::find(1);

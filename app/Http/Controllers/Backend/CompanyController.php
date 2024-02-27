@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Backend;
 
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use App\Helper\GenerateUniqueSlug;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -65,18 +67,20 @@ class CompanyController extends Controller
             $image_path = $request->file('logo')->store('images', 'public');
         }
 
-        Company::create(
-            [
-                'name' => $request->name,
-                'description' => $request->description,
-                'company_type' => $request->company_type,
-                'address' => $request->address,
-                'phone' => $request->phone,
-                'email' => $request->email,
-                'website' => $request->website,
-                'logo' => $image_path,
-                'company_size' => $request->company_size,
-            ]);
+        $slug = GenerateUniqueSlug::slug($request->name, Company::class);
+
+        Company::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'company_type' => $request->company_type,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'website' => $request->website,
+            'logo' => $image_path,
+            'company_size' => $request->company_size,
+            'slug' => $slug,
+        ]);
         
         return redirect()->back()->with('success', 'Company create successfully');
     }
@@ -109,7 +113,7 @@ class CompanyController extends Controller
         $this->authorize('update', Company::class);
 
         $validation = $request->validate([
-            'name' => 'required',
+            'name' => 'required|'.Rule::unique(Company::class)->ignore($company->id),
             'description' => 'required',
             'company_type' => 'required',
             'address' => 'required',
@@ -127,6 +131,10 @@ class CompanyController extends Controller
             $validation['logo'] = $image_path;
         }else{
             unset($validation['logo']);
+        }
+
+        if($request->name != $company->name){
+            $validation['slug'] = GenerateUniqueSlug::slug($request->name, Company::class);
         }
 
         $company->update($validation);

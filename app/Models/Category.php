@@ -4,10 +4,11 @@ namespace App\Models;
 
 use App\Trait\DateTrait;
 use App\Trait\SlugTrait;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Tag extends Model
+class Category extends Model
 {
     use HasFactory, DateTrait, SlugTrait;
 
@@ -16,8 +17,12 @@ class Tag extends Model
         'slug',
     ];
 
-    public function blog()
+    protected $hidden = [
+        'pivot'
+    ];
+
+    public function blogs()
     {
-        return $this->belongsToMany(Blog::class, 'blog_tags');
+        return $this->belongsToMany(Blog::class, 'blog_categories');
     }
 }

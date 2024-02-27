@@ -16,7 +16,7 @@ class UserMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->user() || auth()->user()->user_type == UserTypeEnum::OWNER) {
+        if (!auth()->user() || auth()->user()->user_type == UserTypeEnum::SYSTEM) {
             abort(403);
         }
         return $next($request);

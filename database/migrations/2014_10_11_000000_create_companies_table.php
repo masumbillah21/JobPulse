@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('email');
             $table->string('website')->nullable();
-            $table->string('logo');
+            $table->string('logo')->nullable();
             $table->string('company_size');
             $table->boolean('status')->default(1);
             $table->string('slug')->unique();

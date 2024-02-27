@@ -12,8 +12,10 @@
     import FormSuccess from "@/Components/FormSuccess.vue";
     import FormCheckRadioGroup from "@/Components/FormCheckRadioGroup.vue";
     import { Head, useForm, usePage } from '@inertiajs/vue3'
+import { isSystemUser } from '@/utils/isSystemUser';
 
     const jobData: any = usePage().props.jobData ?? null
+    const jobCateLists: any = usePage().props.jobCateLists ?? null
 
     const jobTypes = [
         { id: '', label: 'Select Job Type' },
@@ -21,16 +23,40 @@
         { id: 'Part Time', label: 'Part Time' },
         { id: 'Contract', label: 'Contract' },
     ];
+    const jobLevel = [
+        { id: '', label: 'Select Experience Level' },
+        { id: 'Beginner', label: 'Beginner' },
+        { id: 'Intermiddiate', label: 'Intermidiate' }, 
+        { id: 'Advanced', label: 'Advanced' },
+    ];
+
+    const workType = [
+        { id: '', label: 'Select a type' },
+        { id: 'Remote', label: 'Remote' },
+        { id: 'On Site', label: 'On Site' }, 
+        { id: 'Hybrid', label: 'Hybrid' },
+    ];
+
+    const jobCates = [
+        {id: 0, label: 'Select a category'},
+    ]
+    if(jobCateLists){
+        jobCates.push(...jobCateLists)
+    }
     const form: any = useForm({
         id: 0,
         title: '',
         location: '',
         job_type: jobTypes[0].id,
+        job_level: jobLevel[0].id,
+        job_category_id: jobCates[0].id,
+        work_type: workType[0].id,
         description: '',
         requirements: '',
         responsibilities: '',
         salary: '',
         facilities: '',
+        skills: '',
         closing_date: '',
         status: '',
         _method: "post",
@@ -41,11 +67,15 @@
         form.title = jobData.title
         form.location = jobData.location
         form.job_type = jobData.job_type
+        form.job_level = jobData.job_level
+        form.job_category_id = jobData.job_category_id
+        form.work_type = jobData.work_type
         form.description = jobData.description
         form.requirements = jobData.requirements
         form.responsibilities = jobData.responsibilities
         form.salary = jobData.salary
         form.facilities = jobData.facilities
+        form.skills = jobData.skills
         form.status = jobData.status
         form._method = 'put'
     }
@@ -59,23 +89,16 @@
     };
 
     const create = () => {
-        form
-            .transform((data: any) => ({
-                ...data,
-                terms: form.terms && form.terms.length,
-            }))
-            .post(route("jobs.store"), {
-                onSuccess: () => form.reset(),
-            });
+        const routeName = isSystemUser() ? "admin.jobs.store" : "jobs.store";
+        
+        form.post(route(routeName), {
+            onSuccess: () => form.reset(),
+        });
     };
 
     const update = () => {
-        form
-            .transform((data: any) => ({
-                ...data,
-                terms: form.terms && form.terms.length,
-            }))
-            .post(route("jobs.update", form.id));
+        const routeName = isSystemUser() ? "admin.jobs.update" : "jobs.update";
+        form.post(route(routeName, form.id));
     };
 </script>
 
@@ -86,7 +109,7 @@
         <SectionMain>
             <SectionTitleLineWithButton icon="far fa-arrow-alt-circle-right"
                 :title="jobData !== null ? 'Edit job' : 'Create job'" main>
-                <BaseButtonLink icon="fas fa-arrow-alt-circle-left" label="Back" routeName="jobs.index" color="contrast"
+                <BaseButtonLink icon="far fa-arrow-alt-circle-left" label="Back" routeName="jobs.index" color="contrast"
                     rounded-full small />
             </SectionTitleLineWithButton>
             <div class="flex justify-center items-center">
@@ -96,16 +119,29 @@
                     <FormField label="Title" label-for="title" help="Please enter job title">
                         <FormControl v-model="form.title" id="title" icon="fas fa-pencil-alt" type="text" required />
                     </FormField>
+                    <FormField label="Job Category" help="Please select a category">
+                        <FormControl v-model="form.job_category_id" icon="fas fa-list-alt" :options="jobCates" />
+                    </FormField>
+
                     <FormField label="Location" label-for="location" help="Please enter job location">
                         <FormControl v-model="form.location" id="location" icon="fas fa-map-marker" type="text" required />
                     </FormField>
-                    <FormField label="Job type" help="Please select job type">
+                    <FormField label="Job Type" help="Please select job type">
                         <FormControl v-model="form.job_type" icon="fas fa-list-alt" :options="jobTypes" />
+                    </FormField>
+
+                    <FormField label="Experience Level" help="Please select one">
+                        <FormControl v-model="form.job_level" icon="fas fa-list-alt" :options="jobLevel" />
+                    </FormField>
+
+                    <FormField label="Work Place" help="Please select one">
+                        <FormControl v-model="form.work_type" icon="fas fa-list-alt" :options="workType" />
                     </FormField>
 
                     <FormField label="Description" label-for="description" help="Please enter job description">
                         <FormControl v-model="form.description" id="description" type="textarea" required />
                     </FormField>
+                    
 
                     <FormField label="Requirements" label-for="requirements" help="Please enter job requirements">
                         <FormControl v-model="form.requirements" id="requirements" type="textarea" required />
@@ -122,6 +158,10 @@
 
                     <FormField label="Facilities" label-for="facilities" help="Please enter job facilities">
                         <FormControl v-model="form.facilities" id="facilities" type="textarea" required />
+                    </FormField>
+
+                    <FormField label="Skills" label-for="skills" help="Write skill sets seprated by comma">
+                        <FormControl v-model="form.skills" id="skills" type="text" required />
                     </FormField>
                     <p v-if="jobData && jobData.closing_date" class="text-red-500">Closing Date: {{ jobData.closing_date }}</p>
                     <FormField label="Closing date" label-for="closing-date" help="Please enter job closing date">

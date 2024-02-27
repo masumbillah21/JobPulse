@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Helper\GenerateUniqueSlug;
+use App\Models\Role;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Company;
+use App\Enum\UserTypeEnum;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
 
 class RegisteredUserController extends Controller
 {
@@ -29,24 +35,85 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        if($request->terms == 0){
+            return redirect()->back()->withErrors('Please accept the terms and conditions');
+        }
+        DB::beginTransaction();
+        try{
+            if($request->user_type === UserTypeEnum::CANDIDATE) {
+                $request->validate([
+                    'name' => 'required|string|max:255',
+                    'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+                    'password' => ['required', 'confirmed', Rules\Password::defaults()],
+                    'user_type' => 'required|'.Rule::in(UserTypeEnum::CANDIDATE),
+                ]);
+        
+                $user = User::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+                $role = Role::where('name', 'Candidate')->first();
 
-        event(new Registered($user));
+                $user->roles()->attach($role->id);
+                
+            }else if($request->user_type === UserTypeEnum::COMPANY) {
+                
+                $request->validate([
+                    'name' => 'required|string|max:255',
+                    'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+                    'password' => ['required', 'confirmed', Rules\Password::defaults()],
+                    'user_type' => 'required|'.Rule::in(UserTypeEnum::COMPANY),
+                    'company_name' => 'required|string|max:40|unique:companies,name',
+                    'description' => 'required',
+                    'company_type' => 'required',
+                    'address' => 'required',
+                    'phone' => 'required|digits:11',
+                    'website' => 'required',
+                    'company_size' => 'required',
+                ]);
+    
+                $company = Company::create([
+                    'name' => $request->company_name,
+                    'description' => $request->description,
+                    'company_type' => $request->company_type,
+                    'address' => $request->address,
+                    'phone' => $request->phone,
+                    'email' => $request->email,
+                    'website' => $request->website,
+                    'company_size' => $request->company_size,
+                    'slug' => GenerateUniqueSlug::slug($request->company_name, Company::class)
+                ]);
+    
+                $user = User::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                    'user_type' => UserTypeEnum::COMPANY,
+                    'company_id' => $company->id
+                ]);
 
-        Auth::login($user);
+                $role = Role::where('name', 'Admin Company')->first();
 
-        return redirect(RouteServiceProvider::HOME);
+                $user->roles()->attach($role->id);
+                
+            }else{
+                return redirect()->back()->withErrors('Invalid Request.');
+            }
+            event(new Registered($user));
+    
+            Auth::login($user);
+            DB::commit();
+            return redirect(RouteServiceProvider::HOME);
+
+        }catch(\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors($e->getMessage());
+        }
+
+        
     }
 }

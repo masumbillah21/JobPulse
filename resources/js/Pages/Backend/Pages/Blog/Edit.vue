@@ -13,8 +13,10 @@
     import FormValidationErrors from "@/Components/FormValidationErrors.vue";
     import FormSuccess from "@/Components/FormSuccess.vue";
     import { Head, useForm, usePage } from '@inertiajs/vue3'
+    import { isSystemUser } from '@/utils/isSystemUser.js'
 
     const blogData: any = usePage().props.blogData ?? null
+    const categoryData: any = usePage().props.categoryData ?? null
 
     const fileInputKey = ref(0);
 
@@ -25,6 +27,8 @@
         body: "",
         image: "",
         status: "",
+        categories: [],
+        tags: '',
         _method: "post",
     });
 
@@ -33,6 +37,7 @@
         form.title = blogData.title
         form.body = blogData.body
         form.status = blogData.status
+        form.categories = blogData.category_ids
         form._method = 'put'
     }
 
@@ -45,26 +50,17 @@
     };
 
     const create = () => {
-        form
-            .transform((data: any) => ({
-            ...data,
-            terms: form.terms && form.terms.length,
-            }))
-            .post(route("blogs.store"), {
-                onSuccess: () => {
-                    form.reset();
-                    fileInputKey.value = fileInputKey.value + 1;
-                },
-            });
+        const routeName: string = isSystemUser() ? "admin.blogs.store" : "blogs.store";
+        form.post(route(routeName), {
+            onSuccess: () => {
+                form.reset();
+                fileInputKey.value = fileInputKey.value + 1;
+            },
+        });
     };
 
     const update = () => {
-        form
-            .transform((data: any) => ({
-            ...data,
-            terms: form.terms && form.terms.length,
-            }))
-            .post(route("blogs.update", form.id));
+        form.post(route(isSystemUser() ? "admin.blogs.update" : "blogs.update", form.id));
     };
 </script>
     
@@ -82,7 +78,6 @@
                     small
                 />
             </SectionTitleLineWithButton>
-           
                 <CardBox class="my-24 w-full" is-form @submit.prevent="submit" >
                     <FormValidationErrors />
                     <FormSuccess />
@@ -108,6 +103,23 @@
                             </FormField>
                         </CardBox>
                         <CardBox class="ml-2 w-1/5">
+                            <FormField class="w-full" label="Select Categories">
+                                <div class="overflow-y-auto max-h-[150px]">
+                                    <FormCheckRadioGroup componentClass="w-full" v-model="form.categories" name="categories[]" type="checkbox"
+                                    :options="categoryData" />
+                                </div>
+                            </FormField>
+
+                            <FormField label="Tags" label-for="tag" help="Please write tag (add multiple tags seperated by coma.)">
+                                <FormControl
+                                    v-model="form.tags"
+                                    id="tag"
+                                    autocomplete="tag"
+                                    type="text"
+                                    required
+                                />
+                            </FormField>
+
                             <img v-if="(blogData && blogData.image)" :src="blogData.image" alt="">
                             <FormField label="Featued Image" help="Max 500kb">
                                 <FormFilePicker 

@@ -26,7 +26,7 @@
     const comStatus = ref<string | number>('');
     const changeStatus = () => {
         isModalDangerActive.value = false
-        router.get(route('company.status', {id: comId.value, status: comStatus.value}))
+        router.get(route('admin.company.status', {id: comId.value, status: comStatus.value}))
         companyData.data.findIndex((com: any) => com.id === comId.value)
     }
     const showModle = (id: number, status: number) => {

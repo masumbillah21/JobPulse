@@ -3,6 +3,10 @@ import { UserTypeEnum } from '@/utils/userTypeEnum';
 
 export const isSystemUser = () => {
     const { auth } = usePage().props;
-    const userType = auth.user_type || '';
+
+    if (!auth.user) {
+        return false;
+    }
+    const userType = auth.user.user_type || '';
     return userType === UserTypeEnum.SYSTEM;
 };

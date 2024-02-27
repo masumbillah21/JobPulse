@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Backend;
 
 use Auth;
 use Exception;
+use App\Models\Tag;
 use App\Models\Blog;
 use Inertia\Inertia;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,8 +23,10 @@ class BlogController extends Controller
         $this->authorize('view', Blog::class);
 
         $blogs = Blog::where('user_id', Auth::user()->id)->with('user')->paginate(10);
+        $category = Category::all();
         return Inertia::render('Backend/Pages/Blog/Index', [
-            'blogsData' => $blogs
+            'blogsData' => $blogs,
+            'categoryData' => $category
         ]);
     }
 
@@ -31,7 +36,10 @@ class BlogController extends Controller
     public function create()
     {
         $this->authorize('create', Blog::class); 
-        return Inertia::render('Backend/Pages/Blog/Edit');
+        $category = Category::pluck('name', 'id')->toArray();
+        return Inertia::render('Backend/Pages/Blog/Edit',[
+            'categoryData' => $category
+        ]);
     }
 
     /**
@@ -39,37 +47,48 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-     
-        $this->authorize('create', Blog::class); 
-           
-        $request->validate([
-            'title' => 'required|max:255',
-            'body' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'status' => 'nullable|boolean',
-        ]);
+       $this->authorize('create', Blog::class); 
+    
+       DB::beginTransaction();
+       try{
+            $request->validate([
+                'title' => 'required|max:255',
+                'body' => 'required',
+                'categories' => 'required|array',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'status' => 'nullable|boolean',
+            ]);
 
-        $image_path = '';
+            $image_path = '';
 
-        if ($request->hasFile('image')) {
-            $image_path = $request->file('image')->store('images', 'public');
-        }
+            if ($request->hasFile('image')) {
+                $image_path = $request->file('image')->store('images', 'public');
+            }
 
-        if(!isset($request->status)){
-            $request->status = 0;
-        }
+            if(!isset($request->status)){
+                $request->status = 0;
+            }
 
-        Blog::create([
-            'user_id' => Auth::user()->id,
-            'title' => $request->title,
-            'body' => $request->body,
-            'image' => $image_path,
-            'slug' => $request->title,
-            'status' => $request->status
-        ]);
+            $blog = Blog::create([
+                'user_id' => Auth::user()->id,
+                'title' => $request->title,
+                'body' => $request->body,
+                'image' => $image_path,
+                'slug' => $request->title,
+                'status' => $request->status
+            ]);
 
-        return redirect()->back()->with('success', 'Blog Created Successfully');
+            $blog->categories()->attach($request->categories);
+            $this->attachTagsToBlog($blog->id, $request->tags);
 
+            DB::commit();
+            return redirect()->back()->with('success', 'Blog Created Successfully');
+
+       }catch(Exception $e){
+            DB::rollBack();
+            return redirect()->back()->withErrors($e->getMessage());
+       }
+        
         
     }
 
@@ -87,9 +106,14 @@ class BlogController extends Controller
     public function edit(Blog $blog)
     {
         $this->authorize('update', $blog); 
+        $category = Category::pluck('name', 'id')->toArray();
+        $blogData = $blog->load('categories:id');
+        $categoryIds = $blogData->categories->pluck('id')->toArray();
 
+        $blogData['category_ids'] = $categoryIds;
         return Inertia::render('Backend/Pages/Blog/Edit', [
-            'blogData' => $blog
+            'blogData' => $blogData,
+            'categoryData' => $category
         ]);
     }
 
@@ -100,12 +124,15 @@ class BlogController extends Controller
     {
         $this->authorize('update', $blog); 
 
-        // try{
+        DB::beginTransaction();
+        try{
             $validation = $request->validate([
                 'title' => 'required|max:255',
                 'body' => 'required',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:500',
                 'status' => 'nullable|boolean',
+                'categories' => 'required|array',
+                'tags' => 'required|string',
                 'slug' => 'nullable|max:255'
             ]);
 
@@ -119,15 +146,20 @@ class BlogController extends Controller
             }
 
             $validation['slug'] = $request->title;
-
+            unset($validation['categories']);
             $blog->update($validation);
 
+            $blog->categories()->sync($request->categories);
+            $this->attachTagsToBlog($blog->id, $request->tags);
+
+            DB::commit();
             return redirect()->back()->with('success', 'Blog Updated Successfully');
 
-        // }
-        // catch (Exception $e){
-        //     return redirect()->back()->withErrors('error', $e->getMessage());
-        // }
+        }
+        catch (Exception $e){
+            DB::rollBack();
+            return redirect()->back()->withErrors('error', $e->getMessage());
+        }
     }
 
     /**
@@ -142,8 +174,23 @@ class BlogController extends Controller
         return redirect()->back()->with('success', 'Blog Deleted Successfully');
     }
 
-    public function categories(){
+    public function attachTagsToBlog($blogId, $tagNames)
+    {
+        $tagIds = [];
 
-        return Inertia::render('Backend/Pages/Blog/Categories');
+        $tagNames = explode(',', $tagNames);
+        foreach ($tagNames as $tagName) {
+            $tag = Tag::firstOrCreate(
+                [
+                    'name' => trim($tagName),
+                ],
+                [
+                    'name' => trim($tagName),
+                    'slug' => trim($tagName),
+                ]
+            );
+            $tagIds[] = $tag->id;
+        }
+        Blog::find($blogId)->tags()->syncWithoutDetaching($tagIds);
     }
 }

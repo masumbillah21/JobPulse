@@ -12,9 +12,7 @@ import AsideMenu from '@/Components/AsideMenu.vue'
 import FooterBar from '@/Components/FooterBar.vue'
 import CacheCleanMessage from '@/Components/CacheCleanMessage.vue'
 import { hasPermission } from '@/utils/hasPermission.js'
-import { UserTypeEnum } from '@/utils/userTypeEnum.js'
-
-const user = usePage().props.auth.user
+import { isSystemUser } from '@/utils/isSystemUser.js'
 
 const layoutAsidePadding = 'xl:pl-72'
 
@@ -22,7 +20,7 @@ const darkModeStore = useDarkModeStore()
 
 const message = ref('');
 
-const filteredItems = filterItems(user.user_type === UserTypeEnum.SYSTEM ?  menuAsideAdmin : menuAside );
+const filteredItems = filterItems(isSystemUser() ?  menuAsideAdmin : menuAside );
 
 function filterItems(items) {
   return items.reduce((filtered, item) => {
@@ -71,7 +69,8 @@ const showMessage = (msg) => {
 
 const clearCache = async () => {
   try {
-    await router.get(route('cache.clear'));
+    const routeName = isSystemUser() ? "admin.cache.clear" : "cache.clear";
+    await router.get(route(routeName));
     showMessage('Cache cleared successfully');
   } catch (error) {
     showMessage('Failed to clear cache ' + error);

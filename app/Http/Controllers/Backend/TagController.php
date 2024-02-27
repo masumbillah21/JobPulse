@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
 use App\Models\Tag;
+use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class TagController extends Controller
 {
@@ -12,7 +14,9 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Backend/Pages/Blog/Tags', [
+            'tagsData' => Tag::orderBy('id', 'desc')->paginate(10),
+        ]);
     }
 
     /**
@@ -28,7 +32,21 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:tags|max:20',
+        ]);
+
+        Tag::updateOrCreate(
+            [
+                'id' => $request->id
+            ], 
+            [
+                'name' => $request->name,
+                'slug' => $request->name
+            ]
+        );
+
+        return redirect()->back()->with('success', 'Tag saved successfully!');
     }
 
     /**
@@ -60,6 +78,8 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        $tag->delete();
+
+        return redirect()->back()->with('success', 'Tag deleted successfully!');
     }
 }

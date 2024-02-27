@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
-use App\Models\JobCategory;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Category;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class JobCategoryController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $cateList = JobCategory::orderBy('id', 'desc')->paginate(10);
-
-        return Inertia::render('Backend/Jobs/Categories', [
-            'jobCateList' => $cateList
+        return Inertia::render('Backend/Pages/Blog/Categories', [
+            'categoriesData' => Category::orderBy('id', 'desc')->paginate(10),
         ]);
     }
 
@@ -37,10 +36,10 @@ class JobCategoryController extends Controller
             'name' => 'required|unique:categories|max:20',
         ]);
 
-        JobCategory::updateOrCreate(
+        Category::updateOrCreate(
             [
                 'id' => $request->id
-            ],
+            ], 
             [
                 'name' => $request->name,
                 'slug' => $request->name
@@ -53,7 +52,7 @@ class JobCategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(JobCategory $jobCategory)
+    public function show(Category $category)
     {
         //
     }
@@ -61,15 +60,15 @@ class JobCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(JobCategory $jobCategory)
+    public function edit(Category $category)
     {
-        //
+        
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, JobCategory $jobCategory)
+    public function update(Request $request, Category $category)
     {
         //
     }
@@ -77,11 +76,10 @@ class JobCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category)
     {
+        $category->delete();
 
-        JobCategory::find($id)->delete();
-
-        return redirect()->back()->with('success', 'Job Category deleted successfully!');
+        return redirect()->back()->with('success', 'Category deleted successfully!');
     }
 }

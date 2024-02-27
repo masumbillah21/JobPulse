@@ -10,6 +10,7 @@
     import BaseDivider from "@/Components/BaseDivider.vue";
     import FormValidationErrors from "@/Components/FormValidationErrors.vue";
     import FormSuccess from "@/Components/FormSuccess.vue";
+    import { isSystemUser } from '@/utils/isSystemUser';
     import { Head, useForm, usePage} from '@inertiajs/vue3'
 
     const employeeData: any = usePage().props.employeeData ?? null
@@ -19,6 +20,7 @@
         name: "",
         email: "",
         password: "",
+        _method: "post",
     });
 
     if(employeeData !== null) {
@@ -26,18 +28,31 @@
         form.name = employeeData.name
         form.email = employeeData.email
         form.password = ""
+        form._method = "put"
     }
+
+    const submit = () => {
+        if(form.id == 0) {
+            create();
+        } else {
+            update();
+        }
+    }
+
+
+    const create = () => {
+        const routeName = isSystemUser() ? "admin.employee.store" : "employee.store";
+        form.post(route(routeName), {
+            onFinish: () => form.reset("password"),
+        });
+    };
     
 
     const update = () => {
-        form
-            .transform((data: any) => ({
-            ...data,
-            terms: form.terms && form.terms.length,
-            }))
-            .put(route("employee.update", form.id), {
-                onFinish: () => form.reset("password"),
-            });
+        const routeName = isSystemUser() ? "admin.employee.update" : "employee.update";
+        form.post(route(routeName, form.id), {
+            onFinish: () => form.reset("password"),
+        });
     };
 </script>
     
@@ -59,7 +74,7 @@
                 <CardBox
                     class="my-24 w-1/2"
                     is-form
-                    @submit.prevent="update"
+                    @submit.prevent="submit"
                 >
                 <FormValidationErrors />
                 <FormSuccess />

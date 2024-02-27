@@ -13,6 +13,7 @@
     import CardBoxModal from '@/Components/CardBoxModal.vue'
     import FormFilePicker from '@/Components/FormFilePicker.vue'
     import { Head, router, useForm, usePage } from '@inertiajs/vue3'
+    import { isSystemUser } from '@/utils/isSystemUser';
 
     const companyData: any = usePage().props.companyData;
     
@@ -60,21 +61,14 @@
       }
     }
     const create = () => {
-      
-      form
-          .transform((data: any) => ({
-          ...data,
-          terms: form.terms && form.terms.length,
-          }))
-          .post(route("company.store"));
+      const routeName = isSystemUser() ? "admin.company.store" : "company.store";
+      form.post(route(routeName),{
+        onSuccess: () => form.reset(),
+      });
   }
     const update = () => {
-        form
-            .transform((data: any) => ({
-            ...data,
-            terms: form.terms && form.terms.length,
-            }))
-            .post(route("company.update", form.id));
+        const routeName = isSystemUser() ? "admin.company.update" : "company.update";
+        form.post(route(routeName, form.id));
     }
 </script>
     

@@ -22,6 +22,7 @@ class Company extends Model
         'website',
         'logo',
         'company_size',
+        'slug',
         'status'
     ];
 

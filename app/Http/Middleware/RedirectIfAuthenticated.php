@@ -22,7 +22,7 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                if(Auth::user()->user_type == UserTypeEnum::OWNER) {
+                if(Auth::user()->user_type == UserTypeEnum::SYSTEM) {
                     return redirect(RouteServiceProvider::ADMIN_HOME);
                 }
                 return redirect(RouteServiceProvider::HOME);

@@ -14,18 +14,20 @@ const jobData = usePage().props.jobData;
 
 <template>
     <LayoutAuthenticated>
+
         <Head :title="jobData.title" />
         <SectionMain>
-            <SectionTitleLineWithButton icon="far fa-arrow-alt-circle-right"
-                :title="jobData.title" main>
+            <SectionTitleLineWithButton icon="far fa-arrow-alt-circle-right" :title="jobData.title" main>
                 <div>
-                    <BaseButtonLink class="mr-1" routeName="jobs.edit" :routeParams="jobData.id" icon="fas fa-edit" label="Edit" color="info" rounded-full small />
+                    <BaseButtonLink class="mr-1" routeName="jobs.edit" :routeParams="jobData.id" icon="fas fa-edit"
+                        label="Edit" color="info" rounded-full small />
                     <BaseButtonLink icon="far fa-arrow-alt-circle-left" label="Back" routeName="jobs.index" color="contrast"
-                    rounded-full small />
+                        rounded-full small />
                 </div>
             </SectionTitleLineWithButton>
+
             <div class="flex justify-center">
-                <CardBox class="my-24 w-1/5">
+                <CardBox class="my-24 w-1/5 dark:bg-white dark:text-blue-950">
                     <p class="text-xl mb-1">Job Post By: {{ jobData.user.name }}</p>
 
                     <p class="text-xl mb-1">Posted on: {{ jobData.created_at }}</p>
@@ -35,30 +37,39 @@ const jobData = usePage().props.jobData;
                     <p class="text-xl mb-1">Status: {{ jobData.status == 1 ? 'Active' : 'Draft' }}</p>
 
                 </CardBox>
-                <CardBox class="my-24 w-4/5 ml-3">
+                <CardBox class="my-24 w-4/5 ml-3 dark:bg-white dark:text-slate-950">
                     <h2 class="text-3xl font-bold">Title: {{ jobData.title }}</h2>
                     <hr class="mb-2">
 
-                    <h2 class="text-2xl font-bold">Location</h2>
-                    <p class="mb-2">{{ jobData.location }}</p>
+                    <h2 class="mb-2"><span class="font-bold text-lg">Category:</span> <span>{{ jobData.category.name
+                    }}</span></h2>
+                    <h2 class="mb-2"><span class="font-bold text-lg">Job type:</span> <span>{{ jobData.job_type }}</span>
+                    </h2>
+                    <h2 class="mb-2"><span class="font-bold text-lg">Level:</span> <span>{{ jobData.job_level }}</span></h2>
 
-                    <h2 class="text-2xl font-bold">Description</h2>
-                    <p class="mb-2">{{ jobData.description }}</p>
+                    <h2 class="mb-2"><span class="font-bold text-lg">Category:</span> <span>{{ jobData.category.name
+                    }}</span></h2>
 
-                    <h2 class="text-2xl font-bold">Requirements</h2>
-                    <p class="mb-2">{{ jobData.requirements }}</p>
+                    <h2 class="mb-2"><span class="font-bold text-lg">Category:</span> <span>{{ jobData.category.name
+                    }}</span></h2>
 
-                    <h2 class="text-2xl font-bold">Responsibilities</h2>
-                    <p class="mb-2">{{ jobData.responsibilities }}</p>
+                    <h2 class="mb-2"><span class="font-bold text-lg">Location:</span> <span>{{ jobData.location }}</span>
+                    </h2>
+                    <h2 class="mb-2"><span class="font-bold text-lg">Description:</span> <span>{{ jobData.description
+                    }}</span></h2>
 
-                    <h2 class="text-2xl font-bold">Job type</h2>
-                    <p class="mb-2">{{ jobData.job_type }}</p>
+                    <h2 class="mb-2"><span class="font-bold text-lg">Requirements:</span> <span>{{ jobData.requirements
+                    }}</span></h2>
 
-                    <h2 class="text-2xl font-bold">Salary</h2>
-                    <p class="mb-2">{{ jobData.salary }}</p>
-                </CardBox>
-            </div>
-        </SectionMain>
-    </LayoutAuthenticated>
+                    <h2 class="mb-2"><span class="font-bold text-lg">Responsibilities:</span> <span>{{
+                            jobData.responsibilities }}</span></h2>
+                    <h2 class="mb-2"><span class="font-bold text-lg">Salary:</span> <span>{{ jobData.salary }}</span></h2>
 
-</template>
+                    <h2 class="mb-2"><span class="font-bold text-lg">Facilities:</span> <span>{{ jobData.facilities
+                    }}</span></h2>
+
+                    <h2 class="mb-2"><span class="font-bold text-lg">Skills:</span> <span>{{ jobData.skills }}</span></h2>
+            </CardBox>
+        </div>
+    </SectionMain>
+</LayoutAuthenticated></template>

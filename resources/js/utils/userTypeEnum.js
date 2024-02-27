@@ -1,5 +1,5 @@
 export const UserTypeEnum = {
-    SYSTEM: 'owner',
+    SYSTEM: 'system',
     COMPANY: 'company',
     CANDIDATE: 'candidate'
 };

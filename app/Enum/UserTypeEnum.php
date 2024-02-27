@@ -2,7 +2,7 @@
 namespace App\Enum;
 
 class UserTypeEnum {
-    const OWNER = 'owner';
+    const SYSTEM = 'system';
     const COMPANY = 'company';
     const CANDIDATE = 'candidate';
 }
