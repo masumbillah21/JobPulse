@@ -3,6 +3,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import { isSystemUser } from '@/utils/isSystemUser.js';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
@@ -16,7 +17,8 @@ const form = useForm({
 });
 
 const updatePassword = () => {
-    form.put(route('password.update'), {
+    const routeName = isSystemUser() ? "admin.profile.password" : "profile.password";
+    form.put(route(routeName), {
         preserveScroll: true,
         onSuccess: () => {
             form.reset();

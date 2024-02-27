@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Enum\UserTypeEnum;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -38,7 +39,12 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit');
+        if(Auth::user()->user_type == UserTypeEnum::SYSTEM){
+            return Redirect::route('admin.profile.edit');
+        }else{
+            return Redirect::route('profile.edit');
+        }
+        
     }
 
     /**

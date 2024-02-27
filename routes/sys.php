@@ -25,9 +25,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 require __DIR__ . '/cache.php';
 
                 Route::get('dashboard', [DashboardController::class, 'indexSystem'])->name('dashboard');
+                
                 Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
                 Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
                 Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+                
+                
                 Route::resource('settings', SettingController::class);
                 Route::resource('categories', CategoryController::class)->only(['index', 'store', 'destroy']);
                 Route::resource('tags', TagController::class)->only(['index', 'store', 'destroy']);

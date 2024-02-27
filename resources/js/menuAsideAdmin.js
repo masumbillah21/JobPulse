@@ -174,10 +174,4 @@ export default [
       route : "admin.company.index",
       permission: "company.create"
    },
-   {
-      label: 'Settings',
-      icon: 'fas fa-cogs',
-      route: 'admin.settings.index',
-      permission: 'settings.view'
-    },
 ]

@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { router, usePage } from '@inertiajs/vue3'
 import menuNavBar from '@/menuNavBar.js'
+import menuNavBarAdmin from '@/menuNavBarAdmin.js'
 import menuAside from '@/menuAside.js'
 import menuAsideAdmin from '@/menuAsideAdmin.js'
 import { useDarkModeStore } from '@/Stores/darkMode.js'
@@ -22,6 +23,7 @@ const message = ref('');
 
 const filteredItems = filterItems(isSystemUser() ?  menuAsideAdmin : menuAside );
 
+const navBar = isSystemUser() ? menuNavBarAdmin : menuNavBar;
 function filterItems(items) {
   return items.reduce((filtered, item) => {
     if (hasPermission(item.permission)) {
@@ -84,7 +86,7 @@ const clearCache = async () => {
   }">
     <div :class="[layoutAsidePadding, { 'ml-72 lg:ml-0': isAsideMobileExpanded }]"
       class="pt-14 min-h-screen w-screen transition-position lg:w-auto bg-gray-50 dark:bg-slate-800 dark:text-slate-100">
-      <NavBar :menu="menuNavBar" :class="[layoutAsidePadding, { 'ml-60 lg:ml-0': isAsideMobileExpanded }]"
+      <NavBar :menu="navBar" :class="[layoutAsidePadding, { 'ml-60 lg:ml-0': isAsideMobileExpanded }]"
         @menu-click="menuClick">
         <NavBarItemPlain display="flex lg:hidden" @click.prevent="isAsideMobileExpanded = !isAsideMobileExpanded">
           <BaseIcon :path="isAsideMobileExpanded ? 'fas fa-caret-square-left' : 'fas fa-caret-square-right'" size="24" />

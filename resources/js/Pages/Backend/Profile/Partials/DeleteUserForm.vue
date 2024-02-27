@@ -6,6 +6,7 @@ import Modal from '@/Components/Modal.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { useForm } from '@inertiajs/vue3';
+import { isSystemUser } from '@/utils/isSystemUser.js';
 import { nextTick, ref } from 'vue';
 
 const confirmingUserDeletion = ref(false);
@@ -22,7 +23,8 @@ const confirmUserDeletion = () => {
 };
 
 const deleteUser = () => {
-    form.delete(route('profile.destroy'), {
+    const routeName = isSystemUser() ? "admin.profile.destroy" : "profile.destroy";
+    form.delete(route(routeName), {
         preserveScroll: true,
         onSuccess: () => closeModal(),
         onError: () => passwordInput.value?.focus(),
