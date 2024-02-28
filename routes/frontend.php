@@ -1,38 +1,27 @@
 <?php 
 
+use App\Http\Controllers\Frontend\FrontEndController;
 use Inertia\Inertia;
-use App\Http\Controllers\Frontend\JobPageController;
-use App\Http\Controllers\Frontend\BlogPageController;
 
 
-Route::get('/', function () {
-    return Inertia::render('Frontend/Home', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'assetsUrl' => asset('assets'),
-    ]);
-})->name('home');
+Route::get('/', [FrontEndController::class, 'index'])->name('home');
 
+Route::get('/blog', [FrontEndController::class, 'blogPage'])->name('blog');
+Route::get('/blog/{slug}', [FrontEndController::class, 'postDetails'])->name('blog.show');
+Route::get('/blog/category/{slug}', [FrontEndController::class, 'postCategory'])->name('blog.category');
+
+Route::get('/jobs', [FrontEndController::class, 'jobPage'])->name('job');
+Route::get('/job/{slug}', [FrontEndController::class, 'jobDetails'])->name('job.show');
+
+Route::get('/contact', [FrontEndController::class, 'contactPage'])->name('contact');
+Route::post('/contact', [FrontEndController::class, 'contactPageEmail'])->name('contact.email');
 
 Route::get('/about', function () {
     return Inertia::render('Frontend/About', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
         'assetsUrl' => asset('assets'),
     ]);
 })->name('about');
 
-Route::get('/jobs', [JobPageController::class, 'index'])->name('job');
-Route::get('/job/{id}', [JobPageController::class, 'jobDetails'])->name('job.show');
 
 
-Route::get('/blog', [BlogPageController::class, 'index'])->name('blog');
-Route::get('/blog/{slug}', [BlogPageController::class, 'postDetails'])->name('blog.show');
 
-Route::get('/contact', function () {
-    return Inertia::render('Frontend/Contact', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'assetsUrl' => asset('assets'),
-    ]);
-})->name('contact');

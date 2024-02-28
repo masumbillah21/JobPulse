@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  const date = new Date().getFullYear()
+const date = new Date().getFullYear()
 </script>
 
 <template>
@@ -15,38 +15,40 @@
       <div class="flex flex-wrap">
         <div class="w-full lg:w-6/12 px-4">
           <h4 class="text-3xl font-semibold">Let's keep in touch!</h4>
-          <h5 class="text-lg mt-0 mb-2 text-gray-700">
+          <h5 class="text-lg mt-0 mb-2 text-gray-400">
             Find us on any of these platforms, we respond 1-2 business days.
           </h5>
           <div class="mt-6">
-            <button
-              class="bg-white text-blue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 p-3"
-              type="button">
-              <i class="flex fab fa-twitter"></i></button><button
-              class="bg-white text-blue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 p-3"
-              type="button">
-              <i class="flex fab fa-facebook-square"></i></button><button
-              class="bg-white text-pink-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 p-3"
-              type="button">
-              <i class="flex fab fa-dribbble"></i></button><button
-              class="bg-white text-gray-900 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 p-3"
-              type="button">
+            <a href="https://facebook.com/masumbillah21"
+              class="bg-white text-blue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 px-3 py-2">
+              <i class="flex fab fa-facebook-square"></i>
+            </a>
+
+            <a href="https://bd.linkedin.com/in/h-m-masum-billah"
+              class="bg-white text-blue-500 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 px-3 py-2">
+              <i class="flex fab fa-linkedin"></i>
+            </a>
+
+            <a href="https://github.com/masumbillah21"
+            class="bg-white text-black shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 px-3 py-2">
               <i class="flex fab fa-github"></i>
-            </button>
+            </a>
+            <a href="http://masum-billah.com"
+            class="bg-white text-black shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 px-3 py-2">
+              <i class="flex fas fa-globe"></i>
+            </a>
           </div>
         </div>
         <div class="w-full lg:w-6/12 px-4">
           <div class="flex flex-wrap items-top mb-6">
             <div class="w-full lg:w-4/12 px-4 ml-auto">
-              <span class="block uppercase text-gray-600 text-sm font-semibold mb-2">Useful Links</span>
+              <span class="block uppercase text-gray-100 text-sm font-semibold mb-2">Useful Links</span>
               <ul class="list-unstyled">
                 <li>
-                  <a class="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
-                    href="#">About Us</a>
+                  <a class="text-gray-400 hover:text-gray-900 font-semibold block pb-2 text-sm" href="#">About Us</a>
                 </li>
                 <li>
-                  <a class="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
-                    href="#">Blog</a>
+                  <a class="text-gray-400 hover:text-gray-900 font-semibold block pb-2 text-sm" href="#">Blog</a>
                 </li>
               </ul>
             </div>
@@ -57,7 +59,7 @@
       <div class="flex flex-wrap items-center md:justify-between justify-center">
         <div class="w-full md:w-4/12 px-4 mx-auto text-center">
           <div class="text-sm text-gray-600 font-semibold py-1">
-            © {{date}} JobPulse by
+            © {{ date }} JobPulse by
             <a href="http://www.masum-billah.com" class="text-gray-600 hover:text-gray-900">H. M. Masum Billah</a>.
           </div>
         </div>

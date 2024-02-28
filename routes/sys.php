@@ -5,11 +5,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\TagController;
 use App\Http\Controllers\JobCategoryController;
 use App\Http\Controllers\System\UserController;
+use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\CompanyController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\PermissionController;
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -20,7 +22,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::post('login', [UserController::class, 'store'])->name('admin.login');
         });
 
-        Route::middleware(['auth', 'user.owner', 'verified'])->group(function () {
+        Route::middleware(['auth', 'user.owner'])->group(function () {
 
                 require __DIR__ . '/cache.php';
 
@@ -38,10 +40,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
                         Route::resource('/categories', JobCategoryController::class)->only(['index', 'store', 'destroy']);
                 });
                 Route::get('company/{id}/{status}', [CompanyController::class, 'changeStatus'])->name('company.status');
-
+                Route::resource('permissions', PermissionController::class);
+                Route::resource('roles', RoleController::class);
+                
                 require __DIR__ . '/employee.php';
                 require __DIR__ . '/company.php';
-                require __DIR__ . '/permissions.php';
                 require __DIR__ . '/jobs.php';
                 require __DIR__ . '/resume.php';
                 require __DIR__ . '/pages.php';

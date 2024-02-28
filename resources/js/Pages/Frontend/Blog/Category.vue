@@ -6,39 +6,27 @@
   import { Head, Link, usePage } from '@inertiajs/vue3';
 
 
-  const blogPageData: any = usePage().props.blogPageData;
-  const blogsList: any = usePage().props.blogsList;
+  const postCategory: any = usePage().props.postCategory;
+  const postList: any = usePage().props.postList;
 
   const props = defineProps({
     storageUrl: String,
   });
 
-  const blogConents: any = {
-    banner: '',
-  }
-
-  if(blogPageData){
-    blogPageData.contents.forEach((item: any) => {
-      if(item.slug === 'banner'){
-        blogConents.banner = item.data[0]
-      }
-    })
-  }
-
 </script>
 <template>
   <LayoutGuest>
-    <Head title="Blog" />
+    <Head :title="postCategory.name" />
     <main>
       <div class="relative pt-16 pb-32 flex content-center items-center justify-center" style="min-height: 45vh;">
         <div class="absolute top-0 w-full h-full bg-center bg-cover"
-          :style="'background-image: url(' + props.storageUrl +  blogPageData.featured_image + ');'">
+          style="background-image: url();">
           <span id="blackOverlay" class="w-full h-full absolute opacity-75 bg-black"></span>
         </div>
         <div class="container relative mx-auto">
           <div class="items-center flex flex-wrap">
             <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
-              <SectionTitle :title="blogConents.banner.title" :description="blogConents.banner.description" :subtitle="blogConents.banner.subtitle" />
+              <SectionTitle :title="postCategory.name" />
             </div>
           </div>
         </div>
@@ -61,7 +49,7 @@
         </div>
         <div class="container mx-auto px-4">
           <div class="grid gap-x-8 gap-y-4 grid-cols-3">
-              <div v-for="(post, index) in blogsList?.data" :key="index" class="bg-gray-100 text-center rounded">
+              <div v-for="(post, index) in postList.data" :key="index" class="bg-gray-100 text-center rounded">
                 
                 <Link :href="route('blog.show', post.slug)">
                   <img :src="post.image" class="rounded h-60 w-full" :alt="post.title"  />
@@ -76,7 +64,7 @@
                 </Link>
               </div>
           </div>
-          <Pagination class="mt-6" :links="blogsList?.links"/>
+          <!-- <Pagination class="mt-6" :links="blogsList?.links"/> -->
         </div>
       </section>
      

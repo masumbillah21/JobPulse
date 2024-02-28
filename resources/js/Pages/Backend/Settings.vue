@@ -19,6 +19,7 @@ const settingList: any = usePage().props.settingList ?? null
 const homePages: any = usePage().props.homePages
 const blogPages: any = usePage().props.blogPages
 const contactPages: any = usePage().props.contactPages
+const jobPages: any = usePage().props.jobPages
 
 const homeList: any = [
     {
@@ -44,6 +45,14 @@ const contactList: any = [
 
 contactList.push(...contactPages)
 
+const jobList: any = [
+    {
+        id: '', label: 'Select Page',
+    }
+]
+
+jobList.push(...jobPages)
+
 const urls: any = usePage().props.urls
 const storage = urls.storeUrl
 
@@ -52,6 +61,7 @@ const form: any = useForm({
     home: "",
     blog: "",
     contact: "",
+    job: "",
 });
 const logoUrl = ref('')
 if(settingList) {
@@ -68,11 +78,14 @@ if(settingList) {
         if(item.name == 'contact') {
             form.contact = item.value
         }
+        if(item.name == 'job') {
+            form.job = item.value
+        }
     })
 }
 
 const submit = () => {
-    form.post(route("settings.store"));
+    form.post(route("admin.settings.store"));
 };
 
 </script>
@@ -97,6 +110,12 @@ const submit = () => {
                         <FormControl 
                         v-model="form.home" 
                         :options="homeList" />
+                    </FormField>
+
+                    <FormField label="Job Page">
+                        <FormControl 
+                        v-model="form.job" 
+                        :options="jobList" />
                     </FormField>
 
                     <FormField label="Blog Page">

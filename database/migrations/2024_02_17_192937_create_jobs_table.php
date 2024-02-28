@@ -24,7 +24,7 @@ return new class extends Migration
             $table->text('description');
             $table->text('requirements');
             $table->text('responsibilities');
-            $table->string('salary');
+            $table->float('salary');
             $table->string('facilities');
             $table->text('skills');
             $table->date('closing_date');

@@ -5,5 +5,3 @@ use App\Http\Controllers\Backend\EmployeeController;
 
 
 Route::resource('employee', EmployeeController::class);
-
-Route::resource('roles', RoleController::class);

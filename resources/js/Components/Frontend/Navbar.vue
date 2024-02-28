@@ -2,11 +2,6 @@
   import { ref } from 'vue';
   import { Link } from '@inertiajs/vue3';
 
-  const props = defineProps({
-    canLogin: Boolean,
-    canRegister: Boolean,
-  });
-
   const showMenu = ref(false);
   const toggleNavbar = () => {
     showMenu.value = !showMenu.value;
@@ -60,12 +55,12 @@
             Dashboard</Link>
           </li>
           <template v-else>
-            <li v-if="canLogin" class="flex items-center">
+            <li class="flex items-center">
               <Link :href="route('login')"
                 class="lg:text-white lg:hover:text-gray-300 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold">
               Log in</Link>
             </li>
-            <li v-if="canRegister" class="flex items-center">
+            <li class="flex items-center">
               <Link  :href="route('register')"
                 class="lg:text-white lg:hover:text-gray-300 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold">
               Register</Link>

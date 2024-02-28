@@ -18,6 +18,7 @@ import Home from '@/Pages/Backend/Pages/Parts/Home.vue'
 import Blog from '@/Pages/Backend/Pages/Parts/Blog.vue'
 import Contact from '@/Pages/Backend/Pages/Parts/Contact.vue'
 import General from '@/Pages/Backend/Pages/Parts/General.vue'
+import Job from '@/Pages/Backend/Pages/Parts/Job.vue'
 
 const pageData: any = usePage().props.pageData ?? null
 const urls: any = usePage().props.urls
@@ -26,6 +27,7 @@ const storage = urls.storeUrl
 const pageType = [
   { id: 'general', label: 'General' },
   { id: 'home', label: 'Home' },
+  { id: 'job', label: 'Job' },
   { id: 'blog', label: 'Blog' },
   { id: 'contact', label: 'Contact' },
 ]
@@ -36,8 +38,8 @@ const imagePosition = [
 
 const iconList = [
   { id: 'fa fa-phone', label: 'Phone' },
-  { id: 'fa fa-email', label: 'Email' },
-  { id: 'fa fa-map', label: 'Map Marker' },
+  { id: 'fa fa-envelope', label: 'Email' },
+  { id: 'fa fa-map-marker', label: 'Map Marker' },
   { id: 'fa fa-fax', label: 'Fax' },
 ]
 
@@ -120,6 +122,7 @@ const addRow = (sectionIndex: any) => {
     form.contents[sectionIndex].data.push({
       title: "",
       description: "",
+      subtitle: "",
       image: '',
       imageKey: Date.now()
     });
@@ -140,7 +143,7 @@ const create = () => {
       ...data,
       terms: form.terms && form.terms.length,
     }))
-    .post(route("pages.store"));
+    .post(route("admin.pages.store"));
 }
 
 const update = () => {
@@ -149,7 +152,7 @@ const update = () => {
       ...data,
       terms: form.terms && form.terms.length,
     }))
-    .post(route("pages.update", form.id));
+    .post(route("admin.pages.update", form.id));
 }
 
 const toggleSection = (sectionIndex: any) => {
@@ -159,8 +162,18 @@ const toggleSection = (sectionIndex: any) => {
 const chooseLayout = (layout: String) => {
   if (layout === 'contact') {
     form.contents = [
+    {
+        name: 'Banner Section',
+        slug: 'banner',
+        data: [{
+          title: "",
+          subtitle: "",
+          description: "",
+        }],
+      },
       {
         name: 'Contact Info',
+        slug: 'contact_info',
         data: [{
           title: "",
           info: "",
@@ -169,14 +182,25 @@ const chooseLayout = (layout: String) => {
       },
     ]
   } else if (layout === 'blog') {
-    form.contents = []
-  } else if(layout === 'home') {
     form.contents = [
       {
-        name: 'Compnay Logo Section',
-        slug: 'logo',
+        name: 'Banner Section',
+        slug: 'banner',
         data: [{
           title: "",
+          subtitle: "",
+          description: "",
+        }],
+      },
+    ]
+  } else if (layout === 'job') {
+    form.contents = [
+      {
+        name: 'Banner Section',
+        slug: 'banner',
+        data: [{
+          title: "",
+          subtitle: "",
           description: "",
         }],
       },
@@ -185,6 +209,46 @@ const chooseLayout = (layout: String) => {
         slug: 'jobs',
         data: [{
           title: "",
+          subtitle: "",
+          description: "",
+        }],
+      },
+    ]
+  } else if(layout === 'home') {
+    form.contents = [
+      {
+        name: 'Banner Section',
+        slug: 'banner',
+        data: [{
+          title: "",
+          subtitle: "",
+          description: "",
+        }],
+      },
+      {
+        name: 'Compnay Logo Section',
+        slug: 'logo',
+        data: [{
+          title: "",
+          subtitle: "",
+          description: "",
+        }],
+      },
+      {
+        name: 'Job Category Section',
+        slug: 'job_category',
+        data: [{
+          title: "",
+          subtitle: "",
+          description: "",
+        }],
+      },
+      {
+        name: 'Available Jobs Section',
+        slug: 'jobs',
+        data: [{
+          title: "",
+          subtitle: "",
           description: "",
         }],
       },
@@ -235,14 +299,17 @@ const chooseLayout = (layout: String) => {
             <div v-if="form.page_type === 'general'" v-for="(row, sectionIndex) in form.contents" :key="sectionIndex">
               <General :sectionIndex="sectionIndex" :row="row" :imagePosition="imagePosition" @addRow="addRow" @removeRow="removeRow" @toggleSection="toggleSection" @addSection="addSection" @removeSection="removeSection" />
             </div>
-            <div v-if="form.page_type === 'blog'">
-              <Blog />
+            <div v-if="form.page_type === 'job'"  v-for="(row, sectionIndex) in form.contents" :key="sectionIndex">
+              <Job :sectionIndex="sectionIndex" :row="row" />
+            </div>
+            <div v-if="form.page_type === 'blog'"  v-for="(row, sectionIndex) in form.contents" :key="sectionIndex">
+              <Blog :sectionIndex="sectionIndex" :row="row" />
             </div>
             <div v-if="form.page_type === 'contact'" v-for="(row, sectionIndex) in form.contents" :key="sectionIndex">
-              <Contact :sectionIndex="sectionIndex" :row="row" :iconList="iconList" @addRow="addRow" @removeRow="removeRow" />
+              <Contact :sectionIndex="sectionIndex" :row="row" :iconList="iconList" @addRow="addRow" @removeRow="removeRow" @toggleSection="toggleSection" />
             </div>
             <div v-if="form.page_type === 'home'" v-for="(row, sectionIndex) in form.contents" :key="sectionIndex">
-              <Home :sectionIndex="sectionIndex" :row="row" />
+              <Home :sectionIndex="sectionIndex" :row="row" @toggleSection="toggleSection" />
             </div>
           </div>
           

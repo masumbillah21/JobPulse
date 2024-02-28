@@ -45,8 +45,8 @@ class PageController extends Controller
         $request->validate([
             'title' => 'required|string|max:255|unique:pages',
             'contents' => 'nullable|array',
-            'featured_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'contents.*.data.*.image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'featured_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'contents.*.data.*.image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'page_type' => 'required|string',
             'for_nav' => 'required|boolean',
             'email_to' => 'nullable|email|lowercase|max:50',
@@ -86,7 +86,7 @@ class PageController extends Controller
             'slug' => $request->title,
         ]);
 
-        return redirect()->route('pages.edit', $page->id)->with('success', 'Page created successfully');
+        return redirect()->route('admin.pages.edit', $page->id)->with('success', 'Page created successfully');
     }
 
     /**

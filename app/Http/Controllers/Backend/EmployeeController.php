@@ -55,19 +55,11 @@ class EmployeeController extends Controller
             'password' => ['required', 'min:8'],
         ]);
 
-        $user_type = '';
-
-        if(Auth::user()->user_type == UserTypeEnum::COMPANY) {
-            $user_type = UserTypeEnum::COMPANY;
-        }else if(Auth::user()->user_type == UserTypeEnum::SYSTEM) {
-            $user_type = UserTypeEnum::SYSTEM;
-        }
-
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
-            'user_type' => $user_type,
+            'user_type' => Auth::user()->user_type,
         ]);
         
         return redirect()->back()->with('success', 'Employee created successfully');

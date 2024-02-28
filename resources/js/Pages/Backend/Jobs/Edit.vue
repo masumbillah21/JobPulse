@@ -153,7 +153,7 @@ import { isSystemUser } from '@/utils/isSystemUser';
                     </FormField>
 
                     <FormField label="Salary" label-for="salary" help="Please enter job salary">
-                        <FormControl v-model="form.salary" id="salary" icon="fas fa-dollar-sign" type="text" required />
+                        <FormControl v-model="form.salary" id="salary" icon="fas fa-dollar-sign" type="number" step="0.01" min="1" required />
                     </FormField>
 
                     <FormField label="Facilities" label-for="facilities" help="Please enter job facilities">

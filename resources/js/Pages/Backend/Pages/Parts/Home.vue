@@ -2,7 +2,8 @@
 
 import FormField from '@/Components/FormField.vue'
 import FormControl from '@/Components/FormControl.vue'
-import SectionTitle from '@/Components/SectionTitle.vue'
+import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue'
+import BaseButtonLink from '@/Components/BaseButtonLink.vue'
 
 
 
@@ -17,14 +18,20 @@ defineProps({
     },
 })
 
+const emit = defineEmits(['toggleSection'])
 
-
-
+const onToggleSection = (sectionIndex: number) => {
+    emit('toggleSection', sectionIndex)
+}
 
 </script>
 
 <template>
-    <SectionTitle :title="row.name" main />
+    <SectionTitleLineWithButton :title="row.name" main>
+        <BaseButtonLink class="mr-1" :icon="row.hidden ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"
+                @click="onToggleSection(sectionIndex)" :label="row.hidden ? 'Show' : 'Hide'" color="contrast" rounded-full
+                small />
+    </SectionTitleLineWithButton>
     <div v-show="!row.hidden" v-for="(data, rowIndex) in row.data" :key="rowIndex + sectionIndex"
         class="mb-2 flex-col justify-end items-end h-full">
         <div class="w-full mb-7 p-5 bg-slate-900 rounded">
