@@ -151,4 +151,16 @@ class FrontEndController extends Controller
 
         return redirect()->back()->with('success', 'Email sent successfully');
     }
+
+    public function generalPages(string $slug){
+
+        $pageData = Page::where(['slug' => $slug, 'status' => 1])->first();
+        if(!$pageData){
+            return abort(404);
+        }
+        return Inertia::render('Frontend/Page', [
+            'pageData' => $pageData,
+            'storageUrl' => config('app.url') . Storage::url('public/'),
+        ]);
+    }
 }

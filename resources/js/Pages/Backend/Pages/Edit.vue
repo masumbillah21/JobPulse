@@ -33,7 +33,7 @@ const pageType = [
 ]
 const imagePosition = [
   { id: 'left', label: 'Left' },
-  { id: 'light', label: 'Right' },
+  { id: 'right', label: 'Right' },
 ]
 
 const iconList = [
@@ -94,6 +94,7 @@ const addSection = () => {
       title: "",
       description: "",
       image: '',
+      imagePosition: imagePosition[0].id,
       imageKey: Date.now()
     }],
   });

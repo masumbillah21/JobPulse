@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Page;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -52,6 +53,7 @@ class HandleInertiaRequests extends Middleware
             'info' => [
                 'message' => session('message'),
             ],
+            'publicPages' => $this->getPublicPageList(),
         ];
     }
 
@@ -77,5 +79,15 @@ class HandleInertiaRequests extends Middleware
         $uniquePermissions = $permissions->unique('id');
 
         return $uniquePermissions;
+    }
+
+    private function getPublicPageList()
+    {
+        $pages = Page::select('title', 'slug', 'page_order')
+                ->where(['for_nav' => 1, 'status' => 1, 'page_type' => 'general'])
+                ->orderBy('page_order', 'asc')
+                ->get();
+
+        return $pages ?? [];
     }
 }

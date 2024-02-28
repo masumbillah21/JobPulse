@@ -16,11 +16,7 @@ Route::get('/job/{slug}', [FrontEndController::class, 'jobDetails'])->name('job.
 Route::get('/contact', [FrontEndController::class, 'contactPage'])->name('contact');
 Route::post('/contact', [FrontEndController::class, 'contactPageEmail'])->name('contact.email');
 
-Route::get('/about', function () {
-    return Inertia::render('Frontend/About', [
-        'assetsUrl' => asset('assets'),
-    ]);
-})->name('about');
+Route::get('/{slug}', [FrontEndController::class, 'generalPages'])->name('public.page');
 
 
 
