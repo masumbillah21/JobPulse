@@ -62,8 +62,10 @@ const form: any = useForm({
     blog: "",
     contact: "",
     job: "",
+    catebg: "",
 });
 const logoUrl = ref('')
+const cateBgUrl = ref('')
 if(settingList) {
     settingList.forEach((item: any) => {
         if(item.name == 'logo') {
@@ -80,6 +82,9 @@ if(settingList) {
         }
         if(item.name == 'job') {
             form.job = item.value
+        }
+        if(item.name == 'cate_logo') {
+            cateBgUrl.value = item.value
         }
     })
 }
@@ -100,6 +105,7 @@ const submit = () => {
                 <CardBox class="my-24 w-9/12" is-form @submit.prevent="submit">
                     <FormValidationErrors />
                     <FormSuccess />
+
                     <img class="mb-2" v-if="logoUrl" :src="logoUrl" alt="logo" width="300">
                     <FormField label="Logo" help="Max 500kb">
                         <FormFilePicker label="Upload Logo" color="success" @update:modelValue="form.logo = $event" />
@@ -130,9 +136,13 @@ const submit = () => {
                         :options="contactList" />
                     </FormField>
 
+                    <img class="mb-2" v-if="cateBgUrl" :src="cateBgUrl" alt="cate logo" width="300">
+                    <FormField label="Category Titlebar Background Image" help="Max 500kb">
+                        <FormFilePicker label="Upload image" color="success" @update:modelValue="form.catebg = $event" />
+                    </FormField>
+
 
                     <BaseDivider />
-
                     <BaseButtons>
                         <BaseButtonLink icon="far fa-save" type="submit" color="info" label="Save"
                             :class="{ 'opacity-25': form.processing }" :disabled="form.processing" />

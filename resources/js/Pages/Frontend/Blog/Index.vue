@@ -37,32 +37,19 @@
         </div>
         <div class="container relative mx-auto">
           <div class="items-center flex flex-wrap">
-            <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
+            <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center text-white">
               <SectionTitle :title="blogConents.banner.title" :description="blogConents.banner.description" :subtitle="blogConents.banner.subtitle" />
             </div>
           </div>
         </div>
-        <div class="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden"
-          style="height: 70px;">
-          <svg class="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
-            version="1.1" viewBox="0 0 2560 100" x="0" y="0">
-            <polygon class="text-gray-300 fill-current" points="2560 0 2560 100 0 100"></polygon>
-          </svg>
-        </div>
+        <Shape polygonClass="text-gray-100" sectionClass="top-auto bottom-0"/>
       </div>
 
-      <section class="relative py-20 bg-white">
-        <div class="bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20"
-          style="height: 80px;">
-          <svg class="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
-            version="1.1" viewBox="0 0 2560 100" x="0" y="0">
-            <polygon class="text-white fill-current" points="2560 0 2560 100 0 100"></polygon>
-          </svg>
-        </div>
+      <section class="relative py-20 bg-gray-50">
+        <Shape polygonClass="text-gray-50"/>
         <div class="container mx-auto px-4">
           <div class="grid gap-x-8 gap-y-4 grid-cols-3">
               <div v-for="(post, index) in blogsList?.data" :key="index" class="bg-gray-100 text-center rounded">
-                
                 <Link :href="route('blog.show', post.slug)">
                   <img :src="post.image" class="rounded h-60 w-full" :alt="post.title"  />
                   <div class="p-4 text-slate-900">

@@ -62,15 +62,15 @@ const contactContent: any = {
         </div>
         <div class="container relative mx-auto">
           <div class="items-center flex flex-wrap">
-            <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
+            <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center text-white">
               <SectionTitle :title="contactPageData.title" />
             </div>
           </div>
         </div>
         <Shape sectionClass="top-auto bottom-0"/>
       </div>
-      <section class="pb-20 relative block bg-gray-900">
-        <Shape polygonClass="text-gray-900" />
+      <section class="pb-20 relative block dark:bg-gray-900">
+        <Shape polygonClass="dark:text-gray-900 text-gray-50"/>
         <div class="container mx-auto px-4 lg:pt-24 lg:pb-64">
           <div class="flex flex-wrap text-center justify-center">
             <div class="w-full lg:w-6/12 px-4">
@@ -94,7 +94,7 @@ const contactContent: any = {
           </div>
         </div>
       </section>
-      <section class="relative block py-24 lg:pt-0 bg-gray-900 text-slate-800">
+      <section class="relative block py-24 lg:pt-0 dark:bg-gray-900 dark:text-slate-800">
         <div class="container mx-auto px-4">
           <div class="flex flex-wrap justify-center lg:-mt-64 -mt-48">
             <div class="w-full lg:w-6/12 px-4">

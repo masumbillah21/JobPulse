@@ -114,6 +114,7 @@ class FrontEndController extends Controller
     public function postCategory(string $slug)
     {
         $postCategory = Category::where('slug', $slug)->first();
+        $cateBgImage = Setting::where('name', 'catebg')->first();
         
         if(!$postCategory){
             return abort(404);
@@ -125,6 +126,7 @@ class FrontEndController extends Controller
         return Inertia::render('Frontend/Blog/Category', [
             'postList' => $postList,
             'postCategory' => $postCategory,
+            'cateBgImage' => $cateBgImage->value ?? null,
             'storageUrl' => config('app.url') . Storage::url('public/'),
         ]);
     }

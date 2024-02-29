@@ -59,7 +59,7 @@ for (let i: number = 1; i <= 8; i++) {
         </div>
         <div class="container relative mx-auto">
           <div class="items-center flex flex-wrap">
-            <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
+            <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center text-white">
               <SectionTitle :title="homeConents.banner.title" :description="homeConents.banner.description" :subtitle="homeConents.banner.subtitle" />
             </div>
           </div>

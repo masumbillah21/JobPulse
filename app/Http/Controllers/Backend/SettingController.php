@@ -47,14 +47,17 @@ class SettingController extends Controller
     {
         $request->validate([
             'home' => 'required|numeric|exists:pages,id',
-            'blog' => 'nullable|numeric|exists:pages,id',
-            'contact' => 'nullable|numeric|exists:pages,id',
+            'blog' => 'required|numeric|exists:pages,id',
+            'contact' => 'required|numeric|exists:pages,id',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:200',
+            'catebg' => 'required|image|mimes:jpeg,png,jpg|max:800',
         ]);
 
         foreach ($request->all() as $key => $value) {
+
             $setting = Setting::firstOrNew(['name' => $key]);
-            if($key == 'logo'){
+
+            if(trim($key) == 'logo'){
                 if ($request->hasFile('logo')) {
                     $oldLogo = Setting::where('name', 'logo')->first();
                     if($oldLogo){
@@ -62,11 +65,22 @@ class SettingController extends Controller
                     }
                     $setting->value = $request->file('logo')->store('images', 'public');
                 }
+            }
+            
+            if(trim($key) == 'catebg'){
+                if ($request->hasFile('catebg')) {
+                    $oldCatBg = Setting::where('name', 'catebg')->first();
+                    if($oldCatBg){
+                        Storage::disk('public')->delete($oldCatBg->value);
+                    }
+                    $setting->value = $request->file('catebg')->store('images', 'public');
+                }
             }else{
                 $setting->value = $value;
             }
-            $setting->save();
-            
+            if($setting->value){
+                $setting->save();
+            }
         }
 
         return redirect()->back()->with('success', 'Setting saved successfully');

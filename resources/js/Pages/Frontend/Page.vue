@@ -20,7 +20,7 @@ defineProps({
         </div>
         <div class="container relative mx-auto">
           <div class="items-center flex flex-wrap">
-            <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
+            <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center text-white">
               <SectionTitle :title="pageData.title" />
             </div>
           </div>
@@ -28,8 +28,8 @@ defineProps({
         <Shape sectionClass="top-auto bottom-0"/>
       </div>
 
-      <section v-for="(item, index) in pageData.contents" :key="index" class="relative py-20" :class="(index % 2 === 0 && pageData.contents.length > 1) ? 'bg-slate-800 text-white' : 'bg-gray-100 text-slate-800'">
-        <Shape :polygonClass="(index % 2 === 0 && pageData.contents.length > 1) ? 'text-slate-800' : 'text-gray-100'"/>
+      <section v-for="(item, index) in pageData.contents" :key="index" class="relative py-20" :class="(index % 2 === 0 && pageData.contents.length > 1) ? 'dark:bg-slate-800 bg-gray-100 dark:text-white' : 'dark:bg-gray-100 dark:text-slate-800'">
+        <Shape :polygonClass="(index % 2 === 0 && pageData.contents.length > 1) ? 'dark:text-slate-800 text-gray-100' : 'dark:text-gray-100 text-gray-50'"/>
 
           <div class="container mx-auto px-4">
           <div v-for="(data, itemIndex) in item.data" :key="itemIndex" class="items-center flex" :class="data.imagePosition === 'right' ? 'flex-row-reverse text-slate-800' : 'flex-row'">

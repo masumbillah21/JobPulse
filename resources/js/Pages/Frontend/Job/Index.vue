@@ -43,14 +43,14 @@
         </div>
         <div class="container relative mx-auto">
           <div class="items-center flex flex-wrap">
-            <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
+            <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center text-white">
               <SectionTitle :title="jobPageContent.banner.title" :description="jobPageContent.banner.description" :subtitle="jobPageContent.banner.subtitle" />
             </div>
           </div>
         </div>
-        <Shape polygonClass="text-gray-300" sectionClass="top-auto bottom-0"/>
+        <Shape polygonClass="text-gray-100" sectionClass="top-auto bottom-0"/>
       </div>
-      <section class="pb-20 bg-gray-300">
+      <section class="pb-20 bg-gray-100">
         <div class="container mx-auto px-4">
           <div class="flex flex-wrap">
             <div class="lg:pt-12 pt-6 w-full px-4">
