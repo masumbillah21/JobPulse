@@ -10,6 +10,7 @@
     import CardBoxModal from '@/Components/CardBoxModal.vue'
     import Pagination from '@/Components/Pagination.vue'
     import FormSuccess from "@/Components/FormSuccess.vue";
+    import FormFilePicker from "@/Components/FormFilePicker.vue";
     import { hasPermission } from '@/utils/hasPermission.js'
 
     import { Head, router, usePage, useForm } from '@inertiajs/vue3'
@@ -23,14 +24,16 @@
     const form = useForm({
         id: 0,
         name: '',
+        logo: '',
     })
-
+    const imageKey = ref(1)
     const submit = () => {
         form.post(route('admin.jobs.categories.store'), {
             onSuccess: () => {
                 const items: any = usePage().props.jobCateList
                 jobCategoriesData.data = items.data
                 form.reset()
+                imageKey.value = imageKey.value + 1
             }
         })
     }
@@ -39,6 +42,7 @@
     const dataEdit = (data: any) => {
         form.id = data.id
         form.name = data.name
+        imageKey.value = 1
     }
 
     const deleteData = () => {
@@ -78,6 +82,15 @@
                             required
                         />
                     </FormField>
+
+                    <FormField label="Logo" help="Max 500kb">
+                        <FormFilePicker 
+                            label="Upload Logo" 
+                            color="success"
+                            :key="imageKey"
+                            @update:modelValue="form.logo = $event" />
+                    </FormField>
+
                     <BaseButtonLink
                         type="submit"
                         color="info"
@@ -91,6 +104,7 @@
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3">SL</th>
+                            <th scope="col" class="px-6 py-3">Logo</th>
                             <th scope="col" class="px-6 py-3">Title</th>
                             <th scope="col" class="px-6 py-3">
                                 Action
@@ -100,6 +114,7 @@
                     <tbody>
                         <tr v-for="(category, index) in jobCategoriesData.data" :key="category.id" class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                             <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ index + 1 }}</td>
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"><img :src="category.logo" :alt="category.name" width="50"></td>
                             <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ category.name }}</td>
                             <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <BaseButtonLink v-if="hasPermission('categories.update')" icon="fas fa-edit" label="Edit" color="info" small @click="dataEdit(category)" />

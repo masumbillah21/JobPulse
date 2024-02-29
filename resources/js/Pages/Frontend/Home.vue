@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import LayoutGuest from '@/Layouts/LayoutGuest.vue';
-  import { Head, usePage } from '@inertiajs/vue3';
+  import { Head, usePage, Link } from '@inertiajs/vue3';
   import Shape from '@/Components/Frontend/Shape.vue';
 
   import SectionTitle from '@/Components/Frontend/SectionTitle.vue';
@@ -10,6 +10,8 @@
   const homePageData: any = usePage().props.homePageData ?? null;
   const jobList: any = usePage().props.jobList ?? null;
   const allActiveJobs: any = usePage().props.allActiveJobs ?? null;
+  const jobCategories: any = usePage().props.jobCategories ?? null;
+  const companies: any = usePage().props.companies ?? null;
 
   const props = defineProps({
     storageUrl: String,
@@ -73,12 +75,14 @@ for (let i: number = 1; i <= 8; i++) {
               <SectionTitle :title="homeConents.logo.title" :description="homeConents.logo.description" :subtitle="homeConents.logo.subtitle" />
             </div>
             <div class="mt-1 mb-10">
-              <div class="grid grid-cols-4 gap-4">
-                <div v-for="_ in numbers" class="rounded shadow-sm p-2 shadow-slate-300 m-3">
-                  <img src="https://fakeimg.pl/250x250" alt="">
-                  <p class="text-center text-sm font-semibold mt-1">Logo section</p>
+              <template v-if="companies">
+                <div class="grid grid-cols-4 gap-4">
+                  <div v-for="compnay in companies" class="rounded shadow-sm p-2 shadow-slate-300 m-3">
+                    <img src="https://fakeimg.pl/250x250" alt="">
+                    <p class="text-center text-sm font-semibold mt-1">{{ compnay.name }}</p>
+                  </div>
                 </div>
-              </div>
+              </template>
             </div>
           </div>
         </div>
@@ -92,10 +96,14 @@ for (let i: number = 1; i <= 8; i++) {
             </div>
             <div class="mt-1 mb-10">
               <div class="grid grid-cols-4 gap-2">
-                <div v-for="_ in numbers" class="text-center rounded shadow-sm p-2 text-stone-900 bg-white shadow-slate-300 m-3 w-full">
-                  <img class="mx-auto" src="https://fakeimg.pl/150x150" alt="">
-                  <p class="text-center text-sm font-semibold mt-1">Software Engineers</p>
-                </div>
+                <template v-if="jobCategories">
+                    <div v-for="category in jobCategories" class="text-center rounded shadow-sm p-2 text-stone-900 bg-white shadow-slate-300 m-3 w-full">
+                      <Link :href="category.slug">
+                        <img class="mx-auto" :src="category.logo" alt="">
+                        <p class="text-center text-sm font-semibold mt-1">{{ category.name }}</p>
+                      </Link>
+                    </div>
+                </template>
               </div>
             </div>
           </div>

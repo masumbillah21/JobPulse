@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Company;
 use App\Models\Job;
 use App\Models\Blog;
+use App\Models\JobCategory;
 use App\Models\Page;
 use Inertia\Inertia;
 use App\Models\Setting;
 use App\Models\Category;
 use App\Mail\ContactEmail;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -25,11 +26,16 @@ class FrontEndController extends Controller
         $jobList = Job::whereDate('closing_date', '>=', now())->with('company')->where('status', 1)->get();
         $allActiveJobs = Job::whereDate('closing_date', '>=', now())->with('company')->where('status', 1)->get();
         
+        $jobCategories = JobCategory::get(['name', 'slug', 'logo']);
+        $companies = Company::where('status', 1)->get(['name', 'slug', 'logo']);
+
         return Inertia::render('Frontend/Home', [
             'storageUrl' => config('app.url') . Storage::url('public/'),
             'homePageData' => $homePageData,
             'jobList' => $jobList,
-            'allActiveJobs' => $allActiveJobs
+            'allActiveJobs' => $allActiveJobs,
+            'jobCategories' => $jobCategories,
+            'companies' => $companies
         ]);
     }
 

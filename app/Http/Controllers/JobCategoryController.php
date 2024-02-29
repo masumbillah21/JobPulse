@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use Inertia\Inertia;
 use App\Models\JobCategory;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
 
 class JobCategoryController extends Controller
 {
@@ -33,21 +35,67 @@ class JobCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|unique:categories|max:20',
-        ]);
 
-        JobCategory::updateOrCreate(
-            [
-                'id' => $request->id
-            ],
-            [
-                'name' => $request->name,
-                'slug' => $request->name
-            ]
-        );
+        try{
 
-        return redirect()->back()->with('success', 'Category saved successfully!');
+            //dd($request->id);
+            
+            $request->validate([
+                'name' => 'required|unique:categories|max:20',
+            ]);
+
+            
+    
+            //New category
+            if ($request->id == null || $request->id == 0) {
+                $request->validate([
+                    'logo' => 'required|image|mimes:jpeg,png,jpg|max:300',
+                ]);
+    
+                if ($request->hasFile('logo')) {
+                    $logo = $request->file('logo')->store('images', 'public');
+                    $request->merge(['cate_logo' => $logo]);
+                }
+            }else{
+                // Update Category
+                $request->validate([
+                    'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:500',
+                ]);
+    
+                $oldImage = JobCategory::where('id', $request->id)->first();
+
+                if ($request->hasFile('logo')) {
+                    $image_path = $request->file('logo')->store('images', 'public');
+
+                    if ($oldImage->logo != null) {
+                        Storage::disk('public')->delete($oldImage->logo);
+                    }
+                    
+                    $request->merge(['cate_logo' => $image_path]);
+                }else{
+                    $request->merge(['cate_logo' => $oldImage->logo]);
+                }
+                
+            }
+
+            
+    
+            JobCategory::updateOrCreate(
+                [
+                    'id' => $request->id
+                ],
+                [
+                    'name' => $request->name,
+                    'logo' => $request->cate_logo,
+                    'slug' => $request->name
+                ]
+            );
+    
+            return redirect()->back()->with('success', 'Category saved successfully!');
+        }catch(Exception $e){
+            return redirect()->back()->withErrors($e->getMessage());
+        }
+        
     }
 
     /**

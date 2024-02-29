@@ -7,7 +7,7 @@
     showMenu.value = !showMenu.value;
   }
 
-  const publicPages: any = usePage().props.publicPages
+  const publicPages: any = usePage().props.publicPages ?? null
 </script>
 
 <template>
@@ -28,11 +28,13 @@
               Home
             </Link>
           </li>
-          <li v-for="page in publicPages" class="flex items-center">
+          <template v-if="publicPages">
+            <li v-for="page in publicPages" class="flex items-center">
             <Link :href="route('public.page', page.slug)" class="lg:text-white lg:hover:text-gray-300 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold">
               {{ page.title }}
             </Link>
           </li>
+          </template>
           <li class="flex items-center">
             <Link :href="route('job')" class="lg:text-white lg:hover:text-gray-300 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold">
               Jobs
