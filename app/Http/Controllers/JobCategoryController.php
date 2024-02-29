@@ -43,9 +43,6 @@ class JobCategoryController extends Controller
             $request->validate([
                 'name' => 'required|unique:categories|max:20',
             ]);
-
-            
-    
             //New category
             if ($request->id == null || $request->id == 0) {
                 $request->validate([
@@ -73,22 +70,25 @@ class JobCategoryController extends Controller
                     
                     $request->merge(['cate_logo' => $image_path]);
                 }else{
-                    $request->merge(['cate_logo' => $oldImage->logo]);
+                    $request->merge(['cate_logo' => '']);
                 }
-                
             }
 
-            
+            $data = [
+                'name' => $request->name,
+                'logo' => $request->cate_logo,
+                'slug' => $request->name
+            ];
+
+            if(empty($data['logo'])){
+                unset($data['logo']);
+            }
     
             JobCategory::updateOrCreate(
                 [
                     'id' => $request->id
                 ],
-                [
-                    'name' => $request->name,
-                    'logo' => $request->cate_logo,
-                    'slug' => $request->name
-                ]
+                $data
             );
     
             return redirect()->back()->with('success', 'Category saved successfully!');
