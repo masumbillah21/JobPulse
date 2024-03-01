@@ -18,8 +18,11 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->enum('user_type', ['system', 'company', 'candidate'])->default('candidate');
+            $table->boolean('is_active')->default(true);
+            $table->boolean('is_default')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

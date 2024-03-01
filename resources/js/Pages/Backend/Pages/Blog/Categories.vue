@@ -69,7 +69,7 @@
             <p>Do you really want to delete?</p>
           </CardBoxModal>
             <div class="flex">
-                <CardBox class="w-1/2 mb-6 mr-4"  is-form @submit.prevent="submit">
+                <CardBox v-if="hasPermission('categories.create') || hasPermission('categories.update')" class="w-1/2 mb-6 mr-4"  is-form @submit.prevent="submit">
                     <FormSuccess/>
                     <FormField label="Name" label-for="name" help="Please enter category name">
                         <FormControl

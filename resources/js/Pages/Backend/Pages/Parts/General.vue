@@ -62,7 +62,7 @@ const onToggleSection = (sectionIndex: number) => {
 
     <div v-show="!row.hidden" v-for="(data, rowIndex) in row.data" :key="rowIndex + sectionIndex"
         class="mb-2 flex-col justify-end items-end h-full">
-        <div class="w-full mb-7 p-5 bg-slate-900 rounded">
+        <div class="w-full mb-7 p-5 dark:bg-slate-900 bg-gray-100 rounded">
             <BaseButtons class="mt-auto justify-end">
                 <BaseButtonLink class="mr-1" icon="fas fa-plus" @click="onAddRow(sectionIndex)" label="Add Row"
                     color="contrast" rounded-full small />

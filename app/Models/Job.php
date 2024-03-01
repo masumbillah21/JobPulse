@@ -45,4 +45,9 @@ class Job extends Model
     {
         return $this->belongsTo(JobCategory::class, 'job_category_id');
     }
+
+    public function applications()
+    {
+        return $this->belongsToMany(User::class, 'job_candidate');
+    }
 }

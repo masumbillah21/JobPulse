@@ -71,7 +71,7 @@
             <p>Do you really want to delete?</p>
           </CardBoxModal>
             <div class="flex">
-                <CardBox class="w-1/2 mb-6 mr-4"  is-form @submit.prevent="submit">
+                <CardBox v-if="hasPermission('job.categories.create') || hasPermission('job.categories.update')" class="w-1/2 mb-6 mr-4"  is-form @submit.prevent="submit">
                     <FormSuccess/>
                     <FormField label="Name" label-for="name" help="Please enter category name">
                         <FormControl
@@ -117,8 +117,8 @@
                             <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"><img :src="category.logo" :alt="category.name" width="50"></td>
                             <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ category.name }}</td>
                             <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <BaseButtonLink v-if="hasPermission('categories.update')" icon="fas fa-edit" label="Edit" color="info" small @click="dataEdit(category)" />
-                                <BaseButtonLink v-if="hasPermission('categories.delete')" class="ml-2" icon="fas fa-trash-alt" label="Delete" color="danger" small @click="showModle(category.id)"/>
+                                <BaseButtonLink v-if="hasPermission('job.categories.update')" icon="fas fa-edit" label="Edit" color="info" small @click="dataEdit(category)" />
+                                <BaseButtonLink v-if="hasPermission('job.categories.delete')" class="ml-2" icon="fas fa-trash-alt" label="Delete" color="danger" small @click="showModle(category.id)"/>
                             </td>
                         </tr>
                     </tbody>

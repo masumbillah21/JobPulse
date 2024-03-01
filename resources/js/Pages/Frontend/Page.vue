@@ -11,8 +11,8 @@ defineProps({
 </script>
 <template>
   <LayoutGuest>
-    <Head :title="pageData.title" />
-    <main>
+    <Head :title="pageData.title ?? 'Page'" />
+    <main v-if="pageData">
       <div class="relative pt-16 pb-32 flex content-center items-center justify-center" style="min-height: 45vh;">
         <div class="absolute top-0 w-full h-full bg-center bg-cover"
           :style="'background-image: url(' + storageUrl +  pageData.featured_image + ');'" style="background-position: center; background-size: cover;">
@@ -49,6 +49,15 @@ defineProps({
           </div>
         </div>
       </section>
+    </main>
+    <main v-else>
+      <div class="container mx-auto px-4">
+        <div class="items-center justify-center flex flex-wrap">
+          <div class="w-full ml-auto mr-auto px-4">
+            <h3 class="text-4xl text-center font-semibold">Coming Soon</h3>
+          </div>
+        </div>
+      </div>
     </main>
   </LayoutGuest>
 </template>

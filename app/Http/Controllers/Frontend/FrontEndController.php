@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Models\Company;
 use App\Models\Job;
 use App\Models\Blog;
-use App\Models\JobCategory;
 use App\Models\Page;
 use Inertia\Inertia;
+use App\Models\Company;
 use App\Models\Setting;
 use App\Models\Category;
 use App\Mail\ContactEmail;
+use App\Models\JobCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,14 +22,23 @@ class FrontEndController extends Controller
     
     public function index()
     {
-        $homeID = Setting::where('name', 'home')->first();
-        $homePageData = Page::where('id', $homeID->value)->first();
-        $jobList = Job::whereDate('closing_date', '>=', now())->with('company')->where('status', 1)->get();
-        $allActiveJobs = Job::whereDate('closing_date', '>=', now())->with('company')->where('status', 1)->get();
-        
-        $jobCategories = JobCategory::get(['name', 'slug', 'logo']);
-        $companies = Company::where('status', 1)->get(['name', 'slug', 'logo']);
+        $homeID = Setting::where('name', 'home')->firstOrFail();
 
+        if($homeID){
+            $homePageData = Page::where('id', $homeID->value)->firstOrFail();
+            $jobList = Job::whereDate('closing_date', '>=', now())->with('company')->where('status', 1)->get();
+            $allActiveJobs = Job::whereDate('closing_date', '>=', now())->with('company')->where('status', 1)->get();
+            
+            $jobCategories = JobCategory::get(['name', 'slug', 'logo']);
+            $companies = Company::where('status', 1)->whereNot('logo', null)->get(['name', 'slug', 'logo']);    
+        }else{
+            $homePageData = null;
+            $jobList = null;
+            $allActiveJobs = null;
+            $jobCategories = null;
+            $companies = null;
+        }
+        
         return Inertia::render('Frontend/Home', [
             'storageUrl' => config('app.url') . Storage::url('public/'),
             'homePageData' => $homePageData,
@@ -170,5 +180,18 @@ class FrontEndController extends Controller
             'pageData' => $pageData,
             'storageUrl' => config('app.url') . Storage::url('public/'),
         ]);
+    }
+
+    public function applyJob(Request $request){
+
+        $job = Job::where('id', $request->id)->where('status', 1)->first();
+        if(!$job){
+            return abort(404);
+        }
+
+        $job->applications()->attach(Auth::id(), ['expected_salary' => $request->expected_salary, 'status' => 'pending']);
+
+        return redirect()->back()->with('success', 'Job applied successfully');
+        
     }
 }

@@ -49,7 +49,15 @@
     });
 
     if(companyData != null) {
-      form = companyData
+      form.id = companyData.id;
+      form.name = companyData.name;
+      form.description = companyData.description;
+      form.company_type = companyData.company_type;
+      form.address = companyData.address;
+      form.phone = companyData.phone;
+      form.email = companyData.email;
+      form.company_size = companyData.company_size;
+      form.website = companyData.website;
       form._method = 'put';
     }
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Trait\DateTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
@@ -12,7 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable //implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, DateTrait;
+    use HasApiTokens, HasFactory, Notifiable, DateTrait, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -35,6 +36,7 @@ class User extends Authenticatable //implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+        'deleted_at',
     ];
 
     /**
@@ -104,4 +106,10 @@ class User extends Authenticatable //implements MustVerifyEmail
             return $role->permissions->pluck('permission');
         })->contains($permission);
     }
+
+    public function appliedJobs()
+    {
+        return $this->belongsToMany(Job::class, 'job_candidate');
+    }
+
 }

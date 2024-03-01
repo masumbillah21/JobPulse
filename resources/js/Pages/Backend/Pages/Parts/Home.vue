@@ -34,7 +34,7 @@ const onToggleSection = (sectionIndex: number) => {
     </SectionTitleLineWithButton>
     <div v-show="!row.hidden" v-for="(data, rowIndex) in row.data" :key="rowIndex + sectionIndex"
         class="mb-2 flex-col justify-end items-end h-full">
-        <div class="w-full mb-7 p-5 bg-slate-900 rounded">
+        <div class="w-full mb-7 p-5 dark:bg-slate-900 bg-gray-100 rounded">
             <FormField :label="'Title: ' + data.title" :label-for="'headline-' + (rowIndex + sectionIndex)">
                 <FormControl v-model="data.title" :id="'headline-' + (rowIndex + sectionIndex)" placeholder="Title here"
                     type="text" required />

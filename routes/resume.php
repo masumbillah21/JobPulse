@@ -20,3 +20,4 @@ Route::delete('resume/experience/{id}', [ResumeController::class, 'deleteExperie
 
 Route::post('resume/reference', [ResumeController::class, 'saveReference'])->name('resume.saveReference');
 Route::delete('resume/reference/{id}', [ResumeController::class, 'deleteReference'])->name('resume.deleteReference');
+Route::get('resume/view', [ResumeController::class, 'viewResume'])->name('resume.viewResume');

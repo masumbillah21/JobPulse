@@ -114,7 +114,7 @@
                         <FormControl v-model="row.result" type="text" required />
                     </td>
                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <BaseButtonLink icon="faf fa-save" color="info" :class="{ 'opacity-25': form.processing }" @click="submit(row)" />
+                        <BaseButtonLink icon="fas fa-save" color="info" :class="{ 'opacity-25': form.processing }" @click="submit(row)" />
                         <BaseButtonLink icon="fas fa-minus" @click="remove(index, row.id)" class="ml-2" color="danger"
                             rounded-full small />
                     </td>

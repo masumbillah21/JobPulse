@@ -46,7 +46,7 @@ const onToggleSection = (sectionIndex: number) => {
     </SectionTitleLineWithButton>
 
     <template v-if="!row.hidden">
-        <div v-if="row.slug === 'banner'" class="w-full mb-7 p-5 bg-slate-900 rounded">
+        <div v-if="row.slug === 'banner'" class="w-full mb-7 p-5 dark:bg-slate-900 bg-gray-100 rounded">
             <FormField :label="'Title: ' + row.data[sectionIndex].title" label-for="'headline-banner'">
                 <FormControl v-model="row.data[sectionIndex].title" id="'headline-banner" placeholder="Title here"
                     type="text" required />
@@ -63,7 +63,7 @@ const onToggleSection = (sectionIndex: number) => {
     </template>
     <div v-show="!row.hidden" v-for="(data, rowIndex) in row.data" :key="rowIndex + sectionIndex"
         class="mb-2 flex-col justify-end items-end h-full">
-        <div class="w-full mb-7 p-5 bg-slate-900 rounded" v-if="row.slug !== 'banner'">
+        <div class="w-full mb-7 p-5 dark:bg-slate-900 bg-gray-100 rounded" v-if="row.slug !== 'banner'">
             <BaseButtons class="mt-auto justify-end">
                 <BaseButtonLink class="mr-1" icon="fas fa-plus" @click="onAddRow(sectionIndex)" label="Add Row"
                     color="contrast" rounded-full small />

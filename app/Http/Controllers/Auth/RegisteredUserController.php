@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Helper\GenerateUniqueSlug;
-use App\Models\Role;
 use App\Models\User;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Company;
+use App\Enum\UserRoleEnum;
 use App\Enum\UserTypeEnum;
+use App\Helper\GetUserRole;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
+use App\Helper\GenerateUniqueSlug;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
 
@@ -56,11 +56,11 @@ class RegisteredUserController extends Controller
                     'password' => Hash::make($request->password),
                 ]);
 
-                $role = Role::where('name', 'Candidate')->first();
+                $candidateRole = GetUserRole::user(UserRoleEnum::CANDIDATE->value);
 
-                $user->roles()->attach($role->id);
+                $user->roles()->attach($candidateRole->id);
                 
-            }else if($request->user_type === UserTypeEnum::COMPANY) {
+            }else if($request->user_type == UserTypeEnum::COMPANY) {
                 
                 $request->validate([
                     'name' => 'required|string|max:255',
@@ -96,9 +96,9 @@ class RegisteredUserController extends Controller
                     'company_id' => $company->id
                 ]);
 
-                $role = Role::where('name', 'Admin Company')->first();
+                $companyAdminRole = GetUserRole::user(UserRoleEnum::COMPNANY_ADMIN->value);
 
-                $user->roles()->attach($role->id);
+                $user->roles()->attach($companyAdminRole);
                 
             }else{
                 return redirect()->back()->withErrors('Invalid Request.');

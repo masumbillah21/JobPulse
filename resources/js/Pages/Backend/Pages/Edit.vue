@@ -319,7 +319,7 @@ const chooseLayout = (layout: String) => {
             <div v-show="!form.featured_image" class="w-full">
               <img v-if="pageData != null && pageData.featured_image" :src="`${storage}/${pageData.featured_image}`"
                 class="h-52 w-11/12 mb-4" alt="">
-              <div v-else class="h-52 w-11/12 mb-4 border-dashed border border-gray-50 flex justify-center items-center">
+              <div v-else class="h-52 w-11/12 mb-4 border-dashed border dark:border-gray-50 border-slate-800  flex justify-center items-center">
                 Featured Image</div>
             </div>
             <FormField label="Featured Image" help="Max 500kb">

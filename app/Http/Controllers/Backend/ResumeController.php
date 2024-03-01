@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\User;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Training;
@@ -314,5 +313,20 @@ class ResumeController extends Controller
         Reference::where('user_id', Auth::id())->where('id', $id)->delete();
 
         return redirect()->back()->with('success', 'Reference deleted successfully');
+    }
+
+    public function viewResume(){
+        if (!Auth::user()->hasPermission('resume.view')) {
+            abort(403);
+        }
+        $data['resume'] = PersonalDetail::where('user_id', Auth::id())->first();
+        $data['education'] = Education::where('user_id', Auth::id())->get();
+        $data['training'] = Training::where('user_id', Auth::id())->get();
+        $data['experience'] = Experience::where('user_id', Auth::id())->get();
+        $data['reference'] = Reference::where('user_id', Auth::id())->get();
+        
+        return Inertia::render('Backend/Resume/Show', [
+            'resumeData' => $data
+        ]);
     }
 }

@@ -50,24 +50,24 @@ class SettingController extends Controller
             'blog' => 'required|numeric|exists:pages,id',
             'contact' => 'required|numeric|exists:pages,id',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:200',
-            'catebg' => 'required|image|mimes:jpeg,png,jpg|max:800',
+            'catebg' => 'nullable|image|mimes:jpeg,png,jpg|max:800',
         ]);
 
         foreach ($request->all() as $key => $value) {
 
             $setting = Setting::firstOrNew(['name' => $key]);
 
-            if(trim($key) == 'logo'){
+            if($key == 'logo'){
                 if ($request->hasFile('logo')) {
+                    $setting->value = $request->file('logo')->store('images', 'public');
+
                     $oldLogo = Setting::where('name', 'logo')->first();
                     if($oldLogo){
                         Storage::disk('public')->delete($oldLogo->value);
                     }
-                    $setting->value = $request->file('logo')->store('images', 'public');
+                    
                 }
-            }
-            
-            if(trim($key) == 'catebg'){
+            }else if(trim($key) == 'catebg'){
                 if ($request->hasFile('catebg')) {
                     $oldCatBg = Setting::where('name', 'catebg')->first();
                     if($oldCatBg){
@@ -78,6 +78,7 @@ class SettingController extends Controller
             }else{
                 $setting->value = $value;
             }
+
             if($setting->value){
                 $setting->save();
             }

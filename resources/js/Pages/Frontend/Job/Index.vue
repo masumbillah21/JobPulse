@@ -35,7 +35,7 @@
   <LayoutGuest>
     <Head title="Jobs" />
     
-    <main>
+    <main v-if="jobPageData">
       <div class="relative pt-16 pb-32 flex content-center items-center justify-center" style="min-height: 45vh;">
         <div class="absolute top-0 w-full h-full bg-center bg-cover"
           :style="'background-image: url(' + props.storageUrl +  jobPageData.featured_image + ');'">
@@ -65,6 +65,16 @@
           </div>
         </div>
       </section>
+    </main>
+
+    <main v-else class="mt-40">
+      <div class="container mx-auto px-4">
+        <div class="items-center justify-center flex flex-wrap">
+          <div class="w-full ml-auto mr-auto px-4">
+            <h3 class="text-4xl font-semibold">Coming Soon</h3>
+          </div>
+        </div>
+      </div>
     </main>
   </LayoutGuest>
 </template>

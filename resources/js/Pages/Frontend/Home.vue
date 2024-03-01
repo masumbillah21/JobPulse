@@ -50,7 +50,7 @@ for (let i: number = 1; i <= 8; i++) {
 </script>
 <template>
   <LayoutGuest>
-    <Head title="Home" />
+    <Head :title="homePageData.title ?? 'Home'" />
     <main v-if="homePageData">
       <div class="relative pt-16 pb-32 flex content-center items-center justify-center" style="min-height: 75vh;">
         <div class="absolute top-0 w-full h-full bg-center bg-cover"
@@ -77,8 +77,8 @@ for (let i: number = 1; i <= 8; i++) {
             <div class="mt-1 mb-10">
               <template v-if="companies">
                 <div class="grid grid-cols-4 gap-4">
-                  <div v-for="compnay in companies" class="rounded shadow-sm p-2 shadow-slate-300 m-3">
-                    <img src="https://fakeimg.pl/250x250" alt="">
+                  <div v-for="compnay in companies" class="rounded shadow-sm p-2 shadow-slate-300 m-3 flex items-center flex-col">
+                    <img :src="compnay.logo" :alt="compnay.name">
                     <p class="text-center text-sm font-semibold mt-1">{{ compnay.name }}</p>
                   </div>
                 </div>
@@ -95,12 +95,12 @@ for (let i: number = 1; i <= 8; i++) {
               <SectionTitle :title="homeConents.job_category.title" :description="homeConents.job_category.description" :subtitle="homeConents.job_category.subtitle" />
             </div>
             <div class="mt-1 mb-10">
-              <div class="grid grid-cols-4 gap-2">
+              <div class="grid grid-cols-5 gap-2">
                 <template v-if="jobCategories">
                     <div v-for="category in jobCategories" class="text-center rounded shadow-sm p-2 text-stone-900 bg-white shadow-slate-300 m-3 w-full">
                       <Link :href="category.slug">
                         <img class="mx-auto" :src="category.logo" alt="">
-                        <p class="text-center text-sm font-semibold mt-1">{{ category.name }}</p>
+                        <p class="text-center text-lg font-semibold mt-3">{{ category.name }}</p>
                       </Link>
                     </div>
                 </template>
@@ -122,6 +122,15 @@ for (let i: number = 1; i <= 8; i++) {
           </div>
         </div>
       </section>
+    </main>
+    <main v-else>
+      <div class="container mx-auto px-4">
+        <div class="items-center justify-center flex flex-wrap">
+          <div class="w-full ml-auto mr-auto px-4">
+            <h3 class="text-4xl text-center font-semibold">Coming Soon</h3>
+          </div>
+        </div>
+      </div>
     </main>
   </LayoutGuest>
 </template>

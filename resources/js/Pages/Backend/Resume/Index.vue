@@ -1,9 +1,10 @@
 <script setup lang="ts">
-  import { computed, ref } from 'vue'
+  import { ref } from 'vue'
 
   import SectionMain from '@/Components/SectionMain.vue'
+  import BaseButtonLink from '@/Components/BaseButtonLink.vue'
   import LayoutAuthenticated from '@/Layouts/LayoutAuthenticated.vue'
-  import SectionTitle from '@/Components/SectionTitle.vue'
+  import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue'
   import Educations from '@/Pages/Backend/Resume/Tabs/Educations.vue'
   import PersonalInfo from '@/Pages/Backend/Resume/Tabs/PersonalInfo.vue'
   import Experience from '@/Pages/Backend/Resume/Tabs/Experience.vue'
@@ -28,7 +29,9 @@
 
     <Head title="Resume" />
     <SectionMain>
-      <SectionTitle title="Resume" icon="fas fa-arrow-circle-right" />
+      <SectionTitleLineWithButton title="Resume" icon="fas fa-arrow-circle-right">
+        <BaseButtonLink type="button" routeName="resume.viewResume" color="success" label="View" icon="fas fa-eye" />
+      </SectionTitleLineWithButton>
       
         <div class="w-full">
           <ul class="flex w-full mb-0 list-none pt-3 pb-4 flex-row">

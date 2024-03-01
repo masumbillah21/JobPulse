@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\User;
 use Auth;
+use Exception;
+use App\Models\User;
 use Inertia\Inertia;
+use App\Enum\UserRoleEnum;
 use App\Enum\UserTypeEnum;
+use App\Helper\GetUserRole;
 use Illuminate\Http\Request;
+use App\Helper\GetUserRoleID;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class EmployeeController extends Controller
@@ -21,8 +26,14 @@ class EmployeeController extends Controller
             abort(403);
         }
 
-        $employees = User::paginate(10);
-
+        $authUserRole = Auth::user()->roles()->pluck('name')->first();
+        
+        if($authUserRole == UserRoleEnum::SUPER_ADMIN->value) {
+            $employees = User::whereNot('id', Auth::user()->id)->whereNot('is_default', 1)->paginate(10);
+        }else{
+            $employees = User::where('company_id', Auth::user()->company)->whereNot('id', Auth::user()->id)->whereNot('is_default', 1)->paginate(10);
+        }
+        
         return Inertia::render('Backend/Employee/Index',[
             'employees' => $employees
         ] );
@@ -45,24 +56,38 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Auth::user()->hasPermission('employee.create')) {
-            abort(403);
+        DB::beginTransaction();
+        try{
+            if (!Auth::user()->hasPermission('employee.create')) {
+                abort(403);
+            }
+    
+            $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'min:8'],
+            ]);
+    
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => $request->password,
+                'user_type' => Auth::user()->user_type,
+            ]);
+    
+            if(Auth::user()->user_type == UserTypeEnum::COMPANY) {
+                $companyEmpRole = GetUserRole::user(UserRoleEnum::COMPNANY_EMP);
+                $user->roles()->attach($companyEmpRole->id);
+            }else if(Auth::user()->user_type == UserTypeEnum::SYSTEM) {
+                $systemEmpRole = GetUserRole::user(UserRoleEnum::SYSTEM_EMP);
+                $user->roles()->attach($systemEmpRole->id);
+            }
+            DB::commit();
+            return redirect()->back()->with('success', 'Employee created successfully');
+        }catch(Exception $e){
+            DB::rollBack();
+            return redirect()->back()->withError('Something went wrong!');
         }
-
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'min:8'],
-        ]);
-
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-            'user_type' => Auth::user()->user_type,
-        ]);
-        
-        return redirect()->back()->with('success', 'Employee created successfully');
     }
 
     /**
