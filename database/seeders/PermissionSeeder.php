@@ -123,6 +123,10 @@ class PermissionSeeder extends Seeder
         "permission" => "jobs.approved"
       ],
       [
+        "name" => "Job Show From List",
+        "permission" => "jobs.list.view"
+      ],
+      [
         "name" => "View Job Categories",
         "permission" => "job.categories.view"
       ],

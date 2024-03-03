@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\Backend\JobController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\TagController;
 use App\Http\Controllers\JobCategoryController;
@@ -42,6 +43,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::get('company/{id}/{status}', [CompanyController::class, 'changeStatus'])->name('company.status');
                 Route::resource('permissions', PermissionController::class);
                 Route::resource('roles', RoleController::class);
+                Route::get('/jobs/list', [JobController::class, 'jobList'])->name('jobs.list');
+                Route::get('/jobs/list/{id}', [JobController::class, 'jobApprove'])->name('jobs.status');
+                Route::get('/jobs/single/{id}', [JobController::class, 'singleJobView'])->name('jobs.list.single');
                 
                 require __DIR__ . '/employee.php';
                 require __DIR__ . '/company.php';

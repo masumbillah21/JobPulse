@@ -105,7 +105,7 @@ export default [
      permission: "jobs.view.list",
      menu :[
         {
-            route : "admin.jobs.index",
+            route : "admin.jobs.list",
             icon : "fas fa-list",
             label : "Job Lists",
             permission: "jobs.view.list",

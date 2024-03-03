@@ -6,7 +6,6 @@ use App\Helper\GenerateUniqueSlug;
 use App\Models\Job;
 use Inertia\Inertia;
 use App\Models\JobCategory;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -170,5 +169,31 @@ class JobController extends Controller
         return redirect()->back()->with('success', 'Job deleted successfully');
     }
 
-    
+    public function jobList()
+    {
+        $jobsData = Job::with(['user', 'category', 'company'])->orderByDesc('created_at')->get();
+        return Inertia::render('Backend/Jobs/List', [
+            'jobsData' => $jobsData
+        ]);
+    }
+
+    public function jobApprove($id)
+    {
+        $job = Job::find($id);
+        $status = $job->status == 1 ? 0 : 1;
+        
+        $job->update(['status' => $status]);
+        return redirect()->back()->with('success', 'Job status updated successfully');
+    }
+
+    public function singleJobView($id)
+    {
+        $this->authorize('view', Job::class);
+        $job = Job::find($id);
+
+        $jobData = $job->load(['user', 'category', 'company']);
+        return Inertia::render('Backend/Jobs/Single', [
+            'jobData' => $jobData,
+        ]);
+    }
 }
