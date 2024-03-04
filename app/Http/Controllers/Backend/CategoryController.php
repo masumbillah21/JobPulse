@@ -15,7 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
         return Inertia::render('Backend/Pages/Blog/Categories', [
-            'categoriesData' => Category::orderBy('id', 'desc')->paginate(10),
+            'categoriesData' => Category::orderBy('id', 'desc')->get(),
         ]);
     }
 

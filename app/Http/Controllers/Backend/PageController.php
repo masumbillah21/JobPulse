@@ -19,7 +19,7 @@ class PageController extends Controller
     {
         $this->authorize('view', Page::class);
         
-        $pages = Page::paginate(10);
+        $pages = Page::get();
         return Inertia::render('Backend/Pages/Index', [
             'pageList' => $pages
         ]);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Enum\UserRoleEnum;
 use App\Helper\GenerateUniqueSlug;
 use App\Models\Job;
 use Inertia\Inertia;
@@ -20,9 +21,12 @@ class JobController extends Controller
     {
         $this->authorize('view', Job::class);
 
-        $companyId = Auth::user()->company_id;
-        $jobsData = Job::where('company_id', $companyId)->paginate(10);
-        
+        if(Auth::user()->roles->pluck('name')->contains(UserRoleEnum::SUPER_ADMIN->value)){
+            $jobsData = Job::with('category')->get();
+        }else{
+            $companyId = Auth::user()->company_id;
+            $jobsData = Job::where('company_id', $companyId)->with('category')->get();
+        }
 
         return Inertia::render('Backend/Jobs/Index', [
             'jobsData' => $jobsData,

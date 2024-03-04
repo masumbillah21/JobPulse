@@ -20,7 +20,7 @@ class CompanyController extends Controller
     {
         $this->authorize('view', Company::class);
 
-        $companyData = Company::paginate(10);
+        $companyData = Company::get();
 
         return Inertia::render('Backend/Company/Index', [
             'companyData' => $companyData
@@ -145,7 +145,7 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function changeStatus(string $id, string $status)
+    public function changeStatus(string $id)
     {
         $this->authorize('delete', Company::class);
 

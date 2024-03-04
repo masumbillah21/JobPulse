@@ -15,7 +15,7 @@ class JobCategoryController extends Controller
      */
     public function index()
     {
-        $cateList = JobCategory::orderBy('id', 'desc')->paginate(10);
+        $cateList = JobCategory::orderBy('id', 'desc')->get();
 
         return Inertia::render('Backend/Jobs/Categories', [
             'jobCateList' => $cateList

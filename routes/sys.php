@@ -40,7 +40,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::prefix('jobs')->name('jobs.')->group(function () {
                         Route::resource('/categories', JobCategoryController::class)->only(['index', 'store', 'destroy']);
                 });
-                Route::get('company/{id}/{status}', [CompanyController::class, 'changeStatus'])->name('company.status');
+                Route::get('company/{id}', [CompanyController::class, 'changeStatus'])->name('company.status');
                 Route::resource('permissions', PermissionController::class);
                 Route::resource('roles', RoleController::class);
                 Route::get('/jobs/list', [JobController::class, 'jobList'])->name('jobs.list');

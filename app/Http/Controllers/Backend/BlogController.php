@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Enum\UserRoleEnum;
 use Auth;
 use Exception;
 use App\Models\Tag;
@@ -21,8 +22,13 @@ class BlogController extends Controller
     public function index()
     {
         $this->authorize('view', Blog::class);
-
-        $blogs = Blog::where('user_id', Auth::user()->id)->with('user')->paginate(10);
+       
+        if(Auth()->user()->roles->pluck('name')->first() === UserRoleEnum::SUPER_ADMIN->value){
+            $blogs = Blog::with('user')->get();
+        }else{
+            $blogs = Blog::where('user_id', Auth::user()->id)->with('user')->get();
+        }
+        
         $category = Category::all();
         return Inertia::render('Backend/Pages/Blog/Index', [
             'blogsData' => $blogs,

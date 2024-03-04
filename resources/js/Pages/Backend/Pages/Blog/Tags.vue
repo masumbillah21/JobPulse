@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ref, watch } from 'vue'
+    import { ref, watch, reactive, computed } from 'vue'
     import SectionMain from '@/Components/SectionMain.vue'
     import CardBox from '@/Components/CardBox.vue'
     import FormField from "@/Components/FormField.vue";
@@ -8,10 +8,10 @@
     import SectionTitle from '@/Components/SectionTitle.vue'
     import BaseButtonLink from '@/Components/BaseButtonLink.vue'
     import CardBoxModal from '@/Components/CardBoxModal.vue'
-    import Pagination from '@/Components/Pagination.vue'
     import FormSuccess from "@/Components/FormSuccess.vue";
     import { hasPermission } from '@/utils/hasPermission.js'
-
+    import Vue3Datatable from '@bhplugin/vue3-datatable'
+    import '@bhplugin/vue3-datatable/dist/style.css'
     import { Head, router, usePage, useForm } from '@inertiajs/vue3'
 
 
@@ -47,9 +47,9 @@
         isModalDangerActive.value = false
         router.delete(route('admin.tags.destroy', deleteId.value))
 
-        const index = tagsData.data.findIndex((category: any) => category.id === deleteId.value)
+        const index = tagsData.findIndex((category: any) => category.id === deleteId.value)
         if (index !== -1) {
-            tagsData.data.splice(index, 1)
+            tagsData.splice(index, 1)
         }
 
     }
@@ -57,6 +57,34 @@
         isModalDangerActive.value = true
         deleteId.value = id
     }
+
+    const params = reactive({
+        current_page: 1,
+        pagesize: 10,
+        sort_column: 'id',
+        sort_direction: 'asc',
+        search: '',
+    });
+
+    const cols = ref([
+      {title: 'SL', field: 'id', isUnique: true, type: 'number', width: '100px'},
+      {title: 'Title', field: 'name'},
+      {title: 'Action', field: 'action'},
+    ])
+
+    const rows = ref(tagsData.map((tag: any, index: number) => {
+        return {
+          sl: index + 1,
+          id: tag.id,
+          name: tag.name,
+        }
+    }))
+
+    const filterdJobList = computed(() => {
+      if(!params.search) return tagsData.slice(0, params.pagesize);
+      const query = params.search.toLowerCase();
+      return tagsData?.filter((item: any) => item.name.toLowerCase().includes(query));
+    })
 </script>
     
     <template>
@@ -88,32 +116,47 @@
                         :disabled="form.processing"
                     />
                 </CardBox>
-                <CardBox class="mb-6 relative overflow-x-auto shadow-md sm:rounded-lg w-1/2" has-table>
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">SL</th>
-                            <th scope="col" class="px-6 py-3">Title</th>
-                            <th scope="col" class="px-6 py-3">
-                                Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(category, index) in tagsData.data" :key="category.id" class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ index + 1 }}</td>
-                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ category.name }}</td>
-                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <BaseButtonLink v-if="hasPermission('tags.update')" icon="fas fa-edit" label="Edit" color="info" small @click="dataEdit(category)" />
-                                <BaseButtonLink v-if="hasPermission('tags.delete')" class="ml-2" icon="fas fa-trash-alt" label="Delete" color="danger" small @click="showModle(category.id)"/>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <Pagination class="mt-6" :links="tagsData.links"/>
+                <CardBox class="mb-6 relative overflow-x-auto shadow-md sm:rounded-lg" has-table>
+                    <FormSuccess class="pt-5 pl-5" />
+                    <div class="flex justify-between px-3 pt-4">
+                        <div class="mb-5 relative">
+                        <button type="button" class="bg-slate-800 text-white p-2 inline-block rounded" @click="isOpen = !isOpen">
+                            Column Compose <i :class="isOpen ? 'fa fa-chevron-up' : 'fa fa-chevron-down'" aria-hidden="true"></i>
+                        </button>
+                        <ul v-if="isOpen" class="absolute left-0 mt-0.5 p-2.5 min-w-[150px] bg-white rounded shadow-md space-y-1 z-10">
+                            <li v-for="col in cols" :key="col.field">
+                                <label class="flex items-center gap-2 w-full cursor-pointer text-gray-600 hover:text-black">
+                                    <input type="checkbox" class="form-checkbox" :checked="!col.hide" @change="col.hide = !$event.target.checked" />
+                                    <span>{{ col.title }}</span>
+                                </label>
+                            </li>
+                        </ul>
+                        </div>
+                        <FormControl  v-model="params.search" type="text" placeholder="Search..." />
+                    </div>
+                    <Vue3Datatable 
+                        :rows="rows" 
+                        :columns="cols" 
+                        :sortable="true"
+                        :sortColumn="params.sort_column"
+                        :sortDirection="params.sort_direction"
+                        :search="params.search"
+                        :columnFilter="true"
+                        @change="filterdJobList"
+                        :cloneHeaderInFooter="true"
+                        skin="bh-table-compact"
+                        class="column-filter p-4"
+                        rowClass="bg-white dark:bg-slate-800 dark:text-slate-300 dark:border-gray-600"
+                    >
+                    <template #action="data">
+                        <template class="flex">
+                            <BaseButtonLink v-if="hasPermission('tags.update')" icon="fas fa-edit" label="Edit" color="info" small @click="dataEdit(data.value)" />
+                            <BaseButtonLink v-if="hasPermission('tags.delete')" class="ml-2" icon="fas fa-trash-alt" label="Delete" color="danger" small @click="showModle(data.value.id)"/>
+                        </template>
+                    </template>
+                    </Vue3Datatable>
                 </CardBox>
             </div>
-            
         </SectionMain>
       </LayoutAuthenticated>
     </template>

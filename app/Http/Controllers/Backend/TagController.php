@@ -15,7 +15,7 @@ class TagController extends Controller
     public function index()
     {
         return Inertia::render('Backend/Pages/Blog/Tags', [
-            'tagsData' => Tag::orderBy('id', 'desc')->paginate(10),
+            'tagsData' => Tag::orderBy('id', 'desc')->get(),
         ]);
     }
 

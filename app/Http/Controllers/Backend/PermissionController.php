@@ -17,7 +17,7 @@ class PermissionController extends Controller
     {
         $this->authorize('view', Permission::class);
 
-        $permissions = Permission::orderBy('id', 'desc')->paginate(10);
+        $permissions = Permission::orderBy('id', 'desc')->get();
         return Inertia::render('Backend/Permissions/Index', ['permissionsData' => $permissions]);
     }
 

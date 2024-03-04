@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
@@ -28,8 +29,6 @@ Route::group(['middleware' => ['auth', 'user']], function () {
 
     Route::post('logout', [UserController::class, 'destroy'])->name('logout');
 });
-
-
 
 require __DIR__ . '/auth.php';
 

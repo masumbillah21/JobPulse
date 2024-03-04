@@ -10,7 +10,6 @@ use App\Enum\UserRoleEnum;
 use App\Enum\UserTypeEnum;
 use App\Helper\GetUserRole;
 use Illuminate\Http\Request;
-use App\Helper\GetUserRoleID;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -29,7 +28,7 @@ class EmployeeController extends Controller
         $authUserRole = Auth::user()->roles()->pluck('name')->first();
         
         if($authUserRole == UserRoleEnum::SUPER_ADMIN->value) {
-            $employees = User::whereNot('id', Auth::user()->id)->whereNot('is_default', 1)->paginate(10);
+            $employees = User::whereNot('id', Auth::user()->id)->whereNot('is_default', 1)->get();
         }else{
             $employees = User::where('company_id', Auth::user()->company)->whereNot('id', Auth::user()->id)->whereNot('is_default', 1)->paginate(10);
         }

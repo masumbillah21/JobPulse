@@ -22,14 +22,11 @@
       obj.status = obj.status == 1 ? true : false;
     });
 
-    const loading: any = ref(true);
-    const total_rows = ref(0);
     const params = reactive({
         current_page: 1,
         pagesize: 10,
         sort_column: 'id',
         sort_direction: 'asc',
-        column_filters: [],
         search: '',
     });
 
@@ -63,28 +60,20 @@
     const isOpen = ref(false);
 
     const updateStatus = () => {
-    isModalDangerActive.value = false
-    const routeName = isSystemUser() ? 'admin.jobs.status' : 'jobs.status'
-    router.get(route(routeName, actionId.value))
-
-}
+      isModalDangerActive.value = false
+      const routeName = isSystemUser() ? 'admin.jobs.status' : 'jobs.status'
+      router.get(route(routeName, actionId.value))
+    }
 const showModle = (id: number, updatedStatus: number) => {
     isModalDangerActive.value = true
     actionId.value = id
 }
 
-const filterdJobList = (data: any) => {
-    params.current_page = 1
-console.log(data);
-    if(data.change_type === 'search'){
-      const query = params.search.toLowerCase();
-      return jobsData.filter((item: any) => item.title.toLowerCase().includes(query));
-    }else if(data.change_type === 'filter'){
-      
-    }else{
-      return jobsData.slice(0, params.pagesize);
-    }
-}
+const filterdJobList = computed(() => {
+  if(!params.search) return jobsData.slice(0, params.pagesize);
+  const query = params.search.toLowerCase();
+  return jobsData?.filter((item: any) => item.title.toLowerCase().includes(query));
+})
 
 </script>
     
@@ -124,7 +113,9 @@ console.log(data);
                 :columnFilter="true"
                 @change="filterdJobList"
                 :cloneHeaderInFooter="true"
+                skin="bh-table-compact"
                 class="column-filter p-4"
+                rowClass="bg-white dark:bg-slate-800 dark:text-slate-300 dark:border-gray-600"
               >
               <template #action="jobsData">
                 <template class="flex">
@@ -141,7 +132,6 @@ console.log(data);
               </template>
               </Vue3Datatable>
             </CardBox>
-            <!-- <Pagination class="mt-6" :links="jobsData.links"/> -->
         </SectionMain>
       </LayoutAuthenticated>
     </template>

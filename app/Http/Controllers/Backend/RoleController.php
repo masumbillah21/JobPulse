@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Role;
-use App\Models\User;
 use Inertia\Inertia;
-use App\Models\AsideMenu;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -20,7 +18,7 @@ class RoleController extends Controller
     {
         $this->authorize('view', Role::class);
 
-        $roles = Role::with('permissions')->paginate(10);
+        $roles = Role::with('permissions')->get();
     
         return Inertia::render('Backend/Roles/Index', [
             'rolesData' => $roles
