@@ -21,13 +21,13 @@ const applicationData = usePage().props.applicationData;
                         rounded-full small />
             </SectionTitleLineWithButton>
             <div class="flex justify-center">
-                <CardBox class="my-24 w-1/5 dark:bg-white dark:text-blue-950">
+                <CardBox class="w-1/5 dark:bg-white dark:text-blue-950">
                     <p class="text-xl mb-1">Job Post By: {{ applicationData.job.user.name }}</p>
                     <p class="text-xl mb-1">Posted on: {{ applicationData.job.created_at }}</p>
                     <p class="text-xl mb-1">Closing on: {{ applicationData.job.closing_date }}</p>
                     <p class="text-xl mb-1">Status: {{ applicationData.job.status == 1 ? 'Active' : 'Draft' }}</p>
                 </CardBox>
-                <CardBox class="my-24 w-4/5 ml-3 dark:bg-white dark:text-slate-950">
+                <CardBox class="w-4/5 ml-3 dark:bg-white dark:text-slate-950">
                     <h2 class="text-3xl font-bold">Title: {{ applicationData.job.title }}</h2>
                     <hr class="mb-2">
 

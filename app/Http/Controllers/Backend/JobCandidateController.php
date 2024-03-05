@@ -83,11 +83,17 @@ class JobCandidateController extends Controller
 
     public function applicationSingle(string $id)
     {
-        $jobCandiate = JobCandidate::find($id);
+        $jobCandiate = JobCandidate::findOrFail($id);
+        if(!$jobCandiate){
+            abort(404);
+        }
         if (Auth::user()->roles->pluck('name')->contains(UserRoleEnum::SUPER_ADMIN->value)) {
             $application = $jobCandiate->with('job', 'job.company', 'job.category', 'job.user')->first();
         }else{
-            $application = $jobCandiate->with('job', 'job.company', 'job.category')->whereHas('user', function($query){
+            if(!$jobCandiate->user_id != Auth::id()){
+                abort(404);
+            }
+            $application = $jobCandiate->with('job', 'job.company', 'job.category','job.user')->whereHas('user', function($query){
                 $query->where('user_id', Auth::id());
             })->first();
         }

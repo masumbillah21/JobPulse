@@ -110,7 +110,7 @@
                 rowClass="bg-white dark:bg-slate-800 dark:text-slate-300 dark:border-gray-600"
             >
             <template #action="data">
-                <BaseButtonLink v-if="hasPermission('candidate.view')" routeName="jobs.applications.single" :routeParams="data.value.id" icon="far fa-eye" label="View" color="success" small />
+                <BaseButtonLink v-if="hasPermission('application.view.list')" routeName="jobs.applications.single" :routeParams="data.value.id" icon="far fa-eye" label="View" color="success" small />
             </template>
             </Vue3Datatable>
           </CardBox>
