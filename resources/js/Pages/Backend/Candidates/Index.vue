@@ -14,6 +14,7 @@
     import { hasPermission } from '@/utils/hasPermission.js'
     import { isSystemUser } from '@/utils/isSystemUser.js'
     import { Head, router, usePage, useForm } from '@inertiajs/vue3'
+    import { capitalize } from '@/utils/capitalize'
 
     const candidatesList:any = usePage().props.candidatesList
 
@@ -44,6 +45,7 @@
         isModalDangerActive.value = true
         form.candidate_id = candidateId
     }
+
     const params = reactive({
         current_page: 1,
         pagesize: 10,
@@ -72,7 +74,7 @@
           email: candidate.user.email,
           salary: candidate.expected_salary,
           closing: candidate.job.closing_date,
-          status: candidate.status,
+          status: capitalize(candidate.status),
         }
     }))
 

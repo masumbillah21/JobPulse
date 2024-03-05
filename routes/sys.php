@@ -1,10 +1,9 @@
 <?php
 
 
-use App\Http\Controllers\Backend\JobController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\JobController;
 use App\Http\Controllers\Backend\TagController;
-use App\Http\Controllers\JobCategoryController;
 use App\Http\Controllers\System\UserController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\CompanyController;
@@ -13,6 +12,7 @@ use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\PermissionController;
+use App\Http\Controllers\Backend\JobCategoryController;
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
