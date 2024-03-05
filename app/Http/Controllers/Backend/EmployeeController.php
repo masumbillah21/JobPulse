@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
 {
@@ -130,7 +131,7 @@ class EmployeeController extends Controller
         ];
 
         if($request->password) {
-            $data['password'] = $request->password;
+            $data['password'] = Hash::make($request->password);
         }
 
         User::where('id', $id)->update($data);

@@ -75,6 +75,18 @@ export default [
      ]
   },
   {
+      label : "Candidates",
+      icon : "fas fa-users",
+      route : "jobs.cadidates.list",
+      permission: "candidate.view.list"
+   },
+  {
+      label : "Applications",
+      icon : "fas fa-users",
+      route : "jobs.applications.list",
+      permission: "application.view.list"
+   },
+  {
       label : "Plugins",
       icon : "fas fa-building",
       route : "company.index",

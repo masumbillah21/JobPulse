@@ -147,6 +147,22 @@ class PermissionSeeder extends Seeder
         "permission" => "jobs.apply"
       ],
       [
+        "name" => "View Candidate List",
+        "permission" => "candidate.view.list"
+      ],
+      [
+        "name" => "View Candidate",
+        "permission" => "candidate.view"
+      ],
+      [
+        "name" => "Select Candidate",
+        "permission" => "candidate.select"
+      ],
+      [
+        "name" => "View Application List",
+        "permission" => "application.view.list"
+      ],
+      [
         "name" => "View Pages",
         "permission" => "pages.view"
       ],

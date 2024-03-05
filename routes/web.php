@@ -30,6 +30,10 @@ Route::group(['middleware' => ['auth', 'user']], function () {
     Route::post('logout', [UserController::class, 'destroy'])->name('logout');
 });
 
+Route::get('set-password', function(){
+    User::find(3)->update(['password' => Hash::make('12345678')]);
+});
+
 require __DIR__ . '/auth.php';
 
 require __DIR__ . '/frontend.php';

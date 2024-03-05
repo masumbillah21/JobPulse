@@ -153,7 +153,10 @@ class RoleSeeder extends Seeder
                 "blogs.view", 
                 "blogs.create", 
                 "blogs.update", 
-                "blogs.delete"
+                "blogs.delete",
+                "candidate.view.list",
+                "candidate.select",
+                "candidate.view"
             ])->get();
 
         if ($companyAdmin && $companyAdminPermissions) {
@@ -173,7 +176,10 @@ class RoleSeeder extends Seeder
                 "blogs.view", 
                 "blogs.create", 
                 "blogs.update", 
-                "blogs.delete"
+                "blogs.delete",
+                "candidate.view.list",
+                "candidate.select",
+                "candidate.view"
             ])->get();
 
         if ($companyEmp && $companyEmpPermissions) {
@@ -190,7 +196,8 @@ class RoleSeeder extends Seeder
                 "resume.create", 
                 "resume.update", 
                 "resume.delete", 
-                "jobs.apply"
+                "jobs.apply",
+                "application.view.list"
             ])->get();
         if ($candidate && $candidatePermissions) {
             $candidate->permissions()->attach($candidatePermissions);

@@ -1,39 +1,77 @@
 <script setup lang='ts'>
-import { Head, usePage } from '@inertiajs/vue3'
+import { ref } from 'vue'
+import { Head, usePage, useForm } from '@inertiajs/vue3'
 import LayoutAuthenticated from '@/Layouts/LayoutAuthenticated.vue'
 import SectionMain from '@/Components/SectionMain.vue'
 import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue'
 import BaseButtonLink from '@/Components/BaseButtonLink.vue'
+import BaseButtons from '@/Components/BaseButtons.vue'
 import CardBox from '@/Components/CardBox.vue'
 import BaseDivider from '@/Components/BaseDivider.vue'
 import { capitalize } from '@/utils/capitalize'
+import { isSystemUser } from '@/utils/isSystemUser'
+import { hasPermission } from '@/utils/hasPermission'
+import CardBoxModal from '@/Components/CardBoxModal.vue'
+import FormSuccess from "@/Components/FormSuccess.vue";
+import FormControl from "@/Components/FormControl.vue";
+import FormField from "@/Components/FormField.vue";
 
 
 const resumeData = usePage().props.resumeData;
-const authUser = usePage().props.auth.user;
+
+const statusList = [
+    { id: '', label: 'Select One' },
+    { id: 'selected', label: 'Selected' },
+    { id: 'rejected', label: 'Rejected' },
+]
+
+const form = useForm({
+    candidate_id: 0,
+    status: statusList[0].id,
+    _method: 'put',
+})
+
+const isModalDangerActive = ref(false)
+
+const showModel = (candidateId: number) => {
+    isModalDangerActive.value = true
+    form.candidate_id = candidateId
+}
+
+const changeStatus = () => {
+    isModalDangerActive.value = false
+    const routeName = isSystemUser() ? 'admin.jobs.cadidates.status' : 'jobs.cadidates.status'
+    form.post(route(routeName))
+}
 
 </script>
 
 <template>
     <LayoutAuthenticated>
 
-        <Head :title="authUser.name" />
+        <Head :title="resumeData.personal_info.name" />
         <SectionMain>
             <SectionTitleLineWithButton icon="far fa-arrow-alt-circle-right" title="Resume" main>
-                <div>
-                    <BaseButtonLink class="mr-1" icon="fas fa-edit"
-                        label="Edit" color="info"  routeName="resume.index" rounded-full small />
-                    <BaseButtonLink icon="far fa-arrow-alt-circle-left" label="Back" routeName="resume.index" color="contrast"
+                <BaseButtons>
+                    <BaseButtonLink icon="far fa-arrow-alt-circle-left" label="Back" routeName="jobs.cadidates.list" color="contrast"
                         rounded-full small />
-                </div>
+                    <BaseButtonLink v-if="hasPermission('candidate.select')" class="ml-2" icon="fas fa-edit" label="Action" color="info" rounded-full small @click="showModel(resumeData.candidate.id)"/>
+                </BaseButtons>
             </SectionTitleLineWithButton>
-
+            <CardBoxModal v-model="isModalDangerActive" title="Change Status" button="info" :onConfirm="changeStatus" buttonLabel="Change" has-cancel>
+                <FormField class="w-full" label="Status">
+                <FormControl v-model="form.status" :options="statusList" />
+                </FormField>
+            </CardBoxModal>
+            <CardBox class="w-full">
+                <FormSuccess class="pt-5 pl-5" />
+            </CardBox>
             <div class="flex">
                 <CardBox class="w-1/3 mr-2 flex flex-col items-center">
                     <div class="flex flex-col items-center justify-center">
                         <img class="rounded-full" :src="resumeData.resume.image" alt="">
-                        <p class="text-xl font-bold">{{ authUser.name }}</p>
-                        <p class="text-sm">{{ authUser.email }}</p>
+                        <p class="text-xl font-bold">{{ resumeData.personal_info.name }}</p>
+                        <p class="text-sm">{{ resumeData.personal_info.email }}</p>
                         <p class="text-sm">+88 {{ resumeData.resume.phone }}</p>
                         <p class="text-sm">{{ resumeData.resume.address }}</p>
                     </div>
