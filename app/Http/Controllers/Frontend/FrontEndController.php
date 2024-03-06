@@ -194,4 +194,29 @@ class FrontEndController extends Controller
         return redirect()->back()->with('success', 'Job applied successfully');
         
     }
+
+    public function jobByCompnay(string $slug){
+        $company = Company::where('slug', $slug)->where('status', 1)->first();
+        if(!$company){
+            return abort(404);
+        }
+        $jobList = Job::whereDate('closing_date', '>=', now())->with('company')->where(['status' => 1, 'company_id' => $company->id])->paginate(10);
+        return Inertia::render('Frontend/Job/Company', [
+            'jobsData' => $jobList,
+            'companyData' => $company,
+            'storageUrl' => config('app.url') . Storage::url('public/'),
+        ]);
+    }
+
+    public function jobByCategory(string $slug){
+        $category = JobCategory::where('slug', $slug)->first();
+        if(!$category){
+            return abort(404);
+        }
+        $jobList = Job::whereDate('closing_date', '>=', now())->with('company')->where(['status' => 1, 'job_category_id' => $category->id])->paginate(10);
+        return Inertia::render('Frontend/Job/Category', [
+            'jobsData' => $jobList,
+            'categoryData' => $category
+        ]);
+    }
 }

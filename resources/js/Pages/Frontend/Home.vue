@@ -78,8 +78,10 @@ for (let i: number = 1; i <= 8; i++) {
               <template v-if="companies">
                 <div class="grid grid-cols-4 gap-4">
                   <div v-for="compnay in companies" class="rounded shadow-sm p-2 shadow-slate-300 m-3 flex items-center flex-col">
-                    <img :src="compnay.logo" :alt="compnay.name">
-                    <p class="text-center text-sm font-semibold mt-1">{{ compnay.name }}</p>
+                    <Link :href="route('job.by.company', compnay.slug)">
+                      <img :src="compnay.logo" :alt="compnay.name">
+                      <p class="text-center text-sm font-semibold mt-1">{{ compnay.name }}</p>
+                    </Link>
                   </div>
                 </div>
               </template>
@@ -98,7 +100,7 @@ for (let i: number = 1; i <= 8; i++) {
               <div class="grid grid-cols-5 gap-2">
                 <template v-if="jobCategories">
                     <div v-for="category in jobCategories" class="text-center rounded shadow-sm p-2 text-stone-900 bg-white shadow-slate-300 m-3 w-full">
-                      <Link :href="category.slug">
+                      <Link :href="route('job.by.category', category.slug)">
                         <img class="mx-auto" :src="category.logo" alt="">
                         <p class="text-center text-lg font-semibold mt-3">{{ category.name }}</p>
                       </Link>

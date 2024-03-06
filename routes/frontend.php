@@ -13,6 +13,8 @@ Route::get('/blog/category/{slug}', [FrontEndController::class, 'postCategory'])
 Route::get('/job', [FrontEndController::class, 'jobPage'])->name('job');
 Route::get('/job/{slug}', [FrontEndController::class, 'jobDetails'])->name('job.show');
 Route::post('/job/apply/', [FrontEndController::class, 'applyJob'])->name('job.apply');
+Route::get('/job/compnay/{slug}', [FrontEndController::class, 'jobByCompnay'])->name('job.by.company');
+Route::get('/job/category/{slug}', [FrontEndController::class, 'jobByCategory'])->name('job.by.category');
 
 Route::get('/contact', [FrontEndController::class, 'contactPage'])->name('contact');
 Route::post('/contact', [FrontEndController::class, 'contactPageEmail'])->name('contact.email');
