@@ -31,7 +31,7 @@ class EmployeeController extends Controller
         if($authUserRole == UserRoleEnum::SUPER_ADMIN->value) {
             $employees = User::whereNot('id', Auth::user()->id)->whereNot('is_default', 1)->get();
         }else{
-            $employees = User::where('company_id', Auth::user()->company)->whereNot('id', Auth::user()->id)->whereNot('is_default', 1)->paginate(10);
+            $employees = User::where('company_id', Auth::user()->company)->whereNot('id', Auth::user()->id)->whereNot('is_default', 1)->get();
         }
         
         return Inertia::render('Backend/Employee/Index',[

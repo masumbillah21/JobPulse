@@ -242,6 +242,26 @@ class PermissionSeeder extends Seeder
         "name" => "Delete Settings",
         "permission" => "settings.delete"
       ],
+      [
+        "name" => "View Plugins",
+        "permission" => "plugin.view"
+      ],
+      [
+        "name" => "Create Plugins",
+        "permission" => "plugin.create"
+      ],
+      [
+        "name" => "Update Plugins",
+        "permission" => "plugin.update"
+      ],
+      [
+        "name" => "Delete Plugins",
+        "permission" => "plugin.delete"
+      ],
+      [
+        "name" => "Use Plugins",
+        "permission" => "plugin.use"
+      ],
     ];  
 
     $this->createMenu($menus);

@@ -3,9 +3,11 @@
 namespace App\Http\Middleware;
 
 use App\Models\Page;
-use Illuminate\Http\Request;
+use App\Models\Company;
+use App\Models\Feature;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
+use Illuminate\Http\Request;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -32,13 +34,16 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
 
-       $permissions = $this->getUserPermissions($request);
+        $permissions = $this->getUserPermissions($request);
+        $allActiveFeatures = $this->allActiveFeatures($request);
 
         return [
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+                'role' => $request->user() ? $request->user()->roles()->first() : null,
                 'permissions' => $request->user() ? $permissions : [],
+                'features' => $request->user() ? $allActiveFeatures : [],
             ],
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),
@@ -89,5 +94,24 @@ class HandleInertiaRequests extends Middleware
                 ->get();
 
         return $pages ?? [];
+    }
+
+    private function allActiveFeatures(Request $request)
+    {
+        if (!$request->user()) {
+            return [];
+        }
+
+        if(!$request->user()->company_id) {
+            return [];
+        }
+
+        $company = Company::find($request->user()->company_id);
+
+        $features = $company->features()
+        ->where('company_id', $request->user()->company_id)
+        ->pluck('features.id') ?? [];
+
+        return $features ?? [];
     }
 }

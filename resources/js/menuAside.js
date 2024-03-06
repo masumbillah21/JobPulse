@@ -3,12 +3,15 @@ export default [
      label : "Dashboard",
      icon : "fas fa-desktop",
      route : "dashboard",
-     permission: "dashboard.view"
+     permission: "dashboard.view",
+     is_plugin: false,
   },
   {
      label : "Employees",
      icon : "fas fa-users",
      permission: "employee.view",
+     is_plugin: true,
+     plugin_id: 2,
      menu :[
         {
            route : "employee.index",
@@ -28,18 +31,21 @@ export default [
      label : "Company Profile",
      icon : "fas fa-building",
      route : "company.create",
-     permission: "company.create"
+     permission: "company.create",
+     is_plugin: false,
   },
   {
      label : "Resume",
      icon : "fas fa-file",
      route : "resume.index",
      permission: "resume.view",
+     is_plugin: false,
   },
   {
      label : "Jobs",
      icon : "fas fa-sliders-h",
      permission: "jobs.view",
+     is_plugin: false,
      menu :[
         {
            route : "jobs.index",
@@ -59,6 +65,8 @@ export default [
      label : "Blogs",
      icon : "fas fa-folder",
      permission: "blogs.view",
+     is_plugin: true,
+     plugin_id: 1,
      menu :[
         {
            route : "blogs.index",
@@ -78,18 +86,21 @@ export default [
       label : "Candidates",
       icon : "fas fa-users",
       route : "jobs.cadidates.list",
-      permission: "candidate.view.list"
+      permission: "candidate.view.list",
+      is_plugin: false,
    },
   {
       label : "Applications",
       icon : "fas fa-users",
       route : "jobs.applications.list",
-      permission: "application.view.list"
+      permission: "application.view.list",
+      is_plugin: false,
    },
-  {
+   {
       label : "Plugins",
       icon : "fas fa-building",
-      route : "company.index",
-      permission: "company.create"
+      route : "plugins.index",
+      permission: "plugin.view",
+      is_plugin: false,
    },
 ]

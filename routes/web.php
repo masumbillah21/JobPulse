@@ -21,11 +21,12 @@ Route::group(['middleware' => ['auth', 'user']], function () {
     Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    require __DIR__.'/employee.php';
-    require __DIR__.'/company.php';
-    require __DIR__.'/resume.php';
-    require __DIR__.'/jobs.php';
-    require __DIR__.'/blog.php';
+    require __DIR__ . '/employee.php';
+    require __DIR__ . '/company.php';
+    require __DIR__ . '/resume.php';
+    require __DIR__ . '/jobs.php';
+    require __DIR__ . '/blog.php';
+    require __DIR__ . '/plugin.php';
 
     Route::post('logout', [UserController::class, 'destroy'])->name('logout');
 });

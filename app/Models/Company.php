@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Trait\DateTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Storage;
 
@@ -24,6 +25,10 @@ class Company extends Model
         'company_size',
         'slug',
         'status'
+    ];
+
+    protected $hidden = [
+        'pivot'
     ];
 
     public function getLogoAttribute($value): string
@@ -46,6 +51,10 @@ class Company extends Model
         return $this->hasMany(Job::class);
     }
 
+    public function features(): BelongsToMany
+    {
+        return $this->belongsToMany(Feature::class, 'company_feature');
+    }
     
 
 }

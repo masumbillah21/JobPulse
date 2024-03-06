@@ -86,7 +86,12 @@ class RoleSeeder extends Seeder
                 "settings.view", 
                 "settings.create", 
                 "settings.update", 
-                "settings.delete"
+                "settings.delete",
+                "plugin.view",
+                "plugin.create",
+                "plugin.update",
+                "plugin.delete",
+                "plugin.use",
             ]
         )->get();
         if ($systemAdmin && $systemAdminPermissions) {
@@ -126,7 +131,12 @@ class RoleSeeder extends Seeder
                 "settings.view", 
                 "settings.create", 
                 "settings.update", 
-                "settings.delete"
+                "settings.delete",
+                "plugin.view",
+                "plugin.create",
+                "plugin.update",
+                "plugin.delete",
+                "plugin.use",
             ])->get();
 
         if ($systemEmp && $sysEmpPermissions) {
@@ -156,7 +166,9 @@ class RoleSeeder extends Seeder
                 "blogs.delete",
                 "candidate.view.list",
                 "candidate.select",
-                "candidate.view"
+                "candidate.view",
+                "plugin.view",
+                "plugin.use",
             ])->get();
 
         if ($companyAdmin && $companyAdminPermissions) {
@@ -179,7 +191,9 @@ class RoleSeeder extends Seeder
                 "blogs.delete",
                 "candidate.view.list",
                 "candidate.select",
-                "candidate.view"
+                "candidate.view",
+                "plugin.view",
+                "plugin.use",
             ])->get();
 
         if ($companyEmp && $companyEmpPermissions) {

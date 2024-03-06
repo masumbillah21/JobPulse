@@ -14,6 +14,7 @@ import FooterBar from '@/Components/FooterBar.vue'
 import CacheCleanMessage from '@/Components/CacheCleanMessage.vue'
 import { hasPermission } from '@/utils/hasPermission.js'
 import { isSystemUser } from '@/utils/isSystemUser.js'
+import { isSuperUser } from '@/utils/isSuperUser.js'
 
 const layoutAsidePadding = 'xl:pl-72'
 
@@ -21,7 +22,7 @@ const darkModeStore = useDarkModeStore()
 
 const message = ref('');
 
-const filteredItems = filterItems(isSystemUser() ?  menuAsideAdmin : menuAside );
+let filteredItems = filterItems(isSystemUser() ?  menuAsideAdmin : menuAside );
 
 const navBar = isSystemUser() ? menuNavBarAdmin : menuNavBar;
 function filterItems(items) {
@@ -36,9 +37,20 @@ function filterItems(items) {
         filtered.push(item);
       }
     }
+
     return filtered;
   }, []);
 }
+if(!isSystemUser()){
+  filteredItems = filteredItems.filter(item => {
+    if(item.is_plugin === true && usePage().props.auth.features){
+      const features = usePage().props.auth.features
+      return features.includes(item.plugin_id)
+    }
+    return true
+  })
+}
+
 
 router.on('navigate', () => {
   isAsideMobileExpanded.value = false
