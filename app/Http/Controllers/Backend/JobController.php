@@ -175,6 +175,10 @@ class JobController extends Controller
 
     public function jobList()
     {
+        if (!Auth::user()->hasPermission('jobs.view.list')) {
+            abort(403);
+        }
+
         $jobsData = Job::with(['user', 'category', 'company'])->orderByDesc('created_at')->get();
         return Inertia::render('Backend/Jobs/List', [
             'jobsData' => $jobsData
@@ -183,6 +187,10 @@ class JobController extends Controller
 
     public function jobApprove($id)
     {
+        if (!Auth::user()->hasPermission('jobs.approved')) {
+            abort(403);
+        }
+
         $job = Job::find($id);
         $status = $job->status == 1 ? 0 : 1;
         
@@ -192,7 +200,10 @@ class JobController extends Controller
 
     public function singleJobView($id)
     {
-        $this->authorize('view', Job::class);
+        if (!Auth::user()->hasPermission('jobs.list.view')) {
+            abort(403);
+        }
+        
         $job = Job::find($id);
 
         $jobData = $job->load(['user', 'category', 'company']);

@@ -6,6 +6,7 @@ use App\Models\Tag;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class TagController extends Controller
 {
@@ -14,6 +15,10 @@ class TagController extends Controller
      */
     public function index()
     {
+        if (!Auth::user()->hasPermission('tags.view')) {
+            abort(403);
+        }
+        
         return Inertia::render('Backend/Pages/Blog/Tags', [
             'tagsData' => Tag::orderBy('id', 'desc')->get(),
         ]);
@@ -32,6 +37,14 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::user()->hasPermission('tags.create')) {
+            abort(403);
+        }
+
+        if ($request->id && !Auth::user()->hasPermission('tags.update')) {
+            abort(403);
+        }
+
         $request->validate([
             'name' => 'required|unique:tags|max:20',
         ]);
@@ -78,6 +91,10 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
+        if (!Auth::user()->hasPermission('tags.delete')) {
+            abort(403);
+        }
+
         $tag->delete();
 
         return redirect()->back()->with('success', 'Tag deleted successfully!');

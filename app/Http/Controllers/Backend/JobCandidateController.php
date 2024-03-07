@@ -20,6 +20,10 @@ class JobCandidateController extends Controller
 {
     public function candidateList()
     {
+        if (!Auth::user()->hasPermission('candidate.view.list')) {
+            abort(403);
+        }
+
         if(Auth::user()->roles->pluck('name')->contains(UserRoleEnum::SUPER_ADMIN->value)){
             $candidatesList = JobCandidate::with(['job', 'user'])->orderBy('id')->get();
         }else{
@@ -37,6 +41,10 @@ class JobCandidateController extends Controller
 
     public function candidateSingle(string $id)
     {
+        if (!Auth::user()->hasPermission('candidate.view')) {
+            abort(403);
+        }
+
         $jobCandiate = JobCandidate::find($id);
 
         $data['candidate'] = $jobCandiate;
@@ -55,6 +63,10 @@ class JobCandidateController extends Controller
 
     public function candidateStatus(Request $request)
     {
+        if (!Auth::user()->hasPermission('candidate.select')) {
+            abort(403);
+        }
+
         $request->validate([
             'candidate_id' => 'required|exists:job_candidate,id',
             'status' => 'required|in:selected,rejected',
@@ -68,6 +80,10 @@ class JobCandidateController extends Controller
 
     public function applicationList()
     {
+        if (!Auth::user()->hasPermission('application.view.list')) {
+            abort(403);
+        }
+
         if (Auth::user()->roles->pluck('name')->contains(UserRoleEnum::SUPER_ADMIN->value)) {
             $applicationList = JobCandidate::with('job', 'job.company')->get();
         }else{
@@ -83,6 +99,10 @@ class JobCandidateController extends Controller
 
     public function applicationSingle(string $id)
     {
+        if (!Auth::user()->hasPermission('jobs.apply')) {
+            abort(403);
+        }
+
         $jobCandiate = JobCandidate::findOrFail($id);
         if(!$jobCandiate){
             abort(404);

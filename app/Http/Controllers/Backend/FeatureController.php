@@ -19,6 +19,10 @@ class FeatureController extends Controller
      */
     public function index()
     {
+        if (!Auth::user()->hasPermission('plugin.view')) {
+            abort(403);
+        }
+
         $features = Feature::with('company')->get();
 
         return Inertia::render('Backend/Feature/Index', ['features' => $features]);
@@ -29,6 +33,10 @@ class FeatureController extends Controller
      */
     public function create()
     {
+        if (!Auth::user()->hasPermission('plugin.create')) {
+            abort(403);
+        }
+
         return Inertia::render('Backend/Feature/Edit');
     }
 
@@ -37,6 +45,10 @@ class FeatureController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::user()->hasPermission('plugin.create')) {
+            abort(403);
+        }
+
         $request->validate([
             'name' => 'required|string|max:50',
             'description' => 'required|string|max:255',
@@ -64,6 +76,10 @@ class FeatureController extends Controller
      */
     public function edit(string $id)
     {
+        if (!Auth::user()->hasPermission('plugin.update')) {
+            abort(403);
+        }
+
         return Inertia::render('Backend/Feature/Edit', [
             'feature' => Feature::find($id)
         ]);
@@ -74,6 +90,10 @@ class FeatureController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (!Auth::user()->hasPermission('plugin.update')) {
+            abort(403);
+        }
+
         $request->validate([
             'name' => 'required|string|max:50',
             'description' => 'required|string|max:255',
@@ -96,12 +116,19 @@ class FeatureController extends Controller
      */
     public function destroy(Feature $feature)
     {
+        if (!Auth::user()->hasPermission('plugin.delete')) {
+            abort(403);
+        }
+
         $feature->delete();
         return redirect()->back()->with('success', 'Feature deleted successfully');
     }
 
     public function activeDeactive(string $id)
     {
+        if (!Auth::user()->hasPermission('plugin.use')) {
+            abort(403);
+        }
         
         $company = Company::find(Auth::user()->company_id);
 

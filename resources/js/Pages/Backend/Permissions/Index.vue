@@ -10,6 +10,7 @@
     import FormControl from '@/Components/FormControl.vue'
     import '@bhplugin/vue3-datatable/dist/style.css'
     import FormSuccess from "@/Components/FormSuccess.vue";
+    import FormValidationErrors from "@/Components/FormValidationErrors.vue";
     import { hasPermission } from '@/utils/hasPermission.js'
     import { Head, router, usePage } from '@inertiajs/vue3'
 
@@ -20,7 +21,8 @@
     const deleteId = ref<string | number>('');
     const deleteRole = () => {
         isModalDangerActive.value = false
-        router.delete(route('permissions.destroy', deleteId.value))
+
+        router.delete(route('admin.permissions.destroy', deleteId.value))
 
         const index = permissionsData.findIndex((role: any) => role.id === deleteId.value)
         if (index !== -1) {
@@ -87,6 +89,7 @@
             <p>Do you really want to delete?</p>
           </CardBoxModal>
           <CardBox class="mb-6 relative overflow-x-auto shadow-md sm:rounded-lg" has-table>
+            <FormValidationErrors/>
             <FormSuccess class="pt-5 pl-5" />
             <div class="flex justify-between px-3 pt-4">
                 <div class="mb-5 relative">

@@ -42,6 +42,7 @@ class BlogController extends Controller
     public function create()
     {
         $this->authorize('create', Blog::class); 
+
         $category = Category::pluck('name', 'id')->toArray();
         return Inertia::render('Backend/Pages/Blog/Edit',[
             'categoryData' => $category
@@ -103,7 +104,9 @@ class BlogController extends Controller
      */
     public function show(Blog $blog)
     {
-        //
+        $this->authorize('view', Blog::class);
+
+        //TODO: Show Blog Details
     }
 
     /**

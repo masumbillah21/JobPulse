@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Models\JobCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class JobCategoryController extends Controller
@@ -16,6 +17,9 @@ class JobCategoryController extends Controller
      */
     public function index()
     {
+        if (!Auth::user()->hasPermission('job.categories.view')) {
+            abort(403);
+        }
         $cateList = JobCategory::orderBy('id', 'desc')->get();
 
         return Inertia::render('Backend/Jobs/Categories', [
@@ -36,10 +40,15 @@ class JobCategoryController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::user()->hasPermission('job.categories.create')) {
+            abort(403);
+        }
+
+        if($request->id && !Auth::user()->hasPermission('job.categories.update')) {
+            abort(403);
+        }
 
         try{
-
-            //dd($request->id);
             
             $request->validate([
                 'name' => 'required|unique:categories|max:20',
@@ -128,6 +137,9 @@ class JobCategoryController extends Controller
      */
     public function destroy(string $id)
     {
+        if (!Auth::user()->hasPermission('job.categories.delete')) {
+            abort(403);
+        }
 
         JobCategory::find($id)->delete();
 

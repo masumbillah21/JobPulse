@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -14,6 +15,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        if (!Auth::user()->hasPermission('categories.view')) {
+            abort(403);
+        }
+        
         return Inertia::render('Backend/Pages/Blog/Categories', [
             'categoriesData' => Category::orderBy('id', 'desc')->get(),
         ]);
@@ -32,6 +37,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::user()->hasPermission('categories.create')) {
+            abort(403);
+        }
+
+        if($request->id && !Auth::user()->hasPermission('categories.update')) {
+            abort(403);
+        }
+
         $request->validate([
             'name' => 'required|unique:categories|max:30',
         ]);
@@ -78,6 +91,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        if (!Auth::user()->hasPermission('categories.delete')) {
+            abort(403);
+        }
+
         $category->delete();
 
         return redirect()->back()->with('success', 'Category deleted successfully!');

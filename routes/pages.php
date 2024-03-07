@@ -2,4 +2,4 @@
 
 use App\Http\Controllers\Backend\PageController;
 
-Route::resource('pages', PageController::class);
+Route::resource('pages', PageController::class)->except('show');
