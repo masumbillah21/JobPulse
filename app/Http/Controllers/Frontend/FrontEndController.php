@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Models\Job;
 use App\Models\Blog;
+use App\Models\JobCandidate;
 use App\Models\Page;
 use Inertia\Inertia;
 use App\Models\Company;
@@ -78,8 +79,15 @@ class FrontEndController extends Controller
             return abort(404);
         }
 
+        if(Auth::check()){
+            $isApplied = JobCandidate::where('job_id', $jobDetail->id)->where('user_id', Auth::id())->first() ? true : false;
+        }else{
+            $isApplied = false;
+        }   
+
         return Inertia::render('Frontend/Job/Show', [
             'jobDetail' => $jobDetail,
+            'isApplied' => $isApplied
         ]);
     }
 

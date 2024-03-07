@@ -8,11 +8,13 @@
   import BaseDivider from '@/Components/BaseDivider.vue';
   import FormControl from '@/Components/FormControl.vue';
   import InputError from '@/Components/InputError.vue';
+  import {isCandidateUser} from '@/utils/isCandidateUser.js';
   import { Head, useForm, usePage } from '@inertiajs/vue3';
 
   const authUser = usePage().props.auth.user
 
   const jobDetail: any = usePage().props.jobDetail;
+  const isApplied = usePage().props.isApplied
 
   const form = useForm({
     id: jobDetail?.id,
@@ -30,7 +32,7 @@
 <template>
   <LayoutGuest>
     <Head :title="jobDetail?.title" />
-    
+
     <main v-if="jobDetail">
       <div class="relative pt-16 pb-32 flex content-center items-center justify-center" style="min-height: 45vh;">
         <div class="absolute top-0 w-full h-full bg-center bg-cover"
@@ -96,7 +98,8 @@
 
                       <p class="text-xl mb-1"><span class="font-bold">Status:</span> {{ jobDetail?.status == 1 ? 'Active' : 'Draft' }}</p>
                     </div>
-                    <CardBox v-if="authUser" class="my-24 w-full" is-form @submit.prevent="submit">
+                    <CardBox v-if="authUser && isCandidateUser()" class="my-24 w-full" is-form @submit.prevent="submit">
+                      <template v-if="!isApplied">
                         <FormField label="Expected Salary">
                             <FormControl
                             icon="fas fa-dollar-sign"
@@ -110,6 +113,11 @@
                                 :class="{ 'opacity-25': form.processing }" :disabled="form.processing" />
                         </BaseButtons>
                         <p v-if="form.recentlySuccessful" class="text-sm text-gray-600 dark:text-gray-400">Applied.</p>
+                      </template>
+                      <template v-else>
+                        <p class="text-xl font-semibold text-red-600">You Already Applied.</p>
+                      </template>
+                        
                   </CardBox>
                   <div v-else class="text-center">
                       <BaseButtonLink 
