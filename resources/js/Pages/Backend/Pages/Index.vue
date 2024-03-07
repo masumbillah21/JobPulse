@@ -21,14 +21,17 @@
     const isModalDangerActive = ref(false)
     const isOpen = ref(false);
     const deleteId = ref<string | number>('')
-    const deleteRole = () => {
+    const deletePage = () => {
         isModalDangerActive.value = false
-        router.delete(route('pages.destroy', deleteId.value))
-
-        const index = pageList.findIndex((page: any) => page.id === deleteId.value)
-        if (index !== -1) {
-            pageList.splice(index, 1)
-        }
+        router.delete(route('admin.pages.destroy', deleteId.value),{
+            onSuccess: () => {
+              const index = rows.value.findIndex((page: any) => page.id === deleteId.value)
+              if (index !== -1) {
+                  rows.value.splice(index, 1)
+              }
+            }
+        })
+        
 
     }
     const showModle = (id : string | number) => {
@@ -90,7 +93,7 @@
             />
           </SectionTitleLineWithButton>
           
-          <CardBoxModal v-model="isModalDangerActive" title="Warning" button="danger" :onConfirm="deleteRole" buttonLabel="Delete" has-cancel>
+          <CardBoxModal v-model="isModalDangerActive" title="Warning" button="danger" :onConfirm="deletePage" buttonLabel="Delete" has-cancel>
             <p>Do you really want to delete?</p>
           </CardBoxModal>
           <CardBox class="mb-6 relative overflow-x-auto shadow-md sm:rounded-lg" has-table>

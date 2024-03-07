@@ -41,7 +41,7 @@
             },
         })
     }
-    const showModle = (candidateId: number) => {
+    const showModel = (candidateId: number) => {
         isModalDangerActive.value = true
         form.candidate_id = candidateId
     }
@@ -130,7 +130,7 @@
             <template #action="data">
                 <template class="flex">
                   <BaseButtonLink v-if="hasPermission('candidate.view')" routeName="jobs.cadidate.single" :routeParams="data.value.id" icon="far fa-eye" label="View" color="success" small />
-                  <BaseButtonLink v-if="hasPermission('candidate.select')" class="ml-2" icon="fas fa-edit" label="Action" color="info" small @click="showModle(data.value.id, )"/>
+                  <BaseButtonLink v-if="hasPermission('candidate.select')" class="ml-2" icon="fas fa-edit" label="Action" color="info" small @click="showModel(data.value.id, )"/>
                 </template>
             </template>
             </Vue3Datatable>

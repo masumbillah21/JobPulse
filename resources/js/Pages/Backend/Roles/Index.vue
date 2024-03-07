@@ -20,7 +20,7 @@
     const deleteId = ref<string | number>('')
     const deleteRole = () => {
         isModalDangerActive.value = false
-        router.delete(route('roles.destroy', deleteId.value))
+        router.delete(route('admin.roles.destroy', deleteId.value))
 
         const index = rolesData.data.findIndex((role: any) => role.id === deleteId.value)
         if (index !== -1) {

@@ -9,6 +9,7 @@
     import { Head, router, usePage } from '@inertiajs/vue3'
     import FormControl from '@/Components/FormControl.vue'
     import { hasPermission } from '@/utils/hasPermission.js'
+    import { isSystemUser } from '@/utils/isSystemUser.js'
     import FormSuccess from "@/Components/FormSuccess.vue";
     import Vue3Datatable from '@bhplugin/vue3-datatable'
     import '@bhplugin/vue3-datatable/dist/style.css'
@@ -20,7 +21,8 @@
     const deleteId = ref<string | number>('');
     const deleteEmployee = () => {
       isModalDangerActive.value = false
-      router.delete(route('employee.destroy', deleteId.value))
+      const routeName = isSystemUser() ? 'admin.employee.destroy' : 'employee.destroy'
+      router.delete(route(routeName, deleteId.value))
       const index = employees.findIndex((emp: any) => emp.id === deleteId.value)
     }
     const showModle = (id: number) => {

@@ -11,6 +11,7 @@
     import Vue3Datatable from '@bhplugin/vue3-datatable'
     import '@bhplugin/vue3-datatable/dist/style.css'
     import { hasPermission } from '@/utils/hasPermission.js'
+    import { isSystemUser } from '@/utils/isSystemUser.js'
     import { Head, router, usePage } from '@inertiajs/vue3'
 
     const jobsData:any = usePage().props.jobsData
@@ -20,7 +21,8 @@
     const isOpen = ref(false);
     const deleteRole = () => {
         isModalDangerActive.value = false
-        router.delete(route('jobs.destroy', deleteId.value))
+        const routeName = isSystemUser() ? 'admin.jobs.destroy' : 'jobs.destroy'
+        router.delete(route(routeName, deleteId.value))
         const index = jobsData.findIndex((role: any) => role.id === deleteId.value)
         if (index !== -1) {
             jobsData.splice(index, 1)
