@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->float('expected_salary');
             $table->enum('status',['pending','selected', 'rejected'])->default('pending');
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->unique(['job_id', 'user_id']);
         });
     }

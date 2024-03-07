@@ -1,6 +1,5 @@
 <script setup>
 import { computed, ref, onMounted } from 'vue'
-import { useMainStore } from '@/Stores/main'
 import * as chartConfig from '@/Components/Charts/chart.config.js'
 import LineChart from '@/Components/Charts/LineChart.vue'
 import SectionMain from '@/Components/SectionMain.vue'
@@ -12,23 +11,32 @@ import CardBoxClient from '@/Components/CardBoxClient.vue'
 import LayoutAuthenticated from '@/Layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue'
 import SectionTitle from '@/Components/SectionTitle.vue'
-import { Head } from '@inertiajs/vue3'
+import { isCompanyUser } from '@/utils/isCompanyUser.js'
+import { isCandidateUser } from '@/utils/isCandidateUser.js'
+import { Head, usePage } from '@inertiajs/vue3'
+
+const chartInfo = usePage().props.chartInfo
+const totalEmployees = usePage().props.totalEmployees
+const totalJobs = usePage().props.totalJobs
+const totalCandidates = usePage().props.totalCandidates
+
+const totalApplied = usePage().props.totalApplied
+const totalSelected = usePage().props.totalSelected
+const totalRejected = usePage().props.totalRejected
 
 const chartData = ref(null)
 
 const fillChartData = () => {
-  chartData.value = chartConfig.sampleChartData()
+  chartData.value = chartConfig.chartTemplate()
+  chartInfo.data.forEach((item, index) => {
+    chartData.value.datasets[index].data = item
+  })
 }
 
 onMounted(() => {
   fillChartData()
 })
 
-const mainStore = useMainStore()
-
-const clientBarItems = computed(() => mainStore.clients.slice(0, 4))
-
-const transactionBarItems = computed(() => mainStore.history)
 </script>
 
 <template>
@@ -39,52 +47,50 @@ const transactionBarItems = computed(() => mainStore.history)
 
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
         <CardBoxWidget
+          v-if="isCompanyUser()"
           color="text-emerald-500"
           icon="fas fa-users"
-          :number="512"
+          :number="totalEmployees"
           label="Employees"
         />
         <CardBoxWidget
+          v-if="isCompanyUser()"
           color="text-blue-500"
           icon="fas fa-building"
-          :number="7770"
-          label="Companies"
+          :number="totalJobs"
+          label="Jobs"
         />
         <CardBoxWidget
+          v-if="isCompanyUser()"
           color="text-red-500"
           icon="fas fa-suitcase"
-          :number="256"
-          suffix="%"
-          label="Performance"
+          :number="totalCandidates"
+          label="Applications"
+        />
+        <CardBoxWidget
+          v-if="isCandidateUser()"
+          color="text-emerald-500"
+          icon="fas fa-suitcase"
+          :number="totalApplied"
+          label="Applied"
+        />
+        <CardBoxWidget
+          v-if="isCandidateUser()"
+          color="text-blue-500"
+          icon="fas fa-suitcase"
+          :number="totalSelected"
+          label="Selected"
+        />
+        <CardBoxWidget
+          v-if="isCandidateUser()"
+          color="text-red-500"
+          icon="fas fa-suitcase"
+          :number="totalRejected"
+          label="Rejected"
         />
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <div class="flex flex-col justify-between">
-          <CardBoxTransaction
-            v-for="(transaction, index) in transactionBarItems"
-            :key="index"
-            :amount="transaction.amount"
-            :date="transaction.date"
-            :business="transaction.business"
-            :type="transaction.type"
-            :name="transaction.name"
-            :account="transaction.account"
-          />
-        </div>
-        <div class="flex flex-col justify-between">
-          <CardBoxClient
-            v-for="client in clientBarItems"
-            :key="client.id"
-            :name="client.name"
-            :login="client.login"
-            :date="client.created"
-            :progress="client.progress"
-          />
-        </div>
-      </div>
-
-      <SectionTitleLineWithButton icon="fas fa-chart-pie" title="Trends overview">
+      <SectionTitleLineWithButton icon="fas fa-chart-pie" title="This Year">
         <BaseButtonLink icon="fas fa-sync-alt" color="whiteDark" @click="fillChartData" />
       </SectionTitleLineWithButton>
 

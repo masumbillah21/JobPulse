@@ -12,23 +12,34 @@ import CardBoxClient from '@/Components/CardBoxClient.vue'
 import LayoutAuthenticated from '@/Layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue'
 import SectionTitle from '@/Components/SectionTitle.vue'
-import { Head } from '@inertiajs/vue3'
+import { Head, usePage } from '@inertiajs/vue3'
+
+
+const totalEmployees = usePage().props.totalEmployees ?? 0
+
+const totalCompanies = usePage().props.totalCompanies ?? 0
+
+const totalJobs = usePage().props.totalJobs ?? 0
+
+const totalCandidates = usePage().props.totalCandidates ?? 0
+
+const chartInfo = usePage().props.chartInfo ?? []
+
+
 
 const chartData = ref(null)
 
 const fillChartData = () => {
-  chartData.value = chartConfig.sampleChartData()
+  chartData.value = chartConfig.chartTemplate()
+  chartInfo.data.forEach((item, index) => {
+    chartData.value.datasets[index].data = item
+  })
 }
 
 onMounted(() => {
   fillChartData()
 })
 
-const mainStore = useMainStore()
-
-const clientBarItems = computed(() => mainStore.clients.slice(0, 4))
-
-const transactionBarItems = computed(() => mainStore.history)
 </script>
 
 <template>
@@ -37,57 +48,36 @@ const transactionBarItems = computed(() => mainStore.history)
     <SectionMain>
       <SectionTitle icon="fas fa-sliders-h" title="Overview" main/>
 
-      <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-4 mb-6">
         <CardBoxWidget
           color="text-emerald-500"
           icon="fas fa-users"
-          :number="512"
+          :number="totalEmployees"
           label="Employees"
         />
         <CardBoxWidget
           color="text-blue-500"
           icon="fas fa-building"
-          :number="7770"
+          :number="totalCompanies"
           label="Companies"
         />
         <CardBoxWidget
           color="text-red-500"
           icon="fas fa-suitcase"
-          :number="256"
-          suffix="%"
-          label="Performance"
+          :number="totalJobs"
+          label="Jobs"
+        />
+        <CardBoxWidget
+          color="text-red-500"
+          icon="fas fa-users"
+          :number="totalCandidates"
+          label="Candiates"
         />
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <div class="flex flex-col justify-between">
-          <CardBoxTransaction
-            v-for="(transaction, index) in transactionBarItems"
-            :key="index"
-            :amount="transaction.amount"
-            :date="transaction.date"
-            :business="transaction.business"
-            :type="transaction.type"
-            :name="transaction.name"
-            :account="transaction.account"
-          />
-        </div>
-        <div class="flex flex-col justify-between">
-          <CardBoxClient
-            v-for="client in clientBarItems"
-            :key="client.id"
-            :name="client.name"
-            :login="client.login"
-            :date="client.created"
-            :progress="client.progress"
-          />
-        </div>
-      </div>
-
-      <SectionTitleLineWithButton icon="fas fa-chart-pie" title="Trends overview">
+      <SectionTitleLineWithButton icon="fas fa-chart-pie" title="This Year">
         <BaseButtonLink icon="fas fa-sync-alt" color="whiteDark" @click="fillChartData" />
       </SectionTitleLineWithButton>
-
       <CardBox class="mb-6">
         <div v-if="chartData">
           <line-chart :data="chartData" class="h-96" />
