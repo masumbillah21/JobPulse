@@ -33,7 +33,9 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
 
-        if (User::where('email', $request->email)->where('user_type', UserTypeEnum::SYSTEM)->count() == 1) {
+        if (User::where('email', $request->email)->where('user_type', UserTypeEnum::SYSTEM)->count() == 1
+            && User::where('email', $request->email)->where('status', 0)->count() == 1
+        ) {
             return redirect()->back()->withErrors(['email' => 'Invalid credentials']);
         }
 
