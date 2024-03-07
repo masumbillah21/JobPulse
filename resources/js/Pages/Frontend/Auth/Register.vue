@@ -63,13 +63,10 @@ const hasTermsAndPrivacyPolicyFeature = computed(
 
 
 const submit = () => {
-  form
-    .transform((data) => ({
-      ...data,
-      terms: form.terms && form.terms.length,
-    }))
-    .post(route("register"), {
-      onFinish: () => form.reset("password", "password_confirmation"),
+    form.post(route('register'), {
+        onFinish: () => {
+            form.reset('password', 'password_confirmation');
+        },
     });
 };
 </script>

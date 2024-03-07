@@ -1,6 +1,5 @@
 <script setup>
 import { useForm, Head, Link } from '@inertiajs/vue3'
-import { mdiEmail, mdiFormTextboxPassword } from '@mdi/js'
 import LayoutGuest from '@/Layouts/LayoutGuest.vue'
 import SectionFullScreen from '@/Components/SectionFullScreen.vue'
 import CardBox from '@/Components/CardBox.vue'
@@ -29,11 +28,12 @@ const form = useForm({
 })
 
 const submit = () => {
-  form
-    .post(route('password.update'), {
-      onFinish: () => form.reset('password', 'password_confirmation'),
-    })
-}
+    form.post(route('password.store'), {
+        onFinish: () => {
+            form.reset('password', 'password_confirmation');
+        },
+    });
+};
 </script>
 
 <template>
@@ -58,7 +58,7 @@ const submit = () => {
         >
           <FormControl
             v-model="form.email"
-            :icon="mdiEmail"
+            icon="fas fa-envelope"
             autocomplete="email"
             type="email"
             id="email"
@@ -73,7 +73,7 @@ const submit = () => {
         >
           <FormControl
             v-model="form.password"
-            :icon="mdiFormTextboxPassword"
+            icon="fas fa-key"
             type="password"
             autocomplete="new-password"
             id="password"
@@ -88,7 +88,7 @@ const submit = () => {
         >
           <FormControl
             v-model="form.password_confirmation"
-            :icon="mdiFormTextboxPassword"
+            icon="fas fa-key"
             type="password"
             autocomplete="new-password"
             id="password_confirmation"

@@ -25,18 +25,15 @@ const props = defineProps({
 const form = useForm({
   email: '',
   password: '',
-  remember: []
+  remember: false
 })
 
 const submit = () => {
-  form
-    .transform(data => ({
-      ... data,
-      remember: form.remember && form.remember.length ? 'on' : ''
-    }))
-    .post(route('login'), {
-      onFinish: () => form.reset('password'),
-    })
+  form.post(route('login'), {
+        onFinish: () => {
+            form.reset('password');
+        },
+    });
 }
 </script>
 
