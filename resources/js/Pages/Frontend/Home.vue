@@ -2,9 +2,8 @@
   import { ref } from 'vue';
   import LayoutGuest from '@/Layouts/LayoutGuest.vue';
   import { Head, usePage, Link } from '@inertiajs/vue3';
-  import Shape from '@/Components/Frontend/Shape.vue';
-
   import SectionTitle from '@/Components/Frontend/SectionTitle.vue';
+  import Slider from '@/Components/Frontend/Slider.vue';
   import JobSection from '@/Components/Frontend/JobSection.vue';
 
   const homePageData: any = usePage().props.homePageData ?? null;
@@ -19,7 +18,7 @@
 
 
   const homeConents: any = {
-    banner: '',
+    slider: [],
     logo: '',
     job_category: '',
     jobs: ''
@@ -27,8 +26,10 @@
 
   if(homePageData){
     homePageData.contents.forEach((item: any) => {
-      if(item.slug === 'banner'){
-        homeConents.banner = item.data[0]
+      if(item.slug === 'slider'){
+        item.data.forEach((sliderItem: any) => {
+          homeConents.slider.push(sliderItem)
+        })
       }
       if(item.slug === 'logo'){
         homeConents.logo = item.data[0]
@@ -52,23 +53,8 @@ for (let i: number = 1; i <= 8; i++) {
   <LayoutGuest>
     <Head :title="homePageData.title ?? 'Home'" />
     <main v-if="homePageData">
-      <div class="relative pt-16 pb-32 flex content-center items-center justify-center" style="min-height: 75vh;">
-        <div class="absolute top-0 w-full h-full bg-center bg-cover"
-          :style="'background-image: url(' + props.storageUrl +  homePageData.featured_image + ');'">
-          <span id="blackOverlay" class="w-full h-full absolute opacity-75 bg-black"></span>
-        </div>
-        <div class="container relative mx-auto">
-          <div class="items-center flex flex-wrap">
-            <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center text-white">
-              <SectionTitle :title="homeConents.banner.title" :description="homeConents.banner.description" :subtitle="homeConents.banner.subtitle" />
-            </div>
-          </div>
-        </div>
-        <Shape sectionClass="top-auto bottom-0"/>
-      </div>
-      
+      <Slider :sliderData="homeConents.slider" />
       <section v-if="homeConents.logo" class="relative py-20 bg-gray-100 text-slate-800">
-        <Shape/>
         <div class="container mx-auto px-4">
           <div class="items-center justify-center flex flex-wrap">
             <div class="w-1/2 ml-auto mr-auto px-4">
@@ -90,7 +76,6 @@ for (let i: number = 1; i <= 8; i++) {
         </div>
       </section>
       <section v-if="homeConents.job_category" class="relative pb-20 bg-slate-800 text-gray-100">
-        <Shape polygonClass="text-slate-800"/>
         <div class="container mx-auto px-4">
           <div class="flex justify-center flex-col items-center">
             <div class="w-1/2 ml-auto mr-auto px-4 py-6">
@@ -112,7 +97,6 @@ for (let i: number = 1; i <= 8; i++) {
         </div>
       </section>
       <section v-if="homeConents.jobs" class="relative py-20 bg-gray-100 text-slate-800">
-        <Shape/>
         <div class="container mx-auto px-4">
           <div class="items-center justify-center flex flex-wrap">
             <div class="w-1/2 ml-auto mr-auto px-4">

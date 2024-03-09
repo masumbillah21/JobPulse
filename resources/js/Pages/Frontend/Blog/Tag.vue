@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import LayoutGuest from '@/Layouts/LayoutGuest.vue';
   import Pagination from '@/Components/Pagination.vue';
-  import Shape from '@/Components/Frontend/Shape.vue';
+  import BannerSection from '@/Components/Frontend/BannerSection.vue';
   import SectionTitle from '@/Components/Frontend/SectionTitle.vue';
   import PostGrid from '@/Components/Frontend/PostGrid.vue';
   import { Head, usePage } from '@inertiajs/vue3';
@@ -20,19 +20,9 @@
   <LayoutGuest>
     <Head :title="postTag.name" />
     <main v-if="postTag">
-      <div class="relative pt-16 pb-32 flex content-center items-center justify-center" style="min-height: 45vh;">
-        <div class="absolute top-0 w-full h-full bg-center bg-cover"
-        :style="'background-image: url(' + props.storageUrl +  cateBgImage + ');'">
-          <span id="blackOverlay" class="w-full h-full absolute opacity-75 bg-black"></span>
-        </div>
-        <div class="container relative mx-auto">
-          <div class="items-center flex flex-wrap">
-            <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
-              <SectionTitle :title="postTag.name" />
-            </div>
-          </div>
-        </div>
-      </div>
+      <BannerSection :bgImage="cateBgImage">
+        <SectionTitle :title="postTag.name" />
+      </BannerSection>
 
       <section class="relative py-20 bg-gray-50">
         <div class="container mx-auto px-4">

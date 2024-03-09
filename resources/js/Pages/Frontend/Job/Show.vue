@@ -1,7 +1,8 @@
 <script setup lang="ts">
   import LayoutGuest from '@/Layouts/LayoutGuest.vue';
   import CardBox from '@/Components/CardBox.vue';
-  import Shape from '@/Components/Frontend/Shape.vue';
+  import BannerSection from '@/Components/Frontend/BannerSection.vue';
+  import SectionTitle from '@/Components/Frontend/SectionTitle.vue';
   import BaseButtons from '@/Components/BaseButtons.vue';
   import FormField from '@/Components/FormField.vue';
   import BaseButtonLink from '@/Components/BaseButtonLink.vue';
@@ -33,28 +34,12 @@
   <LayoutGuest>
     <Head :title="jobDetail?.title" />
 
+    
     <main v-if="jobDetail">
-      <div class="relative pt-16 pb-32 flex content-center items-center justify-center" style="min-height: 45vh;">
-        <div class="absolute top-0 w-full h-full bg-center bg-cover"
-          style='background-image: url("https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1267&amp;q=80");'>
-          <span id="blackOverlay" class="w-full h-full absolute opacity-75 bg-black"></span>
-        </div>
-        <div class="container relative mx-auto">
-          <div class="items-center flex flex-wrap">
-            <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
-              <div class="pr-12">
-                <h1 class="text-white font-semibold text-5xl">
-                  {{ jobDetail?.title }}
-                </h1>
-              </div>
-            </div>
-          </div>
-        </div>
-        <Shape sectionClass="top-auto bottom-0"/>
-      </div>
-
-      <section class="relative py-20 bg-gray-50">
-        <Shape polygonClass="dark:text-gray-900 text-gray-50"/>
+      <BannerSection>
+        <SectionTitle :title="jobDetail?.title" />
+      </BannerSection>
+      <section class="relative py-20 bg-gray-200 dark:bg-slate-800">
         <div class="container mx-auto px-4">
             <div class="flex justify-center">
                 <div class="my-2 w-9/12 mr-3 text-black bg-white dark:bg-gray-100 rounded p-5 shadow">
@@ -95,8 +80,6 @@
                       <p class="text-xl mb-1"><span class="font-bold">Posted on:</span> {{ jobDetail?.created_at }}</p>
 
                       <p class="text-xl mb-1"><span class="font-bold">Closing on:</span> <span class="text-red-800">{{ jobDetail?.closing_date }}</span></p>
-
-                      <p class="text-xl mb-1"><span class="font-bold">Status:</span> {{ jobDetail?.status == 1 ? 'Active' : 'Draft' }}</p>
                     </div>
                     <CardBox v-if="authUser && isCandidateUser()" class="my-24 w-full" is-form @submit.prevent="submit">
                       <template v-if="!isApplied">
@@ -118,16 +101,16 @@
                         <p class="text-xl font-semibold text-red-600">You Already Applied.</p>
                       </template>
                         
-                  </CardBox>
-                  <div v-else class="text-center">
-                      <BaseButtonLink 
-                        icon="far fa-save" 
-                        type="button" 
-                        color="danger" 
-                        label="Login To Apply"
-                        routeName="login"
-                        />
-                  </div>
+                    </CardBox>
+                    <div v-else class="text-center">
+                        <BaseButtonLink 
+                          icon="far fa-save" 
+                          type="button" 
+                          color="danger" 
+                          label="Login To Apply"
+                          routeName="login"
+                          />
+                    </div>
                 </div>
             </div>
         </div>

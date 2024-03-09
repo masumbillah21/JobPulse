@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import LayoutGuest from '@/Layouts/LayoutGuest.vue';
-import Shape from '@/Components/Frontend/Shape.vue';
 import CardBox from '@/Components/CardBox.vue'
 import FormField from "@/Components/FormField.vue";
 import FormControl from "@/Components/FormControl.vue";
 import FormValidationErrors from "@/Components/FormValidationErrors.vue";
 import FormSuccess from "@/Components/FormSuccess.vue";
 import SectionTitle from '@/Components/Frontend/SectionTitle.vue';
+import BannerSection from '@/Components/Frontend/BannerSection.vue';
 import BaseButtonLink from '@/Components/BaseButtonLink.vue';
 import BaseDivider from '@/Components/BaseDivider.vue';
 import BaseButtons from '@/Components/BaseButtons.vue';
@@ -55,22 +55,11 @@ const contactContent: any = {
 
     <Head :title="contactPageData.title ?? 'Contact'" />
     <main v-if="contactPageData">
-      <div class="relative pt-16 pb-32 flex content-center items-center justify-center" style="min-height: 45vh;">
-        <div class="absolute top-0 w-full h-full bg-center bg-cover"
-          :style="'background-image: url(' + storageUrl +  contactPageData.featured_image + ');'">
-          <span id="blackOverlay" class="w-full h-full absolute opacity-75 bg-black"></span>
-        </div>
-        <div class="container relative mx-auto">
-          <div class="items-center flex flex-wrap">
-            <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center text-white">
-              <SectionTitle :title="contactPageData.title" />
-            </div>
-          </div>
-        </div>
-        <Shape sectionClass="top-auto bottom-0"/>
-      </div>
+      <BannerSection :bgImage="contactPageData.featured_image">
+        <SectionTitle :title="contactPageData.title" />
+      </BannerSection>
+      
       <section class="pb-20 relative block dark:bg-gray-900">
-        <Shape polygonClass="dark:text-gray-900 text-gray-50"/>
         <div class="container mx-auto px-4 lg:pt-24 lg:pb-64">
           <div class="flex flex-wrap text-center justify-center">
             <div class="w-full lg:w-6/12 px-4">

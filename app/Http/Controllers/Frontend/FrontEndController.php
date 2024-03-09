@@ -135,13 +135,14 @@ class FrontEndController extends Controller
     public function postCategory(string $slug)
     {
         $postCategory = Category::where('slug', $slug)->first();
-        $cateBgImage = Setting::where('name', 'catebg')->first();
+        
         
         if(!$postCategory){
             return abort(404);
         }
 
         $postList = $postCategory->blogs()->paginate(9);
+        $cateBgImage = Setting::where('name', 'catebg')->first();
         
 
         return Inertia::render('Frontend/Blog/Category', [
@@ -158,10 +159,12 @@ class FrontEndController extends Controller
             return abort(404);
         }
         $postList = $tag->blog()->paginate(9);
+        $cateBgImage = Setting::where('name', 'catebg')->first();
         
         return Inertia::render('Frontend/Blog/Tag', [
             'postList' => $postList,
             'postTag' => $tag,
+            'cateBgImage' => $cateBgImage->value ?? null,
         ]);
     }
 

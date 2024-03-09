@@ -1,9 +1,9 @@
 <script setup lang="ts">
   import LayoutGuest from '@/Layouts/LayoutGuest.vue';
   import Pagination from '@/Components/Pagination.vue';
-  import Shape from '@/Components/Frontend/Shape.vue';
   import SectionTitle from '@/Components/Frontend/SectionTitle.vue';
   import PostGrid from '@/Components/Frontend/PostGrid.vue';
+  import BannerSection from '@/Components/Frontend/BannerSection.vue';
   import { Head, usePage } from '@inertiajs/vue3';
 
 
@@ -31,20 +31,9 @@
   <LayoutGuest>
     <Head title="Blog" />
     <main v-if="blogPageData">
-      <div class="relative pt-16 pb-32 flex content-center items-center justify-center" style="min-height: 45vh;">
-        <div class="absolute top-0 w-full h-full bg-center bg-cover"
-          :style="'background-image: url(' + props.storageUrl +  blogPageData.featured_image + ');'">
-          <span id="blackOverlay" class="w-full h-full absolute opacity-75 bg-black"></span>
-        </div>
-        <div class="container relative mx-auto">
-          <div class="items-center flex flex-wrap">
-            <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center text-white">
-              <SectionTitle :title="blogConents.banner.title" :description="blogConents.banner.description" :subtitle="blogConents.banner.subtitle" />
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <BannerSection :bgImage="blogPageData.featured_image">
+        <SectionTitle :title="blogConents.banner.title" :description="blogConents.banner.description" :subtitle="blogConents.banner.subtitle" />
+      </BannerSection>
       <section class="relative py-20 bg-gray-200">
         <div class="container mx-auto px-4">
           <div class="grid gap-x-8 gap-y-4 grid-cols-3">

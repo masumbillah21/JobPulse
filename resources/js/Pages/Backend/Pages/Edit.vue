@@ -218,12 +218,14 @@ const chooseLayout = (layout: String) => {
   } else if(layout === 'home') {
     form.contents = [
       {
-        name: 'Banner Section',
-        slug: 'banner',
+        name: 'Slide Section',
+        slug: 'slider',
         data: [{
           title: "",
           subtitle: "",
           description: "",
+          image: '',
+          imageKey: Date.now()
         }],
       },
       {
@@ -310,7 +312,7 @@ const chooseLayout = (layout: String) => {
               <Contact :sectionIndex="sectionIndex" :row="row" :iconList="iconList" @addRow="addRow" @removeRow="removeRow" @toggleSection="toggleSection" />
             </div>
             <div v-if="form.page_type === 'home'" v-for="(row, sectionIndex) in form.contents" :key="sectionIndex">
-              <Home :sectionIndex="sectionIndex" :row="row" @toggleSection="toggleSection" />
+              <Home :sectionIndex="sectionIndex" :row="row" @toggleSection="toggleSection" @addRow="addRow" @removeRow="removeRow" />
             </div>
           </div>
           

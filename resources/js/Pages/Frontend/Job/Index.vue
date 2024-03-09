@@ -3,8 +3,8 @@
   import Pagination from '@/Components/Pagination.vue';
   import { Head, usePage } from '@inertiajs/vue3';
   import JobSection from '@/Components/Frontend/JobSection.vue';
-  import Shape from '@/Components/Frontend/Shape.vue';
   import SectionTitle from '@/Components/Frontend/SectionTitle.vue';
+  import BannerSection from '@/Components/Frontend/BannerSection.vue';
 
   const jobPageData: any = usePage().props.jobPageData;
   const jobList: any = usePage().props.jobList;
@@ -36,20 +36,9 @@
     <Head title="Jobs" />
     
     <main v-if="jobPageData">
-      <div class="relative pt-16 pb-32 flex content-center items-center justify-center" style="min-height: 45vh;">
-        <div class="absolute top-0 w-full h-full bg-center bg-cover"
-          :style="'background-image: url(' + props.storageUrl +  jobPageData.featured_image + ');'">
-          <span id="blackOverlay" class="w-full h-full absolute opacity-75 bg-black"></span>
-        </div>
-        <div class="container relative mx-auto">
-          <div class="items-center flex flex-wrap">
-            <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center text-white">
-              <SectionTitle :title="jobPageContent.banner.title" :description="jobPageContent.banner.description" :subtitle="jobPageContent.banner.subtitle" />
-            </div>
-          </div>
-        </div>
-        <Shape polygonClass="text-gray-100" sectionClass="top-auto bottom-0"/>
-      </div>
+      <BannerSection :bgImage="jobPageData?.featured_image">
+        <SectionTitle :title="jobPageContent.banner.title" :description="jobPageContent.banner.description" :subtitle="jobPageContent.banner.subtitle" />
+      </BannerSection>
       <section class="pb-20 bg-gray-100">
         <div class="container mx-auto px-4">
           <div class="flex flex-wrap">
