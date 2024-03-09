@@ -262,6 +262,14 @@ class PermissionSeeder extends Seeder
         "name" => "Use Plugins",
         "permission" => "plugin.use"
       ],
+      [
+        "name" => "View User List",
+        "permission" => "users.list.view"
+      ],
+      [
+        "name" => "User Status Change",
+        "permission" => "users.list.status"
+      ],
     ];  
 
     $this->createMenu($menus);

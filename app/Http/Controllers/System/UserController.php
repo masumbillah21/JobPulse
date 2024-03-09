@@ -50,7 +50,6 @@ class UserController extends Controller
             return redirect()->intended(RouteServiceProvider::ADMIN_HOME);
         }
 
-        // Authentication failed
         return redirect()->back()->withErrors(['email' => 'Invalid credentials']);
     }
 
@@ -66,5 +65,28 @@ class UserController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function showAllUsers()
+    {
+        if (!Auth::user()->hasPermission('users.list.view')) {
+            abort(403);
+        }
+
+        $users = User::whereNot('user_type', UserTypeEnum::SYSTEM)->orderBy('id')->get();
+        return Inertia::render('Backend/Users/Index', [
+            'usersList' => $users
+        ]);
+    }
+
+    public function changeUserSatus($id)
+    {
+        if (!Auth::user()->hasPermission('users.list.status')) {
+            abort(403);
+        }
+        $user = User::find($id);
+        $user->is_active = !$user->is_active;
+        $user->save();
+        return redirect()->back()->with('success', 'Status changed successfully');
     }
 }

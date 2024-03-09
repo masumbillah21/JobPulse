@@ -92,6 +92,8 @@ class RoleSeeder extends Seeder
                 "plugin.update",
                 "plugin.delete",
                 "plugin.use",
+                "users.list.view",
+                "users.list.status",
             ]
         )->get();
         if ($systemAdmin && $systemAdminPermissions) {
@@ -137,6 +139,8 @@ class RoleSeeder extends Seeder
                 "plugin.update",
                 "plugin.delete",
                 "plugin.use",
+                "users.list.view",
+                "users.list.status",
             ])->get();
 
         if ($systemEmp && $sysEmpPermissions) {

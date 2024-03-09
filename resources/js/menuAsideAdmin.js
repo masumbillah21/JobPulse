@@ -41,6 +41,13 @@ export default [
       permission: "company.view",
       is_plugin: false,
    },
+   {
+      label : "User List",
+      icon : "fas fa-users",
+      route : "admin.users.list",
+      permission: "users.list.view",
+      is_plugin: false,
+   },
   {
      label : "Roles",
      icon : "fas fa-users-cog",

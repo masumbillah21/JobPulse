@@ -46,7 +46,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::get('/jobs/list', [JobController::class, 'jobList'])->name('jobs.list');
                 Route::get('/jobs/list/{id}', [JobController::class, 'jobApprove'])->name('jobs.status');
                 Route::get('/jobs/single/{id}', [JobController::class, 'singleJobView'])->name('jobs.list.single');
-                
+                Route::get('/users',[UserController::class, 'showAllUsers'])->name('users.list');
+                Route::get('/users/{id}',[UserController::class, 'changeUserSatus'])->name('users.status');
+
                 require __DIR__ . '/employee.php';
                 require __DIR__ . '/company.php';
                 require __DIR__ . '/jobs.php';
