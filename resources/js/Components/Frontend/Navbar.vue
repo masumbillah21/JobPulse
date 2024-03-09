@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { ref } from 'vue';
+  import ApplicationLogo from '@/Components/ApplicationLogo.vue';
   import { Link, usePage } from '@inertiajs/vue3';
 
   const showMenu = ref(false);
@@ -8,6 +9,7 @@
   }
 
   const publicPages: any = usePage().props.publicPages ?? null
+
 </script>
 
 <template>
@@ -18,7 +20,7 @@
           <i class="text-white dark:text-slate-800 fas fa-bars"></i>
         </button>
         <Link :href="route('home')" class="text-xl italic font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-stone-800 dark:text-white">
-          JobPulse
+          <ApplicationLogo />
         </Link>
       </div>
       <div class="lg:flex flex-grow items-center bg-white lg:bg-transparent lg:shadow-none" :class="{'hidden': !showMenu, 'block': showMenu}">

@@ -104,9 +104,9 @@ class BlogController extends Controller
      */
     public function show(Blog $blog)
     {
-        $this->authorize('view', Blog::class);
-
-        //TODO: Show Blog Details
+        return Inertia::render('Backend/Pages/Blog/Show', [
+            'blogData' => $blog
+        ]);
     }
 
     /**

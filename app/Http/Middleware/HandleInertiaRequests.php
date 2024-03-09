@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\Page;
 use App\Models\Company;
 use App\Models\Feature;
+use App\Models\Setting;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
 use Illuminate\Http\Request;
@@ -59,6 +60,8 @@ class HandleInertiaRequests extends Middleware
                 'message' => session('message'),
             ],
             'publicPages' => $this->getPublicPageList(),
+            'logo' => $this->getSiteLogo(),
+            'siteTitle' => config('app.name'),
         ];
     }
 
@@ -113,5 +116,10 @@ class HandleInertiaRequests extends Middleware
         ->pluck('features.id') ?? [];
 
         return $features ?? [];
+    }
+
+    private function getSiteLogo(){
+        $settings = Setting::where('name', 'logo')->first();
+        return $settings ? $settings->value : null;
     }
 }
