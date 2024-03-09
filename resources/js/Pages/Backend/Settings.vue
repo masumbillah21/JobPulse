@@ -83,7 +83,7 @@ if(settingList) {
         if(item.name == 'job') {
             form.job = item.value
         }
-        if(item.name == 'cate_logo') {
+        if(item.name == 'catebg') {
             cateBgUrl.value = item.value
         }
     })
@@ -136,11 +136,10 @@ const submit = () => {
                         :options="contactList" />
                     </FormField>
 
-                    <img class="mb-2" v-if="cateBgUrl" :src="cateBgUrl" alt="cate logo" width="300">
+                    <img class="mb-2" v-if="cateBgUrl" :src="`${storage}/${cateBgUrl}`" alt="Category Bg" width="300">
                     <FormField label="Category Titlebar Background Image" help="Max 500kb">
                         <FormFilePicker label="Upload image" color="success" @update:modelValue="form.catebg = $event" />
                     </FormField>
-
 
                     <BaseDivider />
                     <BaseButtons>
