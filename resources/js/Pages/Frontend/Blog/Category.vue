@@ -3,7 +3,8 @@
   import Pagination from '@/Components/Pagination.vue';
   import Shape from '@/Components/Frontend/Shape.vue';
   import SectionTitle from '@/Components/Frontend/SectionTitle.vue';
-  import { Head, Link, usePage } from '@inertiajs/vue3';
+  import PostGrid from '@/Components/Frontend/PostGrid.vue';
+  import { Head, usePage } from '@inertiajs/vue3';
 
 
   const postCategory: any = usePage().props.postCategory;
@@ -31,28 +32,16 @@
             </div>
           </div>
         </div>
-        <Shape sectionClass="top-auto bottom-0"/>
       </div>
 
       <section class="relative py-20 bg-gray-50">
-        <Shape polygonClass="text-gray-50"/>
         <div class="container mx-auto px-4">
           <div class="grid gap-x-8 gap-y-4 grid-cols-3">
               <div v-for="(post, index) in postList.data" :key="index" class="bg-gray-100 text-center rounded">
-                <Link :href="route('blog.show', post.slug)">
-                  <img :src="post.image" class="rounded h-60 w-full" :alt="post.title"  />
-                  <div class="p-4 text-slate-900">
-                    <h1 class="font-semibold text-xl">
-                      {{ post.title }}
-                    </h1>
-                    <p class="text-sm text-ellipsis" >
-                      {{ post.body.substring(0,40)+".." }}
-                    </p>
-                  </div>
-                </Link>
+                <PostGrid :post="post" />
               </div>
           </div>
-          <!-- <Pagination class="mt-6" :links="blogsList?.links"/> -->
+          <Pagination class="mt-6" :links="postList?.links"/>
         </div>
       </section>
     </main>

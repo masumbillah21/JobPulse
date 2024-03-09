@@ -2,11 +2,14 @@
   import { ref } from 'vue';
   import ApplicationLogo from '@/Components/ApplicationLogo.vue';
   import { Link, usePage } from '@inertiajs/vue3';
+  import {isSystemUser } from '@/utils/isSystemUser.js';
 
   const showMenu = ref(false);
   const toggleNavbar = () => {
     showMenu.value = !showMenu.value;
   }
+
+  const dashboardRoute = isSystemUser() ? 'admin.dashboard' : 'dashboard';
 
   const publicPages: any = usePage().props.publicPages ?? null
 
@@ -56,7 +59,7 @@
 
         <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
           <li v-if="$page.props.auth.user" class="flex items-center">
-            <Link :href="route('dashboard')"
+            <Link :href="route(dashboardRoute)"
             class="lg:text-stone-900 lg:hover:text-gray-500 text-gray-800 dark:text-white px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold">
             Dashboard</Link>
           </li>

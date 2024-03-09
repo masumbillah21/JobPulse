@@ -7,52 +7,41 @@
   import { Head, usePage } from '@inertiajs/vue3';
 
 
-  const blogPageData: any = usePage().props.blogPageData;
-  const blogsList: any = usePage().props.blogsList;
+  const postTag: any = usePage().props.postTag;
+  const postList: any = usePage().props.postList;
+  const cateBgImage: any = usePage().props.cateBgImage ?? null
 
   const props = defineProps({
     storageUrl: String,
   });
 
-  const blogConents: any = {
-    banner: '',
-  }
-
-  if(blogPageData){
-    blogPageData.contents.forEach((item: any) => {
-      if(item.slug === 'banner'){
-        blogConents.banner = item.data[0]
-      }
-    })
-  }
-
 </script>
 <template>
   <LayoutGuest>
-    <Head title="Blog" />
-    <main v-if="blogPageData">
+    <Head :title="postTag.name" />
+    <main v-if="postTag">
       <div class="relative pt-16 pb-32 flex content-center items-center justify-center" style="min-height: 45vh;">
         <div class="absolute top-0 w-full h-full bg-center bg-cover"
-          :style="'background-image: url(' + props.storageUrl +  blogPageData.featured_image + ');'">
+        :style="'background-image: url(' + props.storageUrl +  cateBgImage + ');'">
           <span id="blackOverlay" class="w-full h-full absolute opacity-75 bg-black"></span>
         </div>
         <div class="container relative mx-auto">
           <div class="items-center flex flex-wrap">
-            <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center text-white">
-              <SectionTitle :title="blogConents.banner.title" :description="blogConents.banner.description" :subtitle="blogConents.banner.subtitle" />
+            <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
+              <SectionTitle :title="postTag.name" />
             </div>
           </div>
         </div>
       </div>
 
-      <section class="relative py-20 bg-gray-200">
+      <section class="relative py-20 bg-gray-50">
         <div class="container mx-auto px-4">
           <div class="grid gap-x-8 gap-y-4 grid-cols-3">
-              <div v-for="(post, index) in blogsList?.data" :key="index" class="bg-gray-100 text-center rounded">
+              <div v-for="(post, index) in postList.data" :key="index" class="bg-gray-100 text-center rounded">
                 <PostGrid :post="post" />
               </div>
           </div>
-          <Pagination class="mt-6" :links="blogsList?.links"/>
+          <Pagination class="mt-6" :links="postList?.links"/>
         </div>
       </section>
     </main>

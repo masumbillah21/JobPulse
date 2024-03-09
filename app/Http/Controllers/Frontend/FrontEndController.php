@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Job;
+use App\Models\Tag;
 use App\Models\Blog;
-use App\Models\JobCandidate;
 use App\Models\Page;
 use Inertia\Inertia;
 use App\Models\Company;
@@ -12,6 +12,7 @@ use App\Models\Setting;
 use App\Models\Category;
 use App\Mail\ContactEmail;
 use App\Models\JobCategory;
+use App\Models\JobCandidate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -112,20 +113,22 @@ class FrontEndController extends Controller
 
     public function postDetails(string $slug)
     {
-        $blog = Blog::with('user')->where('slug', $slug)->first();
-        $postList = Blog::with('user')->where('status', 1)->select('title', 'slug')->take(5)->get();
-        
-        $postCategories = Category::withCount('blogs')->get(['name', 'slug']); 
+        $blog = Blog::with('user', 'categories', 'tags')->where('slug', $slug)->where('status', 1)->first();
 
         if (!$blog) {
             return abort(404);
         }
+
+        $postList = Blog::with('user')->where('status', 1)->select('title', 'slug')->take(5)->get();
         
+        $postCategories = Category::withCount('blogs')->get(['name', 'slug']); 
+        $postTags = Tag::withCount('blog')->get(['name', 'slug']);
+
         return Inertia::render('Frontend/Blog/Show', [
             'post' => $blog,
             'recentPosts' => $postList,
             'postCategories' => $postCategories,
-            'storageUrl' => config('app.url') . Storage::url('public/'),
+            'postTags' => $postTags,
         ]);
     }
 
@@ -145,7 +148,20 @@ class FrontEndController extends Controller
             'postList' => $postList,
             'postCategory' => $postCategory,
             'cateBgImage' => $cateBgImage->value ?? null,
-            'storageUrl' => config('app.url') . Storage::url('public/'),
+        ]);
+    }
+
+    public function postTag(string $slug)
+    {
+        $tag = Tag::where('slug', $slug)->first();
+        if(!$tag){
+            return abort(404);
+        }
+        $postList = $tag->blog()->paginate(9);
+        
+        return Inertia::render('Frontend/Blog/Tag', [
+            'postList' => $postList,
+            'postTag' => $tag,
         ]);
     }
 

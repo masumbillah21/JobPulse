@@ -24,6 +24,12 @@ export default [
     ]
   },
   {
+    icon: 'fas fa-globe',
+    label: 'Site',
+    isDesktopNoLabel: true,
+    isSite: true
+  },
+  {
     icon: 'fas fa-sync-alt',
     label: 'Cache',
     isDesktopNoLabel: true,

@@ -71,6 +71,9 @@ const menuClick = (event, item) => {
   if (item.isCache) {
     clearCache()
   }
+  if(item.isSite){
+    router.get(route('home'))
+  }
 }
 
 

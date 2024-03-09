@@ -9,6 +9,7 @@ Route::get('/', [FrontEndController::class, 'index'])->name('home');
 Route::get('/blog', [FrontEndController::class, 'blogPage'])->name('blog');
 Route::get('/blog/{slug}', [FrontEndController::class, 'postDetails'])->name('blog.show');
 Route::get('/blog/category/{slug}', [FrontEndController::class, 'postCategory'])->name('blog.category');
+Route::get('/blog/tag/{slug}', [FrontEndController::class, 'postTag'])->name('blog.tag');
 
 Route::get('/job', [FrontEndController::class, 'jobPage'])->name('job');
 Route::get('/job/{slug}', [FrontEndController::class, 'jobDetails'])->name('job.show');
