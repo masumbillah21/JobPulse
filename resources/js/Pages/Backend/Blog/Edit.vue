@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { computed, ref, watch } from 'vue'
+    import { ref } from 'vue'
      import SectionMain from '@/Components/SectionMain.vue'
     import CardBox from '@/Components/CardBox.vue'
     import FormField from "@/Components/FormField.vue";
@@ -62,6 +62,7 @@
     const update = () => {
         form.post(route(isSystemUser() ? "admin.blogs.update" : "blogs.update", form.id));
     };
+
 </script>
     
     <template>
@@ -92,6 +93,7 @@
                                     required
                                 />
                             </FormField>
+                            
                             <FormField label="Content" label-for="content" help="Please enter post content">
                                 <FormControl
                                     v-model="form.body"

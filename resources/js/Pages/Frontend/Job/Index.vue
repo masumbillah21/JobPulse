@@ -64,7 +64,7 @@
         return jobList.data;
     }
 
-    return jobList.data.filter((job: any) => {
+    return allActiveJobs.filter((job: any) => {
         const categoryMatch = form.categories.length === 0 || form.categories.includes(job.job_category_id.toString());
         const jobLevelMatch = form.jobLevel.length === 0 || form.jobLevel.includes(job.job_level);
         const jobTypeMatch = form.jobType.length === 0 || form.jobType.includes(job.job_type);

@@ -29,6 +29,6 @@
         "@bhplugin/vue3-datatable": "^1.1.4",
         "@fortawesome/fontawesome-free": "5.15.3",
         "@jamescoyle/vue-icon": "^0.1.2",
-        "@mdi/js": "^7.4.47"
+        "@vueup/vue-quill": "^1.2.0"
     }
 }
