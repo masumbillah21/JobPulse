@@ -64,12 +64,19 @@ class FrontEndController extends Controller
        
         $jobList = Job::whereDate('closing_date', '>=', now())->with('company')->where('status', 1)->paginate(10);
         $allActiveJobs = Job::whereDate('closing_date', '>=', now())->with('company')->where('status', 1)->get();
-        
+        $jobCategories = JobCategory::get(['name', 'id']);
+
+        $rearrangedCategories = $jobCategories->reduce(function ($carry, $item, $index) {
+            $carry[$item->id] = $item->name;
+            return $carry;
+        }, []);
+
         return Inertia::render('Frontend/Job/Index', [
             'storageUrl' => config('app.url') . Storage::url('public/'),
             'jobPageData' => $jobPageData,
             'jobList' => $jobList,
-            'allActiveJobs' => $allActiveJobs
+            'allActiveJobs' => $allActiveJobs,
+            'jobCategories' => $rearrangedCategories
         ]);
     }
     public function jobDetails(string $slug){
