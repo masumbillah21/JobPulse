@@ -8,7 +8,7 @@
   import { Head, usePage } from '@inertiajs/vue3';
 
 
-  const postCategory: any = usePage().props.postCategory;
+  const postMeta: any = usePage().props.postMeta;
   const postList: any = usePage().props.postList;
   const cateBgImage: any = usePage().props.cateBgImage ?? null
 
@@ -17,10 +17,10 @@
 </script>
 <template>
   <LayoutGuest>
-    <Head :title="postCategory.name" />
-    <main v-if="postCategory">
+    <Head :title="postMeta.name ?? 'Blog'" />
+    <main v-if="postMeta">
       <BannerSection :bgImage="cateBgImage">
-        <SectionTitle :title="postCategory.name" />
+        <SectionTitle :title="postMeta.name" />
       </BannerSection>
 
       <section class="relative py-20 bg-gray-50">

@@ -145,9 +145,9 @@ class FrontEndController extends Controller
         $cateBgImage = Setting::where('name', 'catebg')->first();
         
 
-        return Inertia::render('Frontend/Blog/Category', [
+        return Inertia::render('Frontend/Blog/Archive', [
             'postList' => $postList,
-            'postCategory' => $postCategory,
+            'postMeta' => $postCategory,
             'cateBgImage' => $cateBgImage->value ?? null,
         ]);
     }
@@ -161,9 +161,9 @@ class FrontEndController extends Controller
         $postList = $tag->blog()->paginate(9);
         $cateBgImage = Setting::where('name', 'catebg')->first();
         
-        return Inertia::render('Frontend/Blog/Tag', [
+        return Inertia::render('Frontend/Blog/Archive', [
             'postList' => $postList,
-            'postTag' => $tag,
+            'postMeta' => $tag,
             'cateBgImage' => $cateBgImage->value ?? null,
         ]);
     }

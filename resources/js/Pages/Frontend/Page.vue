@@ -5,9 +5,7 @@ import LayoutGuest from '@/Layouts/LayoutGuest.vue';
 import { Head, Link, usePage } from '@inertiajs/vue3';
 
 const pageData: any = usePage().props.pageData;
-defineProps({
-  storageUrl: String
-});
+const urls: any = usePage().props.urls
 </script>
 <template>
   <LayoutGuest>
@@ -22,7 +20,7 @@ defineProps({
           <div v-for="(data, itemIndex) in item.data" :key="itemIndex" class="items-center flex" :class="data.imagePosition === 'right' ? 'flex-row-reverse text-slate-800' : 'flex-row'">
             <div class="w-full md:w-4/12 ml-auto mr-auto px-4">
               <img :alt="data.title" class="max-w-full rounded-lg shadow-lg"
-                :src="`data:image/jpg;base64,${data.image}`" />
+                :src="`${urls.storeUrl}/${data.image}`" />
             </div>
             <div class="w-full md:w-5/12 ml-auto mr-auto px-4">
               <div class="md:pr-12">

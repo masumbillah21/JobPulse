@@ -63,12 +63,11 @@ const onToggleSection = (sectionIndex: number) => {
                 <FormControl v-model="data.description" :id="'description-' + (rowIndex + sectionIndex)"
                     placeholder="Description here" type="textarea" required />
             </FormField>
-
+            {{ data.oldImage }}
             <FormField v-if="row.slug === 'slider'" label="Image" help="Max 500kb">
                 <FormFilePicker :key="data.imageKey" label="Upload Image" :modelValue="data.image" color="success"
                     @update:modelValue="data.image = $event" />
             </FormField>
-
         </div>
     </div>
 </template>

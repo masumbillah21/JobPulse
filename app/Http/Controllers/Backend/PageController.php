@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Helper\ImageHelper;
 use App\Models\Page;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
@@ -62,7 +63,8 @@ class PageController extends Controller
                     if (isset($item['image']) && $item['image'] instanceof UploadedFile) {
                         $fileContents = file_get_contents($item['image']->path());
                         $base64Image = base64_encode($fileContents);
-                        $item['image'] = $base64Image;
+                        $imagePath = ImageHelper::imageUpload($base64Image, $item['image']->getClientOriginalName());
+                        $item['image'] = $imagePath;
                     }
                 }
             }
@@ -136,7 +138,15 @@ class PageController extends Controller
                     if (isset($item['image']) && $item['image'] instanceof UploadedFile) {
                         $fileContents = file_get_contents($item['image']->path());
                         $base64Image = base64_encode($fileContents);
-                        $item['image'] = $base64Image;
+                        $imagePath = ImageHelper::imageUpload($base64Image, $item['image']->getClientOriginalName());
+                        $item['image'] = $imagePath;
+                        if (isset($item['oldImage'])) {
+                            ImageHelper::imageDelete($item['oldImage']);
+                        }
+                    }else{
+                        if (isset($item['oldImage'])) {
+                            $item['image'] = $item['oldImage'];
+                        }
                     }
                 }
             }

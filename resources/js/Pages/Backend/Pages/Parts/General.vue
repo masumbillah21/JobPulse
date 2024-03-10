@@ -1,11 +1,13 @@
 <script setup lang='ts'>
-import { ref } from 'vue'
 import FormField from '@/Components/FormField.vue'
 import FormControl from '@/Components/FormControl.vue'
 import BaseButtons from '@/Components/BaseButtons.vue'
 import BaseButtonLink from '@/Components/BaseButtonLink.vue'
 import FormFilePicker from '@/Components/FormFilePicker.vue'
 import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue'
+import { usePage } from '@inertiajs/vue3'
+
+const urls: any = usePage().props.urls
 
 defineProps({
     row: {
@@ -82,10 +84,13 @@ const onToggleSection = (sectionIndex: number) => {
                     placeholder="Description here" type="textarea" required />
             </FormField>
             <div class="flex flex-row justify-between items-center">
-                <FormField label="Image" help="Max 500kb">
-                    <FormFilePicker :key="data.imageKey" label="Upload Image" :modelValue="data.image" color="success"
-                        @update:modelValue="data.image = $event" />
-                </FormField>
+                <div>
+                    <img v-if="data.oldImage" :src="`${urls.storeUrl}/${data.oldImage}`" width="300" class="block">
+                    <FormField label="Image" help="Max 500kb">
+                        <FormFilePicker :key="data.imageKey" label="Upload Image" :modelValue="data.image" color="success"
+                            @update:modelValue="data.image = $event" />
+                    </FormField>
+                </div>
 
                 <FormField class="ml-auto w-auto" label="Image Position">
                     <FormControl v-model="data.imagePosition" :options="imagePosition" />

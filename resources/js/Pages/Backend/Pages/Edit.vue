@@ -59,6 +59,7 @@ const form: any = useForm({
       subtitle: "",
       description: "",
       image: '',
+      oldImage: '',
       imagePosition: imagePosition[0].id,
       imageKey: Date.now()
     }],
@@ -80,7 +81,8 @@ if (pageData) {
   form.contents.forEach((section: any) => {
     section.data.forEach((row: any) => {
       if (row.image) {
-        row.image = base64ToFile(row.image, row.imageKey)
+        row.oldImage = row.image
+        row.image = ''
       }
     })
   })
@@ -94,6 +96,7 @@ const addSection = () => {
       title: "",
       description: "",
       image: '',
+      oldImage: '',
       imagePosition: imagePosition[0].id,
       imageKey: Date.now()
     }],
@@ -125,6 +128,7 @@ const addRow = (sectionIndex: any) => {
       description: "",
       subtitle: "",
       image: '',
+      oldImage: '',
       imageKey: Date.now()
     });
   }
@@ -225,6 +229,7 @@ const chooseLayout = (layout: String) => {
           subtitle: "",
           description: "",
           image: '',
+          oldImage: '',
           imageKey: Date.now()
         }],
       },
@@ -265,6 +270,7 @@ const chooseLayout = (layout: String) => {
           title: "",
           description: "",
           image: '',
+          oldImage: '',
           imagePosition: imagePosition[0].id,
           imageKey: Date.now()
         }],
