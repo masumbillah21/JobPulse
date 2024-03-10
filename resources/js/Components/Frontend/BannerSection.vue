@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 
-const storageUrl: String = usePage().props.urls.storeUrl
+const urls: any = usePage().props.urls
 
 const props = defineProps({
     bgImage:{
@@ -26,7 +26,7 @@ if(props.bgImage && (props.bgImage.startsWith('http://') || props.bgImage.starts
 }else if(props.bgImage && props.bgImage.startsWith('data:')){
   imageUrl.value = props.bgImage
 }else{
-  imageUrl.value =  storageUrl + '/' + props.bgImage
+  imageUrl.value =  urls.storeUrl + '/' + props.bgImage
 }
 
 
@@ -41,7 +41,7 @@ if(props.bgImage && (props.bgImage.startsWith('http://') || props.bgImage.starts
         </div>
         <div class="container relative mx-auto">
           <div class="items-center flex flex-wrap">
-            <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
+            <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center text-white">
               <slot />
             </div>
           </div>

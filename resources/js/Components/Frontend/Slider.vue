@@ -2,10 +2,12 @@
     import { ref, onMounted } from 'vue'
     import SectionTitle from '@/Components/Frontend/SectionTitle.vue';
     import BannerSection from '@/Components/Frontend/BannerSection.vue';
+    import { usePage } from '@inertiajs/vue3';
 
+    const urls: any = usePage().props.urls
     const props = defineProps({
         sliderData: {
-            type: Array,
+            type: Array as () => Array<{ image: string; title: string; subtitle: string; description: string }>,
             required: true
         }
     });
@@ -28,7 +30,7 @@
     <div class="relative slide">
         <div class="carousel-indicators absolute bottom-0 flex bg-stone-800 h-24 w-full justify-center items-center">
             <ol class="z-50 flex w-4/12 justify-center">
-                <li v-for="(img, i) in sliderData" :key="i"
+                <li v-for="(_, i) in sliderData" :key="i"
                     class="md:w-4 md:h-4 bg-gray-300 rounded-full cursor-pointer mx-2" @click="active = i" :class="`${active === i ? 'bg-slate-800 dark:bg-gray-600' : ''}`"></li>
             </ol>
         </div>
@@ -36,10 +38,10 @@
             <div v-for="(slider, i) in sliderData" :key="i"
                 :class="{ 'active': active === i }"
                 class="carousel-item inset-0 absolute w-full opacity-0 transition-opacity duration-500 ease-linear"
-                :style="`background-image: url(data:image/jpg;base64,${slider.image})`"
+                :style="`background-image: url( ${urls.storeUrl}/${slider.image})`"
                 style="background-position: center; background-size: cover;">
-                <BannerSection :bgImage="`data:image/jpg;base64,${slider.image}`" banerHeight="70vh">
-                    <SectionTitle :title="slider.title" :subtitle="slider.subtitle" :description="slider.description" />
+                <BannerSection :bgImage="slider.image" banerHeight="70vh">
+                    <SectionTitle :title="slider.title" :subtitle="slider.subtitle" :description="slider.description"/>
                 </BannerSection>
             </div>
         </div>

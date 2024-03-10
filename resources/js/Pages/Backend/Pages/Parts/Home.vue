@@ -6,7 +6,9 @@ import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.
 import BaseButtons from '@/Components/BaseButtons.vue'
 import BaseButtonLink from '@/Components/BaseButtonLink.vue'
 import FormFilePicker from '@/Components/FormFilePicker.vue'
+import { usePage } from '@inertiajs/vue3'
 
+const urls: any = usePage().props.urls
 
 defineProps({
     row: {
@@ -63,7 +65,7 @@ const onToggleSection = (sectionIndex: number) => {
                 <FormControl v-model="data.description" :id="'description-' + (rowIndex + sectionIndex)"
                     placeholder="Description here" type="textarea" required />
             </FormField>
-            {{ data.oldImage }}
+            <img v-if="data.oldImage" :src="`${urls.storeUrl}/${data.oldImage}`" width="300" class="block">
             <FormField v-if="row.slug === 'slider'" label="Image" help="Max 500kb">
                 <FormFilePicker :key="data.imageKey" label="Upload Image" :modelValue="data.image" color="success"
                     @update:modelValue="data.image = $event" />
