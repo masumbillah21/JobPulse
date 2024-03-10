@@ -22,10 +22,22 @@ const props = defineProps({
 const searchQuery = ref('');
 
 const filterdJobList = computed(() => {
-  if(!searchQuery.value) return props.jobList.slice(0, props.displayTotal)
+  if (!searchQuery.value) return props.jobList.slice(0, props.displayTotal);
+
   const query = searchQuery.value.toLowerCase();
-  return props.allJobs?.filter((item: any) => item.title.toLowerCase().includes(query));
-})
+
+  return props.allJobs?.filter((item: any) => {
+    for (const key in item) {
+      if (Object.prototype.hasOwnProperty.call(item, key)) {
+        const value = item[key];
+        if (typeof value === 'string' && value.toLowerCase().includes(query)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  });
+});
 
 
 </script>

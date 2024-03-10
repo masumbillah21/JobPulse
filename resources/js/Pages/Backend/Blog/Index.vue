@@ -133,7 +133,6 @@
             >
             <template #action="data">
                 <template class="flex">
-                  {{ data.value.id }}
                   <BaseButtonLink v-if="hasPermission('blogs.view')" routeName="blogs.show" :routeParams="data.value.id" icon="fas fa-eye" label="View" color="success" small />
                   <BaseButtonLink v-if="hasPermission('blogs.update')" class="ml-2" routeName="blogs.edit" :routeParams="data.value.id" icon="fas fa-edit" label="Edit" color="info" small />
                   <BaseButtonLink v-if="hasPermission('blogs.delete')" class="ml-2" icon="fas fa-trash-alt" label="Delete" color="danger" small @click="showModle(data.value.id)"/>
