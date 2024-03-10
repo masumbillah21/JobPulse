@@ -7,31 +7,40 @@
     import BaseButtonLink from '@/Components/BaseButtonLink.vue'
     import CardBoxModal from '@/Components/CardBoxModal.vue'
     import FormSuccess from "@/Components/FormSuccess.vue";
+    import FormValidationErrors from '@/Components/FormValidationErrors.vue'
     import { hasPermission } from '@/utils/hasPermission.js'
+    import { isSystemUser } from '@/utils/isSystemUser.js'
     import Vue3Datatable from '@bhplugin/vue3-datatable'
     import '@bhplugin/vue3-datatable/dist/style.css'
     import FormControl from "@/Components/FormControl.vue";
-    import { Head, router, usePage } from '@inertiajs/vue3'
+    import { Head, useForm, usePage } from '@inertiajs/vue3'
 
     const blogsData: any = usePage().props.blogsData
 
     const isModalDangerActive = ref(false)
-    const deleteId = ref<string | number>('')
     const isOpen = ref(false);
 
-    const deleteData = () => {
+    const form: any = useForm({
+        id: 0,
+        _method: 'post'
+    });
+
+    const deleteData = async () => {
         isModalDangerActive.value = false
-        router.delete(route('blogs.destroy', deleteId.value))
-
-        const index = blogsData.findIndex((role: any) => role.id === deleteId.value)
-        if (index !== -1) {
-            blogsData.splice(index, 1)
-        }
-
+        const routeName = isSystemUser() ? 'admin.blogs.destroy' : 'blogs.destroy'
+        await form.delete(route(routeName, form.id), {
+            onSuccess: () => {
+              const index = rows.value.findIndex((blog: any) => blog.id === form.id)
+              if (index !== -1) {
+                  rows.value.splice(index, 1)
+                  rows.value = [...rows.value]
+              }
+            }
+        })
     }
     const showModle = (id : string | number) => {
         isModalDangerActive.value = true
-        deleteId.value = id
+        form.id = id
     }
 
     const params = reactive({
@@ -43,7 +52,7 @@
     });
 
     const cols = ref([
-      {title: 'SL', field: 'id', isUnique: true, type: 'number', width: '100px'},
+      {title: 'SL', field: 'sl', isUnique: true, type: 'number', width: '100px'},
       {title: 'Title', field: 'title'},
       {title: 'Posted By', field: 'user'},
       {title: 'Status', field: 'status'},
@@ -90,6 +99,7 @@
             <p>Do you really want to delete?</p>
           </CardBoxModal>
           <CardBox class="mb-6 relative overflow-x-auto shadow-md sm:rounded-lg" has-table>
+            <FormValidationErrors />
             <FormSuccess class="pt-5 pl-5" />
             <div class="flex justify-between px-3 pt-4">
                 <div class="mb-5 relative">
@@ -123,7 +133,7 @@
             >
             <template #action="data">
                 <template class="flex">
-                  {{ data.value.slug }}
+                  {{ data.value.id }}
                   <BaseButtonLink v-if="hasPermission('blogs.view')" routeName="blogs.show" :routeParams="data.value.id" icon="fas fa-eye" label="View" color="success" small />
                   <BaseButtonLink v-if="hasPermission('blogs.update')" class="ml-2" routeName="blogs.edit" :routeParams="data.value.id" icon="fas fa-edit" label="Edit" color="info" small />
                   <BaseButtonLink v-if="hasPermission('blogs.delete')" class="ml-2" icon="fas fa-trash-alt" label="Delete" color="danger" small @click="showModle(data.value.id)"/>

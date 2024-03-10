@@ -7,6 +7,7 @@
     import BaseButtonLink from '@/Components/BaseButtonLink.vue'
     import CardBoxModal from '@/Components/CardBoxModal.vue'
     import FormSuccess from "@/Components/FormSuccess.vue";
+    import FormValidationErrors from '@/Components/FormValidationErrors.vue'
     import FormControl from "@/Components/FormControl.vue";
     import FormField from "@/Components/FormField.vue";
     import Vue3Datatable from '@bhplugin/vue3-datatable'
@@ -97,6 +98,7 @@
           </CardBoxModal>
           <CardBox class="mb-6 relative overflow-x-auto shadow-md sm:rounded-lg" has-table>
             <FormSuccess class="pt-5 pl-5" />
+            <FormValidationErrors />
             <div class="flex justify-between px-3 pt-4">
                 <div class="mb-5 relative">
                 <button type="button" class="bg-slate-800 text-white p-2 inline-block rounded" @click="isOpen = !isOpen">

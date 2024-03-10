@@ -19,7 +19,7 @@ class TagController extends Controller
             abort(403);
         }
         
-        return Inertia::render('Backend/Pages/Blog/Tags', [
+        return Inertia::render('Backend/Blog/Tags', [
             'tagsData' => Tag::orderBy('id', 'desc')->get(),
         ]);
     }

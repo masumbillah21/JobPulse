@@ -7,30 +7,36 @@
     import BaseButtonLink from '@/Components/BaseButtonLink.vue'
     import CardBoxModal from '@/Components/CardBoxModal.vue'
     import FormSuccess from "@/Components/FormSuccess.vue";
+    import FormValidationErrors from "@/Components/FormValidationErrors.vue";
     import FormControl from "@/Components/FormControl.vue";
     import Vue3Datatable from '@bhplugin/vue3-datatable'
     import '@bhplugin/vue3-datatable/dist/style.css'
     import { hasPermission } from '@/utils/hasPermission.js'
     import { isSystemUser } from '@/utils/isSystemUser.js'
-    import { Head, router, usePage } from '@inertiajs/vue3'
+    import { Head, useForm, usePage } from '@inertiajs/vue3'
 
     const jobsData:any = usePage().props.jobsData
 
+    const form: any = useForm({
+        id: 0,
+        _method: 'delete'
+    });
+
     const isModalDangerActive = ref(false)
-    const deleteId = ref<string | number>('');
     const isOpen = ref(false);
-    const deleteRole = () => {
+
+    const deleteJob = async () => {
         isModalDangerActive.value = false
         const routeName = isSystemUser() ? 'admin.jobs.destroy' : 'jobs.destroy'
-        router.delete(route(routeName, deleteId.value))
-        const index = jobsData.findIndex((role: any) => role.id === deleteId.value)
+        await form.delete(route(routeName, form.id))
+        const index = jobsData.findIndex((role: any) => role.id === form.id)
         if (index !== -1) {
             jobsData.splice(index, 1)
         }
     }
     const showModle = (id: number) => {
         isModalDangerActive.value = true
-        deleteId.value = id
+        form.id = id
     }
     const params = reactive({
         current_page: 1,
@@ -86,11 +92,12 @@
             />
           </SectionTitleLineWithButton>
           
-          <CardBoxModal v-model="isModalDangerActive" title="Warning" button="danger" :onConfirm="deleteRole" buttonLabel="Delete" has-cancel>
+          <CardBoxModal v-model="isModalDangerActive" title="Warning" button="danger" :onConfirm="deleteJob" buttonLabel="Delete" has-cancel>
             <p>Do you really want to delete?</p>
           </CardBoxModal>
           <CardBox class="mb-6 relative overflow-x-auto shadow-md sm:rounded-lg" has-table>
             <FormSuccess class="pt-5 pl-5" />
+            <FormValidationErrors />
             <div class="flex justify-between px-3 pt-4">
                 <div class="mb-5 relative">
                 <button type="button" class="bg-slate-800 text-white p-2 inline-block rounded" @click="isOpen = !isOpen">

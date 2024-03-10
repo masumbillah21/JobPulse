@@ -6,8 +6,8 @@
     import SectionTitle from '@/Components/SectionTitle.vue'
     import FormCheckRadioGroup from '@/Components/FormCheckRadioGroup.vue'
     import CardBoxModal from '@/Components/CardBoxModal.vue'
-    import BaseButtonLink from '@/Components/BaseButtonLink.vue'
     import FormSuccess from "@/Components/FormSuccess.vue"
+    import FormValidationErrors from '@/Components/FormValidationErrors.vue'
     import FormControl from "@/Components/FormControl.vue";
     import { hasPermission } from '@/utils/hasPermission.js'
     import Vue3Datatable from '@bhplugin/vue3-datatable'
@@ -57,7 +57,7 @@
 
     const isOpen = ref(false);
     const userId = ref<string | number>('');
-    const comStatus = ref<string | number>('');
+    
     const changeStatus = () => {
         isModalDangerActive.value = false
         router.get(route('admin.users.status', userId.value))
@@ -83,6 +83,7 @@
             <p>Do you really want to change status?</p>
           </CardBoxModal>
           <CardBox class="mb-6 relative overflow-x-auto shadow-md sm:rounded-lg" has-table>
+            <FormValidationErrors />
             <FormSuccess class="pt-5 pl-5" />
             <div class="flex justify-between px-3 pt-4">
                 <div class="mb-5 relative">

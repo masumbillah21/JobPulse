@@ -7,30 +7,38 @@
     import BaseButtonLink from '@/Components/BaseButtonLink.vue'
     import CardBoxModal from '@/Components/CardBoxModal.vue'
     import FormSuccess from "@/Components/FormSuccess.vue";
+    import FormValidationErrors from "@/Components/FormValidationErrors.vue";
     import { hasPermission } from '@/utils/hasPermission.js'
     import Vue3Datatable from '@bhplugin/vue3-datatable'
     import FormControl from '@/Components/FormControl.vue'
     import '@bhplugin/vue3-datatable/dist/style.css'
-    import { Head, router, usePage } from '@inertiajs/vue3'
+    import { Head, useForm, usePage } from '@inertiajs/vue3'
 
     const rolesData: any = usePage().props.rolesData
 
+    const form: any = useForm({
+        id: 0,
+        _method: 'delete'
+    })
+
     const isModalDangerActive = ref(false)
     const isOpen = ref(false);
-    const deleteId = ref<string | number>('')
-    const deleteRole = () => {
+    
+    const deleteRole = async () => {
         isModalDangerActive.value = false
-        router.delete(route('admin.roles.destroy', deleteId.value))
-
-        const index = rolesData.data.findIndex((role: any) => role.id === deleteId.value)
-        if (index !== -1) {
-            rolesData.data.splice(index, 1)
-        }
-
+        form.delete(route('admin.roles.destroy', form.id),{
+            onSuccess: () => {
+              const index = rows.value.findIndex((role: any) => role.id === form.id)
+              if (index !== -1) {
+                  rows.value.splice(index, 1)
+                  rows.value = [...rows.value]
+              }
+            }
+        })
     }
     const showModle = (id : string | number) => {
         isModalDangerActive.value = true
-        deleteId.value = id
+        form.id = id
     }
 
     const params = reactive({
@@ -87,6 +95,7 @@
             <p>Do you really want to delete?</p>
           </CardBoxModal>
           <CardBox class="mb-6 relative overflow-x-auto shadow-md sm:rounded-lg" has-table>
+            <FormValidationErrors/>
             <FormSuccess class="pt-5 pl-5" />
             <div class="flex justify-between px-3 pt-4">
                 <div class="mb-5 relative">

@@ -12,27 +12,33 @@
     import FormSuccess from "@/Components/FormSuccess.vue";
     import FormValidationErrors from "@/Components/FormValidationErrors.vue";
     import { hasPermission } from '@/utils/hasPermission.js'
-    import { Head, router, usePage } from '@inertiajs/vue3'
+    import { Head, useForm, usePage } from '@inertiajs/vue3'
 
     const permissionsData: any = usePage().props.permissionsData
 
+    const form: any = useForm({
+        id: 0,
+        _method: 'delete'
+    })
     const isModalDangerActive = ref(false)
     const isOpen = ref(false);
-    const deleteId = ref<string | number>('');
-    const deleteRole = () => {
+    const deleteRole = async () => {
         isModalDangerActive.value = false
 
-        router.delete(route('admin.permissions.destroy', deleteId.value))
-
-        const index = permissionsData.findIndex((role: any) => role.id === deleteId.value)
-        if (index !== -1) {
-            permissionsData.splice(index, 1)
-        }
+        await form.delete(route('admin.permissions.destroy', form.id),{
+            onSuccess: () => {
+              const index = rows.value.findIndex((permission: any) => permission.id === form.id)
+              if (index !== -1) {
+                  rows.value.splice(index, 1)
+                  rows.value = [...rows.value]
+              }
+            }
+        })
 
     }
     const showModle = (id: number) => {
         isModalDangerActive.value = true
-        deleteId.value = id
+        form.id = id
     }
 
     const params = reactive({

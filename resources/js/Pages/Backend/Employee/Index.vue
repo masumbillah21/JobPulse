@@ -6,28 +6,41 @@
     import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue'
     import BaseButtonLink from '@/Components/BaseButtonLink.vue'
     import CardBoxModal from '@/Components/CardBoxModal.vue'
-    import { Head, router, usePage } from '@inertiajs/vue3'
+    import { Head, useForm, usePage } from '@inertiajs/vue3'
     import FormControl from '@/Components/FormControl.vue'
     import { hasPermission } from '@/utils/hasPermission.js'
     import { isSystemUser } from '@/utils/isSystemUser.js'
     import FormSuccess from "@/Components/FormSuccess.vue";
+    import FormValidationErrors from "@/Components/FormValidationErrors.vue";
     import Vue3Datatable from '@bhplugin/vue3-datatable'
     import '@bhplugin/vue3-datatable/dist/style.css'
 
     const employees: any = usePage().props.employees
 
+    const form: any = useForm({
+        id: 0,
+        _method: 'delete'
+    });
+
     const isOpen = ref(false);
     const isModalDangerActive = ref(false)
-    const deleteId = ref<string | number>('');
-    const deleteEmployee = () => {
+    const deleteEmployee = async () => {
       isModalDangerActive.value = false
       const routeName = isSystemUser() ? 'admin.employee.destroy' : 'employee.destroy'
-      router.delete(route(routeName, deleteId.value))
-      const index = employees.findIndex((emp: any) => emp.id === deleteId.value)
+      await form.delete(route(routeName, form.id),{
+          onSuccess: () => {
+            const index = rows.value.findIndex((emp: any) => emp.id === form.id)
+            if (index !== -1) {
+                rows.value.splice(index, 1)
+                rows.value = [...rows.value]
+            }
+          }
+        })
+      
     }
     const showModle = (id: number) => {
         isModalDangerActive.value = true
-        deleteId.value = id
+        form.id = id
     }
 
     const params = reactive({
@@ -85,6 +98,7 @@
           </CardBoxModal>
           <CardBox class="mb-6 relative overflow-x-auto shadow-md sm:rounded-lg" has-table>
             <FormSuccess class="pt-5 pl-5" />
+            <FormValidationErrors />
             <div class="flex justify-between px-3 pt-4">
                 <div class="mb-5 relative">
                   <button type="button" class="bg-slate-800 text-white p-2 inline-block rounded" @click="isOpen = !isOpen">

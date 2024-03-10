@@ -18,7 +18,8 @@
 
     const features: any = usePage().props.features
     const activeFeatues = usePage().props.auth.features
-    const form = useForm({
+    
+    const form: any = useForm({
         id: 0,
         status: false,
         _method: 'post'
@@ -27,11 +28,18 @@
     const isOpen = ref(false);
     const isModalDangerActive = ref(false)
     const isModalDangerActiveForUse = ref(false)
-    const deletePlugin = () => {
+    const deletePlugin = async () => {
       isModalDangerActive.value = false
       const routeName = isSystemUser() ? "admin.plugins.destroy" : "plugins.destroy"
-      form.delete(route(routeName, form.id))
-      const index = features.findIndex((emp: any) => emp.id === form.id)
+      await form.delete(route(routeName, form.id), {
+        onSuccess: () => {
+            const index = rows.value.findIndex((plugin: any) => plugin.id === form.id)
+            if (index !== -1) {
+                rows.value.splice(index, 1)
+                rows.value = [...rows.value]
+            }
+          }
+      })
     }
 
     const changeStatus = () => {

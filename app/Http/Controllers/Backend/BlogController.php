@@ -30,7 +30,7 @@ class BlogController extends Controller
         }
         
         $category = Category::all();
-        return Inertia::render('Backend/Pages/Blog/Index', [
+        return Inertia::render('Backend/Blog/Index', [
             'blogsData' => $blogs,
             'categoryData' => $category
         ]);
@@ -44,7 +44,7 @@ class BlogController extends Controller
         $this->authorize('create', Blog::class); 
 
         $category = Category::pluck('name', 'id')->toArray();
-        return Inertia::render('Backend/Pages/Blog/Edit',[
+        return Inertia::render('Backend/Blog/Edit',[
             'categoryData' => $category
         ]);
     }
@@ -104,7 +104,9 @@ class BlogController extends Controller
      */
     public function show(Blog $blog)
     {
-        return Inertia::render('Backend/Pages/Blog/Show', [
+        $this->authorize('view', Blog::class);
+
+        return Inertia::render('Backend/Blog/Show', [
             'blogData' => $blog
         ]);
     }
@@ -120,7 +122,7 @@ class BlogController extends Controller
         $categoryIds = $blogData->categories->pluck('id')->toArray();
 
         $blogData['category_ids'] = $categoryIds;
-        return Inertia::render('Backend/Pages/Blog/Edit', [
+        return Inertia::render('Backend/Blog/Edit', [
             'blogData' => $blogData,
             'categoryData' => $category
         ]);
@@ -178,7 +180,7 @@ class BlogController extends Controller
     {
         $this->authorize('delete', $blog); 
 
-        $blog->delete();
+        // $blog->delete();
 
         return redirect()->back()->with('success', 'Blog Deleted Successfully');
     }

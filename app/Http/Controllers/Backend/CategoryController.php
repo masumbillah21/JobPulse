@@ -19,7 +19,7 @@ class CategoryController extends Controller
             abort(403);
         }
         
-        return Inertia::render('Backend/Pages/Blog/Categories', [
+        return Inertia::render('Backend/Blog/Categories', [
             'categoriesData' => Category::orderBy('id', 'desc')->get(),
         ]);
     }
