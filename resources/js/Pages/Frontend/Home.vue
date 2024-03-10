@@ -5,6 +5,7 @@
   import SectionTitle from '@/Components/Frontend/SectionTitle.vue';
   import Slider from '@/Components/Frontend/Slider.vue';
   import JobSection from '@/Components/Frontend/JobSection.vue';
+import ComingSoon from '@/Components/Frontend/ComingSoon.vue';
 
   const homePageData: any = usePage().props.homePageData ?? null;
   const jobList: any = usePage().props.jobList ?? null;
@@ -109,14 +110,6 @@ for (let i: number = 1; i <= 8; i++) {
         </div>
       </section>
     </main>
-    <main v-else>
-      <div class="container mx-auto px-4">
-        <div class="items-center justify-center flex flex-wrap">
-          <div class="w-full ml-auto mr-auto px-4">
-            <h3 class="text-4xl text-center font-semibold">Coming Soon</h3>
-          </div>
-        </div>
-      </div>
-    </main>
+    <ComingSoon v-else />
   </LayoutGuest>
 </template>

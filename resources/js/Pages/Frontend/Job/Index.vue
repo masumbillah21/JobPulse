@@ -7,6 +7,7 @@
   import JobSection from '@/Components/Frontend/JobSection.vue';
   import SectionTitle from '@/Components/Frontend/SectionTitle.vue';
   import BannerSection from '@/Components/Frontend/BannerSection.vue';
+  import ComingSoon from '@/Components/Frontend/ComingSoon.vue';
 
   const jobPageData: any = usePage().props.jobPageData;
   const jobList: any = usePage().props.jobList;
@@ -23,9 +24,6 @@
     jobType: [],
     workType: [],
   });
-
-  const jobCategoriesList = jobCategories
-
 
   const jobPageContent: any = {
     banner: '',
@@ -62,19 +60,21 @@
   };
 
   const filteredJobs = computed(() => {
-    if (form.categories.length > 0 || form.jobLevel.length > 0 || form.jobType.length > 0 || form.workType.length > 0) {
-        return jobList.data.filter((job: any) => {
-            const categoryMatch = form.categories.length === 0 || form.categories.includes(job.job_category_id.toString());
-            const jobLevelMatch = form.jobLevel.length === 0 || form.jobLevel.includes(job.job_level);
-            const jobTypeMatch = form.jobType.length === 0 || form.jobType.includes(job.job_type);
-            const workTypeMatch = form.workType.length === 0 || form.workType.includes(job.work_type);
-
-            return categoryMatch && jobLevelMatch && jobTypeMatch && workTypeMatch;
-        });
-    } else {
+    if (form.categories.length === 0 && form.jobLevel.length === 0 && form.jobType.length === 0 && form.workType.length === 0) {
         return jobList.data;
     }
+
+    return jobList.data.filter((job: any) => {
+        const categoryMatch = form.categories.length === 0 || form.categories.includes(job.job_category_id.toString());
+        const jobLevelMatch = form.jobLevel.length === 0 || form.jobLevel.includes(job.job_level);
+        const jobTypeMatch = form.jobType.length === 0 || form.jobType.includes(job.job_type);
+        const workTypeMatch = form.workType.length === 0 || form.workType.includes(job.work_type);
+
+        return categoryMatch && jobLevelMatch && jobTypeMatch && workTypeMatch;
+    });
 });
+
+
 
 
 
@@ -98,11 +98,11 @@
                 <div class="md:w-3/12 w-full md:mr-2">
                   <h2 class="text-xl font-semibold px-4">Filters</h2>
                   <hr>
-                  <div class="mt-4 bg-white rounded shadow p-4">
+                  <div v-if="jobCategories" class="mt-4 bg-white rounded shadow p-4">
                     <h2 class="text-xl font-semibold">Categories</h2>
                     <hr>
                     <FormCheckRadioGroup class="mt-6" componentClass="w-full" v-model="form.categories" name="categories" type="checkbox"
-                        :options="jobCategoriesList" />
+                        :options="jobCategories" />
                   </div>
                   <div class="mt-4 bg-white rounded shadow p-4">
                     <h2 class="text-xl font-semibold">Level</h2>
@@ -125,7 +125,7 @@
                 </div>
                 <div class="relative flex flex-col min-w-0 break-words bg-white text-slate-900 w-full mb-8 py-10 px-3 shadow-lg rounded-lg">
                   <p class="mb-2" v-if="form.categories.length > 0">
-                    Category(s): <span v-for="category in form.categories" class="font-bold bg-black rounded m-1 p-1 text-white">{{ jobCategoriesList[category] }} </span> 
+                    Category(s): <span v-for="category in form.categories" class="font-bold bg-black rounded m-1 p-1 text-white">{{ jobCategories[category] }} </span> 
                   </p>
                   <p class="mb-2" v-if="form.jobLevel.length > 0">
                     Level: <span v-for="level in form.jobLevel" class="font-bold bg-black rounded m-1 p-1 text-white">{{ level }} </span> 
@@ -148,15 +148,6 @@
         </div>
       </section>
     </main>
-
-    <main v-else class="mt-40">
-      <div class="container mx-auto px-4">
-        <div class="items-center justify-center flex flex-wrap">
-          <div class="w-full ml-auto mr-auto px-4">
-            <h3 class="text-4xl font-semibold">Coming Soon</h3>
-          </div>
-        </div>
-      </div>
-    </main>
+    <ComingSoon v-else />
   </LayoutGuest>
 </template>
