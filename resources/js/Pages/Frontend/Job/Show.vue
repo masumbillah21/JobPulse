@@ -98,7 +98,7 @@
                         <p v-if="form.recentlySuccessful" class="text-sm text-gray-600 dark:text-gray-400">Applied.</p>
                       </template>
                       <template v-else>
-                        <p class="text-xl font-semibold text-red-600">You Already Applied.</p>
+                        <p class="text-xl font-semibold text-green-800">You Already Applied.</p>
                       </template>
                         
                     </CardBox>
