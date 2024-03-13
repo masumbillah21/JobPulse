@@ -1,5 +1,4 @@
 <script setup>
-import { mdiCog } from '@mdi/js'
 import { useSlots, computed } from 'vue'
 import BaseIcon from '@/Components/BaseIcon.vue'
 import BaseButtonLink from '@/Components/BaseButtonLink.vue'
@@ -30,6 +29,6 @@ const hasSlot = computed(() => useSlots().default)
       </h1>
     </div>
     <slot v-if="hasSlot" />
-    <BaseButtonLink v-else :icon="mdiCog" color="whiteDark" />
+    <BaseButtonLink v-else icon="fas fa-cog" color="whiteDark" />
   </section>
 </template>

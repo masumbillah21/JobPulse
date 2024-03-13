@@ -1,6 +1,5 @@
 <script setup>
 import { computed } from 'vue'
-import { mdiClose } from '@mdi/js'
 import BaseButtonLink from '@/Components/BaseButtonLink.vue'
 import BaseButtons from '@/Components/BaseButtons.vue'
 import CardBox from '@/Components/CardBox.vue'
@@ -60,7 +59,7 @@ window.addEventListener('keydown', (e) => {
       <CardBoxComponentTitle :title="title">
         <BaseButtonLink
           v-if="hasCancel"
-          :icon="mdiClose"
+          icon="far fa-times-circle"
           color="whiteDark"
           small
           rounded-full

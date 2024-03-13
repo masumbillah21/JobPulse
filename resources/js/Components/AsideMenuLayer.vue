@@ -1,5 +1,4 @@
 <script setup>
-import { mdiLogout, mdiClose } from '@mdi/js'
 import { computed } from 'vue'
 import AsideMenuList from '@/Components/AsideMenuList.vue'
 import AsideMenuItem from '@/Components/AsideMenuItem.vue'
@@ -42,7 +41,7 @@ const asideLgCloseClick = (event) => {
           <ApplicationLogo class="mx-auto" logoSize="200" />
         </div>
         <button class="hidden lg:inline-block xl:hidden p-3" @click.prevent="asideLgCloseClick">
-          <BaseIcon :path="mdiClose" />
+          <BaseIcon path="fas fa-times" />
         </button>
       </div>
       <div

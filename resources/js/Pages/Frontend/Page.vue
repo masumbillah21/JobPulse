@@ -27,9 +27,9 @@ const urls: any = usePage().props.urls
               <div class="md:pr-12">
                 <h4 class="text-xl mb-2">{{ data.subtitle }}</h4>
                 <h3 class="text-3xl font-semibold">{{ data.title }}</h3>
-                <p class="mt-4 text-lg leading-relaxed">
+                <div class="mt-4 text-lg leading-relaxed">
                   {{ data.description }}
-                </p>
+                </div>
               </div>
             </div>
           </div>

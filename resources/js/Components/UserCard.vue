@@ -1,7 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useMainStore } from '@/Stores/main'
-import { mdiCheckDecagram } from '@mdi/js'
 import BaseLevel from '@/Components/BaseLevel.vue'
 import UserAvatarCurrentUser from '@/Components/UserAvatarCurrentUser.vue'
 import CardBox from '@/Components/CardBox.vue'
@@ -35,7 +34,7 @@ const userSwitchVal = ref(false)
         </h1>
         <p>Last login <b>12 mins ago</b> from <b>127.0.0.1</b></p>
         <div class="flex justify-center md:block">
-          <PillTag label="Verified" color="info" :icon="mdiCheckDecagram" />
+          <PillTag label="Verified" color="info" icon="fas fa-check-circle" />
         </div>
       </div>
     </BaseLevel>

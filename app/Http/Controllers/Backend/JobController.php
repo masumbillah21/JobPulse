@@ -67,7 +67,7 @@ class JobController extends Controller
             'salary' => 'required|numeric',
             'facilities' => 'required|string',
             'skills' => 'required|string',
-            'closing_date' => 'required|date',
+            'closing_date' => 'required|date|after:tomorrow',
             'status' => 'nullable|boolean',
         ]);
 
@@ -145,7 +145,7 @@ class JobController extends Controller
             'responsibilities' => 'required|string',
             'salary' => 'required|numeric',
             'facilities' => 'required|string',
-            'closing_date' => 'nullable|date',
+            'closing_date' => 'nullable|date|after:tomorrow',
             'status' => 'nullable|boolean',
         ]);
 

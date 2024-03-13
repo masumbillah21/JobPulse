@@ -1,8 +1,6 @@
 <script setup>
-import { mdiChevronUp, mdiChevronDown } from '@mdi/js'
 import { Link, usePage } from '@inertiajs/vue3'
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
-import { useMainStore } from '@/Stores/main.js'
 import BaseIcon from '@/Components/BaseIcon.vue'
 import UserAvatarCurrentUser from '@/Components/UserAvatarCurrentUser.vue'
 import NavBarMenuList from '@/Components/NavBarMenuList.vue'

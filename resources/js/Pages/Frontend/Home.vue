@@ -64,9 +64,9 @@ for (let i: number = 1; i <= 8; i++) {
             <div class="mt-1 mb-10">
               <template v-if="companies">
                 <div class="grid grid-cols-4 gap-4">
-                  <div v-for="compnay in companies" class="rounded shadow-sm p-2 shadow-slate-300 m-3 flex items-center flex-col">
+                  <div v-for="compnay in companies" class="rounded shadow-sm p-2 shadow-slate-300 m-3 flex items-center flex-col bg-white">
                     <Link :href="route('job.by.company', compnay.slug)">
-                      <img :src="compnay.logo" :alt="compnay.name">
+                      <img class="mx-auto max-w-40" :src="compnay.logo" :alt="compnay.name">
                       <p class="text-center text-sm font-semibold mt-1">{{ compnay.name }}</p>
                     </Link>
                   </div>
@@ -76,18 +76,19 @@ for (let i: number = 1; i <= 8; i++) {
           </div>
         </div>
       </section>
-      <section v-if="homeConents.job_category" class="relative pb-20 bg-slate-800 text-gray-100">
+      
+      <section v-if="homeConents.job_category" class="relative py-20 bg-slate-800 text-gray-100">
         <div class="container mx-auto px-4">
           <div class="flex justify-center flex-col items-center">
             <div class="w-1/2 ml-auto mr-auto px-4 py-6">
               <SectionTitle :title="homeConents.job_category.title" :description="homeConents.job_category.description" :subtitle="homeConents.job_category.subtitle" />
             </div>
             <div class="mt-1 mb-10">
-              <div class="grid grid-cols-5 gap-2">
+              <div class="grid grid-cols-5 gap-4">
                 <template v-if="jobCategories">
                     <div v-for="category in jobCategories" class="text-center rounded shadow-sm p-2 text-stone-900 bg-white shadow-slate-300 m-3 w-full">
                       <Link :href="route('job.by.category', category.slug)">
-                        <img class="mx-auto" :src="category.logo" alt="">
+                        <img class="mx-auto max-w-40" :src="category.logo" alt="">
                         <p class="text-center text-lg font-semibold mt-3">{{ category.name }}</p>
                       </Link>
                     </div>

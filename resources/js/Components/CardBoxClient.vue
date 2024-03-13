@@ -1,6 +1,5 @@
 <script setup>
 import { computed } from 'vue'
-import { mdiTrendingDown, mdiTrendingUp, mdiTrendingNeutral } from '@mdi/js'
 import CardBox from '@/Components/CardBox.vue'
 import BaseLevel from '@/Components/BaseLevel.vue'
 import PillTag from '@/Components/PillTag.vue'
@@ -54,9 +53,9 @@ const pillType = computed(() => {
 
 const pillIcon = computed(() => {
   return {
-    success: mdiTrendingUp,
-    warning: mdiTrendingNeutral,
-    danger: mdiTrendingDown,
+    success: 'fas fa-chart-line',
+    warning: 'far fa-chart-bar',
+    danger: 'fas fa-level-down-alt',
     info: null
   }[pillType.value]
 })

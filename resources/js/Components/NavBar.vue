@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue'
-import { mdiClose, mdiDotsVertical } from '@mdi/js'
 import { containerMaxW } from '@/config.js'
 import BaseIcon from '@/Components/BaseIcon.vue'
 import NavBarMenuList from '@/Components/NavBarMenuList.vue'
@@ -32,7 +31,7 @@ const isMenuNavBarActive = ref(false)
       </div>
       <div class="flex-none items-stretch flex h-14 lg:hidden">
         <NavBarItemPlain @click.prevent="isMenuNavBarActive = !isMenuNavBarActive">
-          <BaseIcon :path="isMenuNavBarActive ? mdiClose : mdiDotsVertical" size="24" />
+          <BaseIcon :path="isMenuNavBarActive ? 'fas fa-times' : 'fas fa-ellipsis-v'" size="24" />
         </NavBarItemPlain>
       </div>
       <div
