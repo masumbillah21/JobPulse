@@ -16,6 +16,8 @@ class Tag extends Model
         'slug',
     ];
 
+    protected $hidden = ['pivot'];
+
     public function blog()
     {
         return $this->belongsToMany(Blog::class, 'blog_tags');

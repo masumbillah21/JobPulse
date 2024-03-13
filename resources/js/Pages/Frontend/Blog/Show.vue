@@ -28,7 +28,7 @@ defineProps({
               <h2 class="text-4xl mb-2 font-semibold">{{ post?.title }}</h2>
               <p class="text-lg mb-2 font-semibold">Posted: {{ post?.created_at }} | By: {{ post?.user?.name }}</p>
               <hr class="mb-5">
-              <div class="text-lg text-justify">{{ post?.body }}</div>
+              <div class="text-lg text-justify" v-html="post?.body"></div>
               <p class="mt-5"><span class="font-bold">Categories:</span> <Link v-for="(category, index) in post?.categories" :key="index" :href="route('blog.category', category.slug)" class="inline-block bg-slate-200 rounded-full px-3 py-1 text-sm font-semibold text-slate-700 mr-2 mb-2">{{ category.name }}</Link></p>
               <p class="mt-5"><span class="font-bold">Tags:</span> <Link v-for="(tag, index) in post?.tags" :key="index" :href="route('blog.tag', tag.slug)" class="inline-block bg-slate-200 rounded-full px-3 py-1 text-sm font-semibold text-slate-700 mr-2 mb-2">{{ tag.name }}</Link></p>
             </div>

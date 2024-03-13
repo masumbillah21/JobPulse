@@ -14,11 +14,37 @@
     import FormSuccess from "@/Components/FormSuccess.vue";
     import { Head, useForm, usePage } from '@inertiajs/vue3'
     import { isSystemUser } from '@/utils/isSystemUser.js'
+    import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+    import CKEditor from "@ckeditor/ckeditor5-vue";
 
     const blogData: any = usePage().props.blogData ?? null
     const categoryData: any = usePage().props.categoryData ?? null
 
     const fileInputKey = ref(0);
+
+    const editor = ClassicEditor;
+
+    const onChange = (data: any) => {
+        form.body = data;
+        addStyle();
+    };
+
+    // Add custom CSS to increase the height of CKEditor
+    const style = `
+        .ck-editor__editable {
+            min-height: 300px; /* Adjust the height as per your requirement */
+        }
+        .ck-powered-by-balloon {
+            display: none !important;
+        }
+    `;
+
+    // Apply the custom style
+    const addStyle = () => {
+        const styleElement = document.createElement('style');
+        styleElement.textContent = style;
+        document.head.appendChild(styleElement);
+    };
 
 
     const form: any = useForm({
@@ -38,6 +64,7 @@
         form.body = blogData.body
         form.status = blogData.status
         form.categories = blogData.category_ids
+        form.tags = blogData.tags.map((tag: any) => tag.name)
         form._method = 'put'
     }
 
@@ -62,7 +89,7 @@
     const update = () => {
         form.post(route(isSystemUser() ? "admin.blogs.update" : "blogs.update", form.id));
     };
-
+    addStyle()
 </script>
     
     <template>
@@ -93,16 +120,10 @@
                                     required
                                 />
                             </FormField>
-                            
-                            <FormField label="Content" label-for="content" help="Please enter post content">
-                                <FormControl
-                                    v-model="form.body"
-                                    id="content"
-                                    autocomplete="content"
-                                    type="textarea"
-                                    required
-                                />
-                            </FormField>
+                            <p>Content</p>
+                            <div class="dark:text-black min-h-24">
+                                <CKEditor.component v-model="form.body" :editor="editor" @change="onChange" />
+                            </div>
                         </CardBox>
                         <CardBox class="ml-2 w-1/5">
                             <FormField class="w-full" label="Select Categories">

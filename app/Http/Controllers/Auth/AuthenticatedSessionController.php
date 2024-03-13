@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Company;
 use App\Models\User;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -33,8 +34,17 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
 
-        if (User::where('email', $request->email)->where('user_type', UserTypeEnum::SYSTEM)->count() == 1
-            && User::where('email', $request->email)->where('status', 0)->count() == 1
+        $user = User::where('email', $request->email);
+
+        if($user->company_id) {
+            $company = Company::where('id', $user->company_id)->where('status', 0)->count();
+        }else{
+            $company = 0;
+        }
+
+        if ($user->where('user_type', UserTypeEnum::SYSTEM)->count() == 1
+            && $user->where('status', 0)->count() == 1
+            && $company == 0
         ) {
             return redirect()->back()->withErrors(['email' => 'Invalid credentials']);
         }

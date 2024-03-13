@@ -28,15 +28,18 @@ class FrontEndController extends Controller
 
         if($homeID){
             $homePageData = Page::where('id', $homeID->value)->firstOrFail();
-            $jobList = Job::whereDate('closing_date', '>=', now())->with('company')->where('status', 1)->get();
-            $allActiveJobs = Job::whereDate('closing_date', '>=', now())->with('company')->where('status', 1)->get();
-            
+            $jobList = Job::whereDate('closing_date', '>=', now())
+              ->with(['company' => function ($query) {
+                  $query->where('status', 1);
+              }])
+              ->where('status', 1)
+              ->get();
+
             $jobCategories = JobCategory::get(['name', 'slug', 'logo']);
             $companies = Company::where('status', 1)->whereNot('logo', null)->get(['name', 'slug', 'logo']);    
         }else{
             $homePageData = null;
             $jobList = null;
-            $allActiveJobs = null;
             $jobCategories = null;
             $companies = null;
         }
@@ -45,7 +48,6 @@ class FrontEndController extends Controller
             'storageUrl' => config('app.url') . Storage::url('public/'),
             'homePageData' => $homePageData,
             'jobList' => $jobList,
-            'allActiveJobs' => $allActiveJobs,
             'jobCategories' => $jobCategories,
             'companies' => $companies
         ]);
@@ -62,8 +64,20 @@ class FrontEndController extends Controller
             $jobPageData = null;
         }
        
-        $jobList = Job::whereDate('closing_date', '>=', now())->with('company')->where('status', 1)->paginate(10);
-        $allActiveJobs = Job::whereDate('closing_date', '>=', now())->with('company')->where('status', 1)->get();
+        $jobList = Job::whereDate('closing_date', '>=', now())
+                    ->with(['company' => function ($query) {
+                        $query->where('status', 1);
+                    }])
+                    ->where('status', 1)
+                    ->paginate(10);
+        
+        $allActiveJobs = Job::whereDate('closing_date', '>=', now())
+                        ->with(['company' => function ($query) {
+                            $query->where('status', 1);
+                        }])
+                        ->where('status', 1)
+                        ->get();
+        
         $jobCategories = JobCategory::get(['name', 'id']);
 
         $rearrangedCategories = $jobCategories->reduce(function ($carry, $item, $index) {

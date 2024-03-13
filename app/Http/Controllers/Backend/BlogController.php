@@ -118,7 +118,7 @@ class BlogController extends Controller
     {
         $this->authorize('update', $blog); 
         $category = Category::pluck('name', 'id')->toArray();
-        $blogData = $blog->load('categories:id');
+        $blogData = $blog->load('categories:id', 'tags:name');
         $categoryIds = $blogData->categories->pluck('id')->toArray();
 
         $blogData['category_ids'] = $categoryIds;
@@ -136,15 +136,16 @@ class BlogController extends Controller
         $this->authorize('update', $blog); 
 
         DB::beginTransaction();
+        
         try{
+            
             $validation = $request->validate([
-                'title' => 'required|max:255',
+                'title' => 'required|string|max:255',
                 'body' => 'required',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:500',
                 'status' => 'nullable|boolean',
                 'categories' => 'required|array',
-                'tags' => 'required|string',
-                'slug' => 'nullable|max:255'
+                'tags' => 'nullable|array',
             ]);
 
             if ($request->hasFile('image')) {
@@ -158,10 +159,11 @@ class BlogController extends Controller
 
             $validation['slug'] = $request->title;
             unset($validation['categories']);
+
             $blog->update($validation);
 
             $blog->categories()->sync($request->categories);
-            $this->attachTagsToBlog($blog->id, $request->tags);
+            $this->attachTagsToBlog($blog->id, implode(',', $request->tags));
 
             DB::commit();
             return redirect()->back()->with('success', 'Blog Updated Successfully');
@@ -180,7 +182,7 @@ class BlogController extends Controller
     {
         $this->authorize('delete', $blog); 
 
-        // $blog->delete();
+        $blog->delete();
 
         return redirect()->back()->with('success', 'Blog Deleted Successfully');
     }

@@ -13,7 +13,6 @@ class Company extends Model
 {
     use HasFactory, DateTrait;
     protected $fillable = [
-        'user_id',
         'name',
         'description',
         'company_type',

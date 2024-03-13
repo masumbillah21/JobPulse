@@ -9,7 +9,6 @@ import ComingSoon from '@/Components/Frontend/ComingSoon.vue';
 
   const homePageData: any = usePage().props.homePageData ?? null;
   const jobList: any = usePage().props.jobList ?? null;
-  const allActiveJobs: any = usePage().props.allActiveJobs ?? null;
   const jobCategories: any = usePage().props.jobCategories ?? null;
   const companies: any = usePage().props.companies ?? null;
 
@@ -106,7 +105,7 @@ for (let i: number = 1; i <= 8; i++) {
               <div class="mt-12">
               </div>
             </div>
-            <JobSection :jobList="jobList" :allJobs="allActiveJobs"/>
+            <JobSection :jobList="jobList" :allJobs="jobList"/>
           </div>
         </div>
       </section>

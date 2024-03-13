@@ -17,6 +17,7 @@ class OwerUserSeeder extends Seeder
     public function run(): void
     {
         $superAdmin = User::create([
+            'company_id' => 1,
             'name' => 'Super Admin',
             'email' => 'mbillah21@yahoo.com',
             'password' => '12345678',
@@ -28,6 +29,7 @@ class OwerUserSeeder extends Seeder
         }
 
         $systemAdmin = User::create([
+            'company_id' => 1,
             'name' => 'System Admin',
             'email' => 'mbillah21@gmail.com',
             'password' => '12345678',

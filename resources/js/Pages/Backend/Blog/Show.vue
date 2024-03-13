@@ -41,7 +41,7 @@ defineProps({
               <h2 class="text-4xl mb-2 font-semibold">{{ blogData?.title }}</h2>
               <p class="text-lg mb-2 font-semibold">Date: {{ blogData?.created_at }}</p>
               <hr class="mb-5">
-              <prev class="text-lg text-justify">{{ blogData?.body }}</prev>
+              <prev class="text-lg text-justify" v-html="blogData?.body"></prev>
             </div>
           </div>
         </div>
