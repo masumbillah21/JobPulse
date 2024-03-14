@@ -11,7 +11,7 @@ class ImageHelper
         $logoData = $encodedImage;
         $logoData = str_replace(' ', '+', $logoData);
         $logoImage = base64_decode($logoData);
-        $logoPath = 'image/'. Str::slug($imageName) . time() . '.jpg';
+        $logoPath = 'images/'. Str::slug($imageName) . time() . '.jpg';
 
         Storage::disk('public')->put($logoPath, $logoImage);
 

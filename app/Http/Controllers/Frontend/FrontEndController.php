@@ -27,7 +27,7 @@ class FrontEndController extends Controller
         $homeID = Setting::where('name', 'home')->firstOrFail();
 
         if($homeID){
-            $homePageData = Page::where('id', $homeID->value)->firstOrFail();
+            $homePageData = Page::where('id', $homeID->value)->first();
             $jobList = Job::whereDate('closing_date', '>=', now())
               ->with(['company' => function ($query) {
                   $query->where('status', 1);

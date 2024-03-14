@@ -41,6 +41,8 @@
 10. Open new termial and run `npm run dev`
 Go to your site link. (For localhost: http://127.0.0.1:8000/)
 
+Live Site: https://jobpulse.masum-billah.com/
+
 Super Admin:
 Email: `mbillah21@yahoo.com`
 password: `12345678`

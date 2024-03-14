@@ -12,11 +12,6 @@ import ComingSoon from '@/Components/Frontend/ComingSoon.vue';
   const jobCategories: any = usePage().props.jobCategories ?? null;
   const companies: any = usePage().props.companies ?? null;
 
-  const props = defineProps({
-    storageUrl: String,
-  });
-
-
   const homeConents: any = {
     slider: [],
     logo: '',
@@ -24,8 +19,8 @@ import ComingSoon from '@/Components/Frontend/ComingSoon.vue';
     jobs: ''
   }
 
-  if(homePageData){
-    homePageData.contents.forEach((item: any) => {
+  if(homePageData != null){
+    homePageData.contents?.forEach((item: any) => {
       if(item.slug === 'slider'){
         item.data.forEach((sliderItem: any) => {
           homeConents.slider.push(sliderItem)

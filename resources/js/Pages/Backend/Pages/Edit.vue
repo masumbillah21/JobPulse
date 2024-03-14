@@ -78,7 +78,7 @@ if (pageData) {
   form.contents = pageData.contents
   form._method = 'put'
 
-  form.contents.forEach((section: any) => {
+  pageData.contents.forEach((section: any) => {
     section.data.forEach((row: any) => {
       if (row.image) {
         row.oldImage = row.image
