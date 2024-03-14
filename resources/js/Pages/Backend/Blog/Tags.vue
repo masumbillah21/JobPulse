@@ -67,9 +67,9 @@
     });
 
     const cols = ref([
-      {title: 'SL', field: 'id', isUnique: true, type: 'number', width: '100px'},
-      {title: 'Title', field: 'name'},
-      {title: 'Action', field: 'action'},
+      {title: 'SL', field: 'id', isUnique: true, type: 'number', width: '100px', hide:false},
+      {title: 'Title', field: 'name', hide:false},
+      {title: 'Action', field: 'action', hide:false},
     ])
 
     const rows = ref(tagsData.map((tag: any, index: number) => {
@@ -119,19 +119,6 @@
                 <CardBox class="mb-6 relative overflow-x-auto shadow-md sm:rounded-lg" has-table>
                     <FormSuccess class="pt-5 pl-5" />
                     <div class="flex justify-between px-3 pt-4">
-                        <div class="mb-5 relative">
-                        <button type="button" class="bg-slate-800 text-white p-2 inline-block rounded" @click="isOpen = !isOpen">
-                            Column Compose <i :class="isOpen ? 'fa fa-chevron-up' : 'fa fa-chevron-down'" aria-hidden="true"></i>
-                        </button>
-                        <ul v-if="isOpen" class="absolute left-0 mt-0.5 p-2.5 min-w-[150px] bg-white rounded shadow-md space-y-1 z-10">
-                            <li v-for="col in cols" :key="col.field">
-                                <label class="flex items-center gap-2 w-full cursor-pointer text-gray-600 hover:text-black">
-                                    <input type="checkbox" class="form-checkbox" :checked="!col.hide" @change="col.hide = !$event.target.checked" />
-                                    <span>{{ col.title }}</span>
-                                </label>
-                            </li>
-                        </ul>
-                        </div>
                         <FormControl  v-model="params.search" type="text" placeholder="Search..." />
                     </div>
                     <Vue3Datatable 

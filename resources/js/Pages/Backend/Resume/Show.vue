@@ -9,8 +9,8 @@ import BaseDivider from '@/Components/BaseDivider.vue'
 import { capitalize } from '@/utils/capitalize'
 
 
-const resumeData = usePage().props.resumeData;
-const authUser = usePage().props.auth.user;
+const resumeData: any = usePage().props.resumeData;
+const authUser: any = usePage().props.auth.user;
 
 </script>
 

@@ -52,13 +52,13 @@
     });
 
     const cols = ref([
-      {title: 'SL', field: 'sl', isUnique: true, type: 'number', width: '100px'},
-      {title: 'Title', field: 'title'},
-      {title: 'Posted By', field: 'user'},
-      {title: 'Status', field: 'status'},
-      {title: 'Created', field: 'created'},
-      {title: 'Ppdated', field: 'updated'},
-      {title: 'Action', field: 'action'},
+      {title: 'SL', field: 'sl', isUnique: true, type: 'number', width: '100px', hide:false},
+      {title: 'Title', field: 'title', hide:false},
+      {title: 'Posted By', field: 'user', hide:false},
+      {title: 'Status', field: 'status', hide:false},
+      {title: 'Created', field: 'created', hide:false},
+      {title: 'Ppdated', field: 'updated', hide:false},
+      {title: 'Action', field: 'action', hide:false},
     ])
 
     const rows = ref(blogsData.map((post: any, index: number) => {
@@ -109,7 +109,7 @@
                 <ul v-if="isOpen" class="absolute left-0 mt-0.5 p-2.5 min-w-[150px] bg-white rounded shadow-md space-y-1 z-10">
                     <li v-for="col in cols" :key="col.field">
                         <label class="flex items-center gap-2 w-full cursor-pointer text-gray-600 hover:text-black">
-                            <input type="checkbox" class="form-checkbox" :checked="!col.hide" @change="col.hide = !$event.target.checked" />
+                            <input type="checkbox" class="form-checkbox" :checked="!col.hide" @change="col.hide = !($event.target as HTMLInputElement)?.checked" />
                             <span>{{ col.title }}</span>
                         </label>
                     </li>

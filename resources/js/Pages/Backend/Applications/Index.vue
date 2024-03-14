@@ -9,8 +9,7 @@
     import Vue3Datatable from '@bhplugin/vue3-datatable'
     import '@bhplugin/vue3-datatable/dist/style.css'
     import { hasPermission } from '@/utils/hasPermission.js'
-    import { isSystemUser } from '@/utils/isSystemUser.js'
-    import { Head, router, usePage, useForm } from '@inertiajs/vue3'
+    import { Head, usePage } from '@inertiajs/vue3'
     import { capitalize } from '@/utils/capitalize'
 
     const applicationList:any = usePage().props.applicationList
@@ -20,12 +19,6 @@
         { id: 'selected', label: 'Selected' },
         { id: 'rejected', label: 'Rejected' },
     ]
-
-    const form = useForm({
-        candidate_id: 0,
-        status: statusList[0].id,
-        _method: 'put',
-    })
 
     const isOpen = ref(false);
 
@@ -38,16 +31,16 @@
     });
 
     const cols = ref([
-      {title: 'SL', field: 'sl', isUnique: true, type: 'number', width: '100px'},
+      {title: 'SL', field: 'sl', isUnique: true, type: 'number', width: '100px', hide:false},
       {title: 'Job', field: 'job'},
-      {title: 'Compnay', field: 'company'},
-      {title: 'Location', field: 'location'},
-      {title: 'Job Type', field: 'jobType'},
-      {title: 'Work Type', field: 'workType'},
-      {title: 'Expected Salary', field: 'salary'},
-      {title: 'Closing Data', field: 'closing'},
-      {title: 'Status', field: 'status'},
-      {title: 'Action', field: 'action'},
+      {title: 'Compnay', field: 'company', hide:false},
+      {title: 'Location', field: 'location', hide:false},
+      {title: 'Job Type', field: 'jobType', hide:false},
+      {title: 'Work Type', field: 'workType', hide:false},
+      {title: 'Expected Salary', field: 'salary', hide:false},
+      {title: 'Closing Data', field: 'closing', hide:false},
+      {title: 'Status', field: 'status', hide:false},
+      {title: 'Action', field: 'action', hide:false},
     ])
 
     const rows = ref(applicationList.map((application: any, index: number) => {
@@ -87,7 +80,7 @@
                 <ul v-if="isOpen" class="absolute left-0 mt-0.5 p-2.5 min-w-[150px] bg-white rounded shadow-md space-y-1 z-10">
                     <li v-for="col in cols" :key="col.field">
                         <label class="flex items-center gap-2 w-full cursor-pointer text-gray-600 hover:text-black">
-                            <input type="checkbox" class="form-checkbox" :checked="!col.hide" @change="col.hide = !$event.target.checked" />
+                            <input type="checkbox" class="form-checkbox" :checked="!col.hide" @change="col.hide = !($event.target as HTMLInputElement)?.checked" />
                             <span>{{ col.title }}</span>
                         </label>
                     </li>

@@ -56,14 +56,14 @@
     });
 
     const cols = ref([
-      {title: 'SL', field: 'sl', isUnique: true, type: 'number', width: '100px'},
-      {title: 'Job', field: 'job'},
-      {title: 'Candidate', field: 'candidate'},
-      {title: 'Email', field: 'email'},
-      {title: 'Expected Salary', field: 'salary'},
-      {title: 'Closing Data', field: 'closing'},
-      {title: 'Status', field: 'status'},
-      {title: 'Action', field: 'action'},
+      {title: 'SL', field: 'sl', isUnique: true, type: 'number', width: '100px', hide:false},
+      {title: 'Job', field: 'job', hide:false},
+      {title: 'Candidate', field: 'candidate', hide:false},
+      {title: 'Email', field: 'email', hide:false},
+      {title: 'Expected Salary', field: 'salary', hide:false},
+      {title: 'Closing Data', field: 'closing', hide:false},
+      {title: 'Status', field: 'status', hide:false},
+      {title: 'Action', field: 'action', hide:false},
     ])
 
     const rows = ref(candidatesList.map((candidate: any, index: number) => {
@@ -107,7 +107,7 @@
                 <ul v-if="isOpen" class="absolute left-0 mt-0.5 p-2.5 min-w-[150px] bg-white rounded shadow-md space-y-1 z-10">
                     <li v-for="col in cols" :key="col.field">
                         <label class="flex items-center gap-2 w-full cursor-pointer text-gray-600 hover:text-black">
-                            <input type="checkbox" class="form-checkbox" :checked="!col.hide" @change="col.hide = !$event.target.checked" />
+                            <input type="checkbox" class="form-checkbox" :checked="!col.hide" @change="col.hide = !($event.target as HTMLInputElement)?.checked" />
                             <span>{{ col.title }}</span>
                         </label>
                     </li>

@@ -31,14 +31,14 @@
   });
 
   const cols = ref([
-    { field: 'id', title: 'SL', isUnique: true, type: 'number' },
-    { title: 'Title', field: 'title' },
-    { title: 'Company', field: 'company' },
-    { title: 'Category', field: 'category' },
-    { title: 'Closing Date', field: 'closing_date' },
-    { title: 'Created', field: 'created_at' },
-    { title: 'Updated', field: 'updated_at' },
-    { title: 'Action', field: 'action' },
+    { field: 'id', title: 'SL', isUnique: true, type: 'number', hide:false },
+    { title: 'Title', field: 'title' , hide:false},
+    { title: 'Company', field: 'company', hide:false },
+    { title: 'Category', field: 'category', hide:false },
+    { title: 'Closing Date', field: 'closing_date', hide:false },
+    { title: 'Created', field: 'created_at', hide:false },
+    { title: 'Updated', field: 'updated_at', hide:false },
+    { title: 'Action', field: 'action', hide:false },
   ])
 
   const rows = ref(jobsData.map((job: any, index: number) => {
@@ -100,7 +100,7 @@
               <li v-for="col in cols" :key="col.field">
                 <label class="flex items-center gap-2 w-full cursor-pointer text-gray-600 hover:text-black">
                   <input type="checkbox" class="form-checkbox" :checked="!col.hide"
-                    @change="col.hide = !$event.target.checked" />
+                    @change="col.hide = !($event.target as HTMLInputElement)?.checked" />
                   <span>{{ col.title }}</span>
                 </label>
               </li>

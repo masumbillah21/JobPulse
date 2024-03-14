@@ -17,7 +17,7 @@ import FormControl from "@/Components/FormControl.vue";
 import FormField from "@/Components/FormField.vue";
 
 
-const resumeData = usePage().props.resumeData;
+const resumeData: any = usePage().props.resumeData;
 
 const statusList = [
     { id: '', label: 'Select One' },

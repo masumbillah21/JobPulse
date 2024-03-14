@@ -52,12 +52,12 @@
     });
 
     const cols = ref([
-      {title: 'SL', field: 'sl', isUnique: true, type: 'number', width: '40px'},
-      {title: 'Name', field: 'name'},
-      {title: 'Email', field: 'email'},
-      {title: 'Created', field: 'created_at'},
-      {title: 'Updated', field: 'updated_at'},
-      {title: 'Action', field: 'action'},
+      {title: 'SL', field: 'sl', isUnique: true, type: 'number', width: '40px', hide:false},
+      {title: 'Name', field: 'name', hide:false},
+      {title: 'Email', field: 'email', hide:false},
+      {title: 'Created', field: 'created_at', hide:false},
+      {title: 'Updated', field: 'updated_at', hide:false},
+      {title: 'Action', field: 'action', hide:false},
     ])
 
     const rows = ref(employees.map((employee: any, index: number) => {
@@ -107,7 +107,7 @@
                   <ul v-if="isOpen" class="absolute left-0 mt-0.5 p-2.5 min-w-[150px] bg-white rounded shadow-md space-y-1 z-10">
                       <li v-for="col in cols" :key="col.field">
                           <label class="flex items-center gap-2 w-full cursor-pointer text-gray-600 hover:text-black">
-                              <input type="checkbox" class="form-checkbox" :checked="!col.hide" @change="col.hide = !$event.target.checked" />
+                              <input type="checkbox" class="form-checkbox" :checked="!col.hide" @change="col.hide = !($event.target as HTMLInputElement)?.checked" />
                               <span>{{ col.title }}</span>
                           </label>
                       </li>
