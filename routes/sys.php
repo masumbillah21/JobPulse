@@ -40,8 +40,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::prefix('jobs')->name('jobs.')->group(function () {
                         Route::resource('/categories', JobCategoryController::class)->only(['index', 'store', 'destroy']);
                 });
-                Route::get('company/{id}', [CompanyController::class, 'changeStatus'])->name('company.status');
-                Route::resource('permissions', PermissionController::class);
+                 Route::resource('permissions', PermissionController::class);
                 Route::resource('roles', RoleController::class);
                 Route::get('/jobs/list', [JobController::class, 'jobList'])->name('jobs.list');
                 Route::get('/jobs/list/{id}', [JobController::class, 'jobApprove'])->name('jobs.status');
@@ -51,6 +50,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
                 require __DIR__ . '/employee.php';
                 require __DIR__ . '/company.php';
+                Route::get('company/{id}', [CompanyController::class, 'changeStatus'])->name('company.status');
                 require __DIR__ . '/jobs.php';
                 require __DIR__ . '/resume.php';
                 require __DIR__ . '/pages.php';
