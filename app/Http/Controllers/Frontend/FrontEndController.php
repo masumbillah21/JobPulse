@@ -106,13 +106,19 @@ class FrontEndController extends Controller
 
         if(Auth::check()){
             $isApplied = JobCandidate::where('job_id', $jobDetail->id)->where('user_id', Auth::id())->first() ? true : false;
+            $isProfile = Auth::user()->personalDetails->count() > 0  ? true : false;
         }else{
             $isApplied = false;
+            $isProfile = false;
         }   
+
+        $cateBgImage = Setting::where('name', 'catebg')->first();
 
         return Inertia::render('Frontend/Job/Show', [
             'jobDetail' => $jobDetail,
-            'isApplied' => $isApplied
+            'isApplied' => $isApplied,
+            'isProfile' => $isProfile,
+            'cateBgImage' => $cateBgImage->value ?? null,
         ]);
     }
 

@@ -64,8 +64,8 @@ class DashboardController extends Controller
             $totalCandidates = JobCandidate::whereHas('job', function ($query) {
                                     $query->where('company_id', auth()->user()->company_id);
                                 })
-                                ->distinct('user_id')
-                                ->count('user_id');
+                                ->count();
+
             $candidateData  = JobCandidate::select(DB::raw('DATE_FORMAT(created_at, "%Y-%m") AS month'), DB::raw('COUNT(*) AS count'))
                             ->whereIn('job_id', Job::where('company_id', auth()->user()->company_id)->pluck('id'))        
                             ->groupBy('month')
@@ -90,7 +90,7 @@ class DashboardController extends Controller
     public function indexSystem(){
 
         $totalEmployees = auth()->user()->compnay_id ? auth()->user()->company->employees->count() : 0;
-        $totalCompanies = Company::count();
+        $totalCompanies = Company::where('default', 0)->count();
         $totalJobs = Job::count();
         $totalCandidates = User::where('user_type', UserTypeEnum::CANDIDATE)->count();
 

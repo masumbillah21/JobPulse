@@ -27,13 +27,13 @@ export default [
         }
      ]
   },
-  {
-     label : "Company Profile",
-     icon : "fas fa-building",
-     route : "admin.company.create",
-     permission: "company.create",
-     is_plugin: false,
-  },
+//   {
+//       label : "Company Profile",
+//       icon : "fas fa-building",
+//       route : "admin.company.create",
+//       permission: "company.create",
+//       is_plugin: false,
+//    },
   {
       label : "Company List",
       icon : "fas fa-building",

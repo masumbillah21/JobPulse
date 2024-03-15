@@ -11,11 +11,15 @@
   import InputError from '@/Components/InputError.vue';
   import {isCandidateUser} from '@/utils/isCandidateUser.js';
   import { Head, useForm, usePage } from '@inertiajs/vue3';
+import FormSuccess from '@/Components/FormSuccess.vue';
+import FormValidationErrors from '@/Components/FormValidationErrors.vue';
 
   const authUser = usePage().props.auth.user
 
   const jobDetail: any = usePage().props.jobDetail;
   const isApplied = usePage().props.isApplied
+  const isProfile = usePage().props.isProfile
+  const cateBgImage: any  = usePage().props.cateBgImage
 
   const form = useForm({
     id: jobDetail?.id,
@@ -36,7 +40,7 @@
 
     
     <main v-if="jobDetail">
-      <BannerSection>
+      <BannerSection :bgImage="cateBgImage">
         <SectionTitle :title="jobDetail?.title" />
       </BannerSection>
       <section class="relative py-20 bg-gray-200 dark:bg-slate-800">
@@ -74,6 +78,8 @@
                     <div class="mb-2" v-html="jobDetail?.facilities"></div>
                 </div>
                 <div class="flex flex-col justify-between my-2 w-3/12 mr-3 text-black bg-white dark:bg-gray-100 rounded p-5 shadow">
+                        <FormSuccess/>
+                        <FormValidationErrors/>
                     <div>
                       <p class="text-xl mb-1"><span class="font-bold">Post By:</span> {{ jobDetail?.user.name }}</p>
 
@@ -82,7 +88,7 @@
                       <p class="text-xl mb-1"><span class="font-bold">Closing on:</span> <span class="text-red-800">{{ jobDetail?.closing_date }}</span></p>
                     </div>
                     <CardBox v-if="authUser && isCandidateUser()" class="my-24 w-full" is-form @submit.prevent="submit">
-                      <template v-if="!isApplied">
+                      <template v-if="!isApplied  && isProfile">
                         <FormField label="Expected Salary">
                             <FormControl
                             icon="fas fa-dollar-sign"
@@ -97,10 +103,10 @@
                         </BaseButtons>
                         <p v-if="form.recentlySuccessful" class="text-sm text-gray-600 dark:text-gray-400">Applied.</p>
                       </template>
+                      <div v-else-if="!isProfile" class="font-semibold text-red-700">Complete Your Resume To Apply</div>
                       <template v-else>
                         <p class="text-xl font-semibold text-green-800">You Already Applied.</p>
                       </template>
-                        
                     </CardBox>
                     <div v-else class="text-center">
                         <BaseButtonLink 

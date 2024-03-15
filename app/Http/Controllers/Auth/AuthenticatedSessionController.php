@@ -34,7 +34,9 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
 
-        $user = User::where('email', $request->email);
+        $user = User::where('email', $request->email)->first();
+
+        $err = 0;
 
         if($user->company_id) {
             $company = Company::where('id', $user->company_id)->where('status', 0)->count();
@@ -42,18 +44,26 @@ class AuthenticatedSessionController extends Controller
             $company = 0;
         }
 
-        if ($user->where('user_type', UserTypeEnum::SYSTEM)->count() == 1
-            && $user->where('status', 0)->count() == 1
-            && $company == 0
-        ) {
+        if ($user->user_type == UserTypeEnum::SYSTEM) {
+            $err++;
             return redirect()->back()->withErrors(['email' => 'Invalid credentials']);
         }
 
-        $request->authenticate();
+        if($user->where('is_active', 0)->count() == 1 && $company == 0){
+            $err++;
+            return redirect()->back()->withErrors(['email' => 'Your account is not active']);
+        }
+        if($err > 0){
+            return redirect()->back()->withErrors(['email' => 'Invalid credentials']);
+        }else{
+            $request->authenticate();
 
-        $request->session()->regenerate();
+            $request->session()->regenerate();
+    
+            return redirect()->intended(RouteServiceProvider::HOME);
+        }
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        
     }
 
     /**
