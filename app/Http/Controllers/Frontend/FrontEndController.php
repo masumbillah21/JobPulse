@@ -33,6 +33,7 @@ class FrontEndController extends Controller
                   $query->where('status', 1);
               }])
               ->where('status', 1)
+              ->orderByDesc('id')
               ->get();
 
             $jobCategories = JobCategory::get(['name', 'slug', 'logo']);
@@ -69,6 +70,7 @@ class FrontEndController extends Controller
                         $query->where('status', 1);
                     }])
                     ->where('status', 1)
+                    ->orderByDesc('id')
                     ->paginate(10);
         
         $allActiveJobs = Job::whereDate('closing_date', '>=', now())
@@ -76,6 +78,7 @@ class FrontEndController extends Controller
                             $query->where('status', 1);
                         }])
                         ->where('status', 1)
+                        ->orderByDesc('id')
                         ->get();
         
         $jobCategories = JobCategory::get(['name', 'id']);
@@ -123,7 +126,7 @@ class FrontEndController extends Controller
             $blogPageData = null;
         }
 
-        $postList = Blog::with('user')->where('status', 1)->paginate(9);
+        $postList = Blog::with('user')->where('status', 1)->orderByDesc('id')->paginate(9);
         
         return Inertia::render('Frontend/Blog/Index', [
             'blogsList' => $postList,

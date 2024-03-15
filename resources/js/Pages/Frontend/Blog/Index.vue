@@ -37,11 +37,12 @@ import ComingSoon from '@/Components/Frontend/ComingSoon.vue';
       </BannerSection>
       <section class="relative py-20 bg-gray-200">
         <div class="container mx-auto px-4">
-          <div class="grid gap-x-8 gap-y-4 grid-cols-3">
+          <div class="grid gap-x-8 gap-y-4 grid-cols-3" v-if="blogsList.data.length != 0">
               <div v-for="(post, index) in blogsList?.data" :key="index" class="bg-gray-100 text-center rounded">
                 <PostGrid :post="post" />
               </div>
           </div>
+          <div v-else> <p class="text-center font-semibold">No blog found</p></div>
           <Pagination class="mt-6" :links="blogsList?.links"/>
         </div>
       </section>
