@@ -16,7 +16,7 @@
 </script>
 <template>
   <LayoutGuest>
-    <Head :title="categoryData.name" />
+    <Head :title="categoryData?.name ?? 'Not Found'" />
     
     <main v-if="jobsData">
       <BannerSection :bgImage="categoryData.logo" backgroundSize="contain">

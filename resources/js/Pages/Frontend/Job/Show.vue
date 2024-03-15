@@ -56,22 +56,22 @@
                     <p class="mb-2">{{ jobDetail?.location }}</p>
 
                     <h2 class="text-xl font-semibold">Description</h2>
-                    <p class="mb-2">{{ jobDetail?.description }}</p>
+                    <div class="mb-2" v-html="jobDetail?.description"></div>
 
                     <h2 class="text-xl font-semibold">Requirements</h2>
-                    <p class="mb-2">{{ jobDetail?.requirements }}</p>
+                    <div class="mb-2" v-html="jobDetail?.requirements"></div>
 
                     <h2 class="text-xl font-semibold">Responsibilities</h2>
-                    <p class="mb-2">{{ jobDetail?.responsibilities }}</p>
+                    <div class="mb-2" v-html="jobDetail?.responsibilities"></div>
 
                     <h2 class="text-xl font-semibold">Job type</h2>
                     <p class="mb-2">{{ jobDetail?.job_type }}</p>
 
                     <h2 class="text-xl font-semibold">Salary</h2>
-                    <p class="mb-2">৳{{ jobDetail?.salary }}</p>
+                    <p class="mb-2">${{ jobDetail?.salary }}</p>
 
                     <h2 class="text-xl font-semibold">Facilities</h2>
-                    <p class="mb-2">{{ jobDetail?.facilities }}</p>
+                    <div class="mb-2" v-html="jobDetail?.facilities"></div>
                 </div>
                 <div class="flex flex-col justify-between my-2 w-3/12 mr-3 text-black bg-white dark:bg-gray-100 rounded p-5 shadow">
                     <div>

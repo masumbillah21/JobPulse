@@ -46,7 +46,7 @@ for (let i: number = 1; i <= 8; i++) {
 </script>
 <template>
   <LayoutGuest>
-    <Head :title="homePageData.title ?? 'Home'" />
+    <Head :title="homePageData?.title ?? 'Home'" />
     <main v-if="homePageData">
       <Slider :sliderData="homeConents.slider" />
       <section v-if="homeConents.logo" class="relative py-20 bg-gray-100 text-slate-800">
@@ -78,7 +78,7 @@ for (let i: number = 1; i <= 8; i++) {
               <SectionTitle :title="homeConents.job_category.title" :description="homeConents.job_category.description" :subtitle="homeConents.job_category.subtitle" />
             </div>
             <div class="mt-1 mb-10">
-              <div class="grid grid-cols-5 gap-4">
+              <div class="grid grid-cols-4 gap-4">
                 <template v-if="jobCategories">
                     <div v-for="category in jobCategories" class="text-center rounded shadow-sm p-2 text-stone-900 bg-white shadow-slate-300 m-3 w-full">
                       <Link :href="route('job.by.category', category.slug)">

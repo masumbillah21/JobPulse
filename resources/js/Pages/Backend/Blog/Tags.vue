@@ -13,6 +13,7 @@
     import Vue3Datatable from '@bhplugin/vue3-datatable'
     import '@bhplugin/vue3-datatable/dist/style.css'
     import { Head, router, usePage, useForm } from '@inertiajs/vue3'
+import FormValidationErrors from '@/Components/FormValidationErrors.vue';
 
 
     const tagsData: any = usePage().props.tagsData
@@ -99,6 +100,7 @@
             <div class="flex">
                 <CardBox v-if="hasPermission('tags.create') || hasPermission('tags.update')" class="w-1/2 mb-6 mr-4"  is-form @submit.prevent="submit">
                     <FormSuccess/>
+                    <FormValidationErrors/>
                     <FormField label="Name" label-for="name" help="Please enter tag name">
                         <FormControl
                             v-model="form.name"
@@ -117,7 +119,6 @@
                     />
                 </CardBox>
                 <CardBox class="mb-6 relative overflow-x-auto shadow-md sm:rounded-lg" has-table>
-                    <FormSuccess class="pt-5 pl-5" />
                     <div class="flex justify-between px-3 pt-4">
                         <FormControl  v-model="params.search" type="text" placeholder="Search..." />
                     </div>

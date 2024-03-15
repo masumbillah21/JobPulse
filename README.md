@@ -46,4 +46,3 @@ To login as sytem user: http://127.0.0.1:8000/admin/login
 Live Site: https://jobpulse.masum-billah.com/
 System User Login Url: https://jobpulse.masum-billah.com/admin/login
 Other User Login Url: https://jobpulse.masum-billah.com/login
-

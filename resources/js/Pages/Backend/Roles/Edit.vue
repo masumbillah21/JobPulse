@@ -50,6 +50,7 @@ const create = () => {
 
 
 const update = () => {
+    console.log(form)
     form.post(route("admin.roles.update", form.id));
 };
 </script>

@@ -9,6 +9,7 @@
     import BaseButtonLink from '@/Components/BaseButtonLink.vue'
     import CardBoxModal from '@/Components/CardBoxModal.vue'
     import FormSuccess from "@/Components/FormSuccess.vue";
+    import FormValidationErrors from '@/Components/FormValidationErrors.vue';
     import { hasPermission } from '@/utils/hasPermission.js'
     import Vue3Datatable from '@bhplugin/vue3-datatable'
     import '@bhplugin/vue3-datatable/dist/style.css'
@@ -30,7 +31,7 @@
         form.post(route('admin.categories.store'), {
             onSuccess: () => {
                 const items: any = usePage().props.categoriesData
-                categoriesData.data = items.data
+                rows.value = items
                 form.reset()
             }
         })
@@ -46,9 +47,10 @@
         isModalDangerActive.value = false
         router.delete(route('admin.categories.destroy', deleteId.value))
 
-        const index = categoriesData.findIndex((category: any) => category.id === deleteId.value)
+        const index = rows.value.findIndex((category: any) => category.id === deleteId.value)
         if (index !== -1) {
-            categoriesData.splice(index, 1)
+            rows.value.splice(index, 1)
+            rows.value = [...rows.value]
         }
 
     }
@@ -96,6 +98,7 @@
             <div class="flex">
                 <CardBox v-if="hasPermission('categories.create') || hasPermission('categories.update')" class="w-1/2 mb-6 mr-4"  is-form @submit.prevent="submit">
                     <FormSuccess/>
+                    <FormValidationErrors/>
                     <FormField label="Name" label-for="name" help="Please enter category name">
                         <FormControl
                             v-model="form.name"
@@ -114,7 +117,6 @@
                     />
                 </CardBox>
                 <CardBox class="mb-6 relative overflow-x-auto shadow-md sm:rounded-lg" has-table>
-                    <FormSuccess class="pt-5 pl-5" />
                     <div class="flex justify-between px-3 pt-4">
                         <FormControl  v-model="params.search" type="text" placeholder="Search..." />
                     </div>

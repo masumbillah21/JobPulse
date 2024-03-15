@@ -23,7 +23,8 @@ class Company extends Model
         'logo',
         'company_size',
         'slug',
-        'status'
+        'status',
+        'default'
     ];
 
     protected $hidden = [

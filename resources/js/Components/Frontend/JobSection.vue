@@ -60,7 +60,7 @@ const filterdJobList = computed(() => {
             <Link class="flex items-center justify-between" :href="route('job.show', job.slug)">
                 <div>
                     <p><span class="text-xl font-bold">{{ job.title }}</span> | <span class="inline-block bg-blue-950 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">{{ job.job_type }}</span> | <span class="inline-block bg-green-800 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">{{ job.work_type }}</span> | <span class="inline-block bg-black rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">{{ job.company.name }}</span></p>
-                    <p>{{ job.description.split(" ").slice(0, 20).join(" ") }}</p>
+                    <p v-html="job.description.split('').slice(0, 20).join('')"></p>
                     <p v-for="skill in job.skills.split(',')" class="mt-4 inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{{ skill }}</p>
                 </div>
                 <div class="text-right">

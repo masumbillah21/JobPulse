@@ -25,6 +25,7 @@ class CompanySeeder extends Seeder
             'company_size' => '1-10',
             'slug' => 'jobpulse',
             'status' => true,
+            'default' => true,
         ]);
     }
 }

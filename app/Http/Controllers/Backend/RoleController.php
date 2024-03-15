@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Backend;
 
+use Exception;
 use App\Models\Role;
 use Inertia\Inertia;
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class RoleController extends Controller
 {
@@ -89,23 +92,28 @@ class RoleController extends Controller
     public function update(Request $request, Role $role)
     {
         $this->authorize('update', Role::class);
-
-        $validate = $request->validate([
-            'name' => 'required',
-            'permissions' => 'required|array'
-        ]);
-
-        $companyId = Auth::user()->company_id;
-
-        if($role->company_id != $companyId) {
-            return redirect()->back()->with('error', 'Role not found');
+        try {
+            $validate = $request->validate([
+                'name' => 'required',
+                'permissions' => 'required|array'
+            ]);
+        
+            DB::beginTransaction();
+            
+            $role->update($validate);
+            $role->permissions()->detach();
+            $role->permissions()->attach($request->permissions);
+        
+            DB::commit();
+            return redirect()->back()->with('success', 'Role updated successfully');
+        } catch (ValidationException $e) {
+            DB::rollback();
+            return redirect()->back()->withErrors($e->validator->errors()->all());
+        } catch (Exception $e) {
+            DB::rollback();
+            return redirect()->back()->withErrors('Role failed to update: ' . $e->getMessage());
         }
-
-        $role->update($validate);
-
-        $role->permissions()->sync($request->permissions);
-
-        return redirect()->back()->with('success', 'Role updated successfully');
+        
     }
 
     /**

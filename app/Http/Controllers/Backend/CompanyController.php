@@ -20,7 +20,7 @@ class CompanyController extends Controller
     {
         $this->authorize('view', Company::class);
 
-        $companyData = Company::get();
+        $companyData = Company::where('default', 0)->get();
 
         return Inertia::render('Backend/Company/Index', [
             'companyData' => $companyData

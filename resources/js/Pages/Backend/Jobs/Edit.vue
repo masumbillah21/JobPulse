@@ -12,7 +12,9 @@
     import FormSuccess from "@/Components/FormSuccess.vue";
     import FormCheckRadioGroup from "@/Components/FormCheckRadioGroup.vue";
     import { Head, useForm, usePage } from '@inertiajs/vue3'
-import { isSystemUser } from '@/utils/isSystemUser';
+    import { isSystemUser } from '@/utils/isSystemUser';
+    import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+    import CKEditor from "@ckeditor/ckeditor5-vue";
 
     const jobData: any = usePage().props.jobData ?? null
     const jobCateLists: any = usePage().props.jobCateLists ?? null
@@ -43,6 +45,25 @@ import { isSystemUser } from '@/utils/isSystemUser';
     if(jobCateLists){
         jobCates.push(...jobCateLists)
     }
+    const editor = ClassicEditor;
+
+    // Add custom CSS to increase the height of CKEditor
+    const style = `
+        .ck-editor__editable {
+            min-height: 300px; /* Adjust the height as per your requirement */
+        }
+        .ck-powered-by-balloon {
+            display: none !important;
+        }
+    `;
+
+    // Apply the custom style
+    const addStyle = () => {
+        const styleElement = document.createElement('style');
+        styleElement.textContent = style;
+        document.head.appendChild(styleElement);
+    };
+
     const form: any = useForm({
         id: 0,
         title: '',
@@ -100,6 +121,8 @@ import { isSystemUser } from '@/utils/isSystemUser';
         const routeName = isSystemUser() ? "admin.jobs.update" : "jobs.update";
         form.post(route(routeName, form.id));
     };
+
+    addStyle()
 </script>
 
 <template>
@@ -138,27 +161,43 @@ import { isSystemUser } from '@/utils/isSystemUser';
                         <FormControl v-model="form.work_type" icon="fas fa-list-alt" :options="workType" />
                     </FormField>
 
-                    <FormField label="Description" label-for="description" help="Please enter job description">
+                    <!-- <FormField label="Description" label-for="description" help="Please enter job description">
                         <FormControl v-model="form.description" id="description" type="textarea" required />
-                    </FormField>
-                    
+                    </FormField> -->
+                    <p>Description</p>
+                    <div class="dark:text-black min-h-24">
+                        <CKEditor.component v-model="form.description" :editor="editor"/>
+                    </div>
 
-                    <FormField label="Requirements" label-for="requirements" help="Please enter job requirements">
+                    <!-- <FormField label="Requirements" label-for="requirements" help="Please enter job requirements">
                         <FormControl v-model="form.requirements" id="requirements" type="textarea" required />
-                    </FormField>
+                    </FormField> -->
+                    <p>Requirements</p>
+                    <div class="dark:text-black min-h-24">
+                        <CKEditor.component v-model="form.requirements" :editor="editor"/>
+                    </div>
 
-                    <FormField label="Responsibilities" label-for="responsibilities"
+                    <!-- <FormField label="Responsibilities" label-for="responsibilities"
                         help="Please enter job responsibilities">
                         <FormControl v-model="form.responsibilities" id="responsibilities" type="textarea" required />
-                    </FormField>
+                    </FormField> -->
+
+                    <p>Responsibilities</p>
+                    <div class="dark:text-black min-h-24">
+                        <CKEditor.component v-model="form.responsibilities" :editor="editor"/>
+                    </div>
 
                     <FormField label="Salary" label-for="salary" help="Please enter job salary">
                         <FormControl v-model="form.salary" id="salary" icon="fas fa-dollar-sign" type="number" step="0.01" min="1" required />
                     </FormField>
 
-                    <FormField label="Facilities" label-for="facilities" help="Please enter job facilities">
+                    <!-- <FormField label="Facilities" label-for="facilities" help="Please enter job facilities">
                         <FormControl v-model="form.facilities" id="facilities" type="textarea" required />
-                    </FormField>
+                    </FormField> -->
+                    <p>Facilities</p>
+                    <div class="dark:text-black min-h-24">
+                        <CKEditor.component v-model="form.facilities" :editor="editor"/>
+                    </div>
 
                     <FormField label="Skills" label-for="skills" help="Write skill sets seprated by comma">
                         <FormControl v-model="form.skills" id="skills" type="text" required />

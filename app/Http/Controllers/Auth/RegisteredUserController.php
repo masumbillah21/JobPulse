@@ -37,10 +37,11 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+        
         if($request->terms == 0){
             return redirect()->back()->withErrors('Please accept the terms and conditions');
         }
-        DB::beginTransaction();
+        
         try{
             if($request->user_type === UserTypeEnum::CANDIDATE) {
                 $request->validate([
@@ -49,6 +50,8 @@ class RegisteredUserController extends Controller
                     'password' => ['required', 'confirmed', Rules\Password::defaults()],
                     'user_type' => 'required|'.Rule::in(UserTypeEnum::CANDIDATE),
                 ]);
+
+                DB::beginTransaction();
         
                 $user = User::create([
                     'name' => $request->name,

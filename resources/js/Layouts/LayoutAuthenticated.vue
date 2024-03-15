@@ -41,7 +41,7 @@ function filterItems(items) {
     return filtered;
   }, []);
 }
-if(!isSystemUser()){
+if(!isSuperUser()){
   filteredItems = filteredItems.filter(item => {
     if(item.is_plugin === true && usePage().props.auth.features){
       const features = usePage().props.auth.features

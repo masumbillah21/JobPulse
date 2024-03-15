@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('company_size');
             $table->boolean('status')->default(1);
             $table->string('slug')->unique();
+            $table->boolean('default')->default(0);
             $table->timestamps();
         });
     }

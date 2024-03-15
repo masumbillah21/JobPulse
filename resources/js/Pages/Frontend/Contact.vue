@@ -54,7 +54,7 @@ const contactContent: any = {
 <template>
   <LayoutGuest>
 
-    <Head :title="contactPageData.title ?? 'Contact'" />
+    <Head :title="contactPageData?.title ?? 'Contact'" />
     <main v-if="contactPageData">
       <BannerSection :bgImage="contactPageData.featured_image">
         <SectionTitle :title="contactPageData.title" />

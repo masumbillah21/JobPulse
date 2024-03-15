@@ -24,7 +24,7 @@ class FrontEndController extends Controller
     
     public function index()
     {
-        $homeID = Setting::where('name', 'home')->firstOrFail();
+        $homeID = Setting::where('name', 'home')->first();
 
         if($homeID){
             $homePageData = Page::where('id', $homeID->value)->first();
@@ -36,7 +36,7 @@ class FrontEndController extends Controller
               ->get();
 
             $jobCategories = JobCategory::get(['name', 'slug', 'logo']);
-            $companies = Company::where('status', 1)->whereNot('logo', null)->get(['name', 'slug', 'logo']);    
+            $companies = Company::where('status', 1)->where('default', 0)->whereNot('logo', null)->get(['name', 'slug', 'logo']);    
         }else{
             $homePageData = null;
             $jobList = null;

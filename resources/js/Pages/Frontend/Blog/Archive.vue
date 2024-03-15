@@ -17,7 +17,7 @@
 </script>
 <template>
   <LayoutGuest>
-    <Head :title="postMeta.name ?? 'Blog'" />
+    <Head :title="postMeta?.name ?? 'Blog'" />
     <main v-if="postMeta">
       <BannerSection :bgImage="cateBgImage">
         <SectionTitle :title="postMeta.name" />

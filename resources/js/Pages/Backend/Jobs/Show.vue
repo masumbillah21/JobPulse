@@ -55,18 +55,14 @@ const jobData = usePage().props.jobData;
 
                     <h2 class="mb-2"><span class="font-bold text-lg">Location:</span> <span>{{ jobData.location }}</span>
                     </h2>
-                    <h2 class="mb-2"><span class="font-bold text-lg">Description:</span> <span>{{ jobData.description
-                    }}</span></h2>
+                    <h2 class="mb-2"><span class="font-bold text-lg">Description:</span> <span v-html="jobData.description"></span></h2>
 
-                    <h2 class="mb-2"><span class="font-bold text-lg">Requirements:</span> <span>{{ jobData.requirements
-                    }}</span></h2>
+                    <h2 class="mb-2"><span class="font-bold text-lg">Requirements:</span> <span v-html="jobData.requirements"></span></h2>
 
-                    <h2 class="mb-2"><span class="font-bold text-lg">Responsibilities:</span> <span>{{
-                            jobData.responsibilities }}</span></h2>
-                    <h2 class="mb-2"><span class="font-bold text-lg">Salary:</span> <span>{{ jobData.salary }}</span></h2>
+                    <h2 class="mb-2"><span class="font-bold text-lg">Responsibilities:</span> <span v-html="jobData.responsibilities"></span></h2>
+                    <h2 class="mb-2"><span class="font-bold text-lg">Salary:</span> <span>${{ jobData.salary }}</span></h2>
 
-                    <h2 class="mb-2"><span class="font-bold text-lg">Facilities:</span> <span>{{ jobData.facilities
-                    }}</span></h2>
+                    <h2 class="mb-2"><span class="font-bold text-lg">Facilities:</span> <span v-html="jobData.facilities"></span></h2>
 
                     <h2 class="mb-2"><span class="font-bold text-lg">Skills:</span> <span>{{ jobData.skills }}</span></h2>
             </CardBox>

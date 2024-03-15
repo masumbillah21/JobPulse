@@ -10,7 +10,7 @@ const urls: any = usePage().props.urls
 </script>
 <template>
   <LayoutGuest>
-    <Head :title="pageData.title ?? 'Page'" />
+    <Head :title="pageData?.title ?? 'Page'" />
     <main v-if="pageData">
       <BannerSection :bgImage="pageData.featured_image">
         <SectionTitle :title="pageData.title" />
